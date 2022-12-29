@@ -19,11 +19,7 @@ public class StarParticleSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (ps == null) ps = GetComponent<ParticleSystem>();
-        ps.Stop();
-        ps.Play();
-        emitOverride = new ParticleSystem.EmitParams();
-        hasRun = false;
+        RunAgain();
     }
 
     void LateUpdate()
@@ -36,6 +32,16 @@ public class StarParticleSystem : MonoBehaviour
     }
 
     void OnValidate()
+    {
+        RunAgain();
+    }
+
+    private void OnEnable()
+    {
+        RunAgain();
+    }
+
+    void RunAgain()
     {
         if (ps == null) ps = GetComponent<ParticleSystem>();
         ps.Stop();
