@@ -20,4 +20,20 @@ public static class MathUtils
         float t = InverseLerp(oldMin, oldMax, v);
         return Mathf.Lerp(newMin, newMax, v);
     }
+
+    public static int WrapIndex(int index, int maxExclusive)
+    {
+        if (index < 0)
+        {
+            index *= -1;
+            return maxExclusive - index;
+        }
+
+        if (index > maxExclusive - 1)
+        {
+            index -= maxExclusive;
+        }
+
+        return index;
+    }
 }

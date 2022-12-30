@@ -10,6 +10,7 @@ public class StarParticleSystem : MonoBehaviour
     [SerializeField] int seed;
     [SerializeField] int particleCount = 5000;
     [SerializeField] Vector2 xRange, yRange, zRange;
+    [SerializeField] List<Color32> starColors = new List<Color32>();
     ParticleSystem.Particle[] particles;
     ParticleSystem ps;
     int numAlive;
@@ -70,6 +71,11 @@ public class StarParticleSystem : MonoBehaviour
         {
             particles[i].position = new Vector3(Random.Range(xRange.x, xRange.y), Random.Range(yRange.x, yRange.y), Random.Range(zRange.x, zRange.y));
             particles[i].velocity = Vector3.zero;
+            if(starColors.Count > 1)
+            {
+                int index = Random.Range(0, starColors.Count);
+                particles[i].startColor = starColors[index];
+            }
         }
         Random.InitState((int)System.DateTime.Now.Ticks);
         hasRun = true;

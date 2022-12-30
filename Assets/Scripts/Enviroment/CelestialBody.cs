@@ -81,10 +81,10 @@ public class CelestialBody : MonoBehaviour
 
             Gizmos.DrawLine(transform.position, rotatingAround.transform.position);
 
-            float flip = (flipDirection) ? -1f : 1f;
+            float flip = (flipDirection) ? 1f : -1f;
 
             Vector2 direction2D = GetDirection();
-            Vector3 direction3D = Quaternion.AngleAxis(90.0f, Vector3.up) * new Vector3(direction2D.x, 0f, direction2D.y);
+            Vector3 direction3D = Quaternion.AngleAxis(-90.0f, Vector3.up) * new Vector3(direction2D.x, 0f, direction2D.y);
             direction3D *= flip;
 
             Gizmos.DrawLine(transform.position, transform.position + direction3D * 0.5f * radius);
