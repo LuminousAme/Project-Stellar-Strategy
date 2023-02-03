@@ -22,11 +22,7 @@ public class NebulaQuad : MonoBehaviour
         Render();
     }
 
-    void OnValidate()
-    {
-    }
-
-    void Render()
+    public void Render()
     {
         mat = GetComponent<MeshRenderer>().material;
         perlinTexture1 = 
