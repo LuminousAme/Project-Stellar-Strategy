@@ -5,9 +5,9 @@ using UnityEngine;
 [ExecuteAlways]
 public class CelestialBody : MonoBehaviour
 {
-    [SerializeField] CelestialBody rotatingAround;
-    [SerializeField] float orbitTime = 60f;
-    [SerializeField] bool flipDirection = false;
+    public CelestialBody rotatingAround;
+    public float orbitTime = 60f;
+    public bool flipDirection = false;
     float radius;
     float currentAngle;
     float orbitSpeed;

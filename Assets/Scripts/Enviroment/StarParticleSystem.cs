@@ -7,7 +7,12 @@ using UnityEngine;
 [RequireComponent(typeof(ParticleSystem))]
 public class StarParticleSystem : MonoBehaviour
 {
-    [SerializeField] int seed;
+    private int seed;
+    public int Seed
+    {
+        get { return seed; }
+        set { seed = value; }
+    }
     [SerializeField] int particleCount = 5000;
     [SerializeField] Vector2 xRange, yRange, zRange;
     [SerializeField] List<Color32> starColors = new List<Color32>();
@@ -42,7 +47,7 @@ public class StarParticleSystem : MonoBehaviour
         RunAgain();
     }
 
-    void RunAgain()
+    public void RunAgain()
     {
         if (ps == null) ps = GetComponent<ParticleSystem>();
         ps.Stop();

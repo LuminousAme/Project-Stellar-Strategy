@@ -40,6 +40,20 @@ public class Planet : MonoBehaviour
             sphereMeshFilter.sharedMesh = new Mesh();
         }
 
+        if (sphereMeshFilter.sharedMesh == null)
+        {
+            sphereMeshFilter.sharedMesh = new Mesh();
+        }
+
+        if (sphereMeshFilter.gameObject.GetComponent<MeshRenderer>() == null)
+        {
+            sphereMeshFilter.gameObject.AddComponent<MeshRenderer>().sharedMaterial = colorGenerator.mat;
+        }
+        else if (sphereMeshFilter.gameObject.GetComponent<MeshRenderer>().sharedMaterial == null)
+        {
+            sphereMeshFilter.gameObject.GetComponent<MeshRenderer>().sharedMaterial = colorGenerator.mat;
+        }
+
         fullSphere = new PlanetFullSphere(shapeGenerator, colorGenerator, sphereMeshFilter.sharedMesh, resolution);
     }
 

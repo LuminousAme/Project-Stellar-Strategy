@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class NebulaFull : MonoBehaviour
 {
+    private int seed;
+    public int Seed
+    {
+        get { return seed; }
+        set { seed = value; }
+    }
+
     [Header("General")]
     [SerializeField] GameObject quadPrefab;
-    [SerializeField] int seed;
     [SerializeField] int textureWidth, textureHeight;
 
     [Space]
@@ -34,10 +40,10 @@ public class NebulaFull : MonoBehaviour
 
     void Start()
     {
-        Run();
+        //Run();
     }
 
-    void Run()
+    public void Run()
     {
         Clear();
         Generate();
