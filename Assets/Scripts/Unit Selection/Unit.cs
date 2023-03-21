@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Unit : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class Unit : MonoBehaviour
     private UnitSelection unitSelector;
     private Rigidbody body;
 
+    private NavMeshAgent agent;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,17 +41,28 @@ public class Unit : MonoBehaviour
         targetPosition = transform.position;
         moveDirection = Vector3.zero;
 
-        InvokeRepeating("Step", 0.0f, unitData.aiUpdateDelay);
+        //InvokeRepeating("Step", 0.0f, unitData.aiUpdateDelay);
 }
 
     private void Awake()
     {
         body = gameObject.GetComponent<Rigidbody>();
+
+        NavMeshHit closestPoint;
+        if(NavMesh.SamplePosition(transform.position, out closestPoint, 1000, 1))
+        {
+            transform.position = closestPoint.position;
+            agent = gameObject.AddComponent<NavMeshAgent>();
+            agent.speed = unitData.maxSpeed;
+
+            //gameObject.AddComponent<NavMeshObstacle>();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*
         //remove any y component influence
         moveDirection.y = 0.0f;
 
@@ -66,7 +80,6 @@ public class Unit : MonoBehaviour
         }
 
         //calculate the angle
-        /*
         float moveDirectionAngle = Vector3.SignedAngle(Vector3.forward, moveDirection, Vector3.up);
         float oppositeAngle = moveDirectionAngle + 180.0f;
 
@@ -74,10 +87,11 @@ public class Unit : MonoBehaviour
         Vector3 eulers = transform.rotation.eulerAngles;
         eulers.y = MathUtils.LerpClamped(oppositeAngle, moveDirectionAngle, t);
         transform.rotation = Quaternion.Euler(eulers);
-        */
+
 
         //update the elapsed time
         if(elapsedRotationTime < unitData.fullRotationTime) elapsedRotationTime += Time.deltaTime;
+                */
     }
 
     private void Detect()
@@ -190,7 +204,9 @@ public class Unit : MonoBehaviour
     public void SetSeekTarget(Vector3 targetPosition)
     {
         this.targetPosition = targetPosition;
-        Step();
+        targetPosition.y = transform.position.y;
+        if (agent != null) agent.destination = targetPosition;
+        //Step();
     }
 
     public static class Directions

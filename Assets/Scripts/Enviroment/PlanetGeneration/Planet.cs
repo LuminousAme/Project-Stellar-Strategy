@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 //based on the procedural planet generation series by Sebastian Lague 
 //https://www.youtube.com/playlist?list=PLFt_AvWsXl0cONs3T0By4puYy6GM22ko8
@@ -55,6 +56,9 @@ public class Planet : MonoBehaviour
 
         SphereCollider collider = GetComponent<SphereCollider>();
         if (collider != null) collider.radius = shapeSettings.radius * 2.0f;
+
+        NavMeshObstacle obstacle = GetComponent<NavMeshObstacle>();
+        if (obstacle != null) obstacle.size = new Vector3(shapeSettings.radius * 1.5f, shapeSettings.radius * 1.5f, shapeSettings.radius * 1.5f);
     }
 
     public void GeneratePlanet()
