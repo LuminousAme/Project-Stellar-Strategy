@@ -17,7 +17,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   unitRadius: 12
-  acceptableSeekRadius: 20
+  acceptableSeekRadius: 30
   aiUpdateDelay: 0.05
-  maxSpeed: 2000
+  maxSpeed: 20
   fullRotationTime: 2.5

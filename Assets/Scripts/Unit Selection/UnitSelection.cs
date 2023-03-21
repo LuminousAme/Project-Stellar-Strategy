@@ -14,6 +14,8 @@ public class UnitSelection : MonoBehaviour
     //replace this with a better way of indentifiying selected units soon
     public Material highlightMaterial; // Material for highlighting selected units
 
+    Plane plane = new Plane(Vector3.down, 0f);
+
     private void Start()
     {
         selectionBox.SetActive(false);
@@ -55,12 +57,12 @@ public class UnitSelection : MonoBehaviour
                 Unit unit = selected.GetComponent<Unit>();
 
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
+                float dist = 0.0f;
+                
                 // If the camera is pointing somewhere on the floor
-                if (Physics.Raycast(ray, out hit))
+                if (plane.Raycast(ray, out dist))
                 {
-                    Vector3 position = hit.point;
+                    Vector3 position = ray.GetPoint(dist);
                     position.y = 0;
                     unit.SetSeekTarget(position);
                 }

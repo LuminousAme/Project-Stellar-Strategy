@@ -62,7 +62,7 @@ public class Unit : MonoBehaviour
             //get the speed based on that t
             float speed = MathUtils.LerpClamped(0.0f, unitData.maxSpeed, t);
             //move based on the speed
-            transform.position = transform.position + (moveDirection * speed * Time.deltaTime);
+            transform.position = transform.position + (moveDirection * unitData.maxSpeed * Time.deltaTime);
         }
 
         //calculate the angle
