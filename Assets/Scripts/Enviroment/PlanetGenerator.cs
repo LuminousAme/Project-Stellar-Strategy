@@ -83,12 +83,11 @@ public class PlanetGenerator : MonoBehaviour
             //set the planet generation settings
             Planet planet = go.GetComponent<Planet>();
             planet.resolution = resolution;
-            int shapeIndex = Random.Range(0, shapeSettings.Count);
-            planet.shapeSettings = shapeSettings[shapeIndex];
-            int colorIndex = Random.Range(0, (colorSettings.Count <= atmosphereSettings.Count) ? 
-                colorSettings.Count : atmosphereSettings.Count);
-            planet.colorSettings = colorSettings[colorIndex];
-            planet.GeneratePlanet();
+            int maxIndex = (colorSettings.Count <= atmosphereSettings.Count) ? colorSettings.Count : atmosphereSettings.Count;
+            maxIndex = (shapeSettings.Count <= maxIndex) ? shapeSettings.Count : maxIndex;
+            int index = Random.Range(0, maxIndex);
+            planet.shapeSettings = shapeSettings[index];
+            planet.colorSettings = colorSettings[index];
 
             //set the celestial body settings
             float maxPossibleDistance = minDistanceFromSun + maxDistanceBetweenPlanets * numOfPlants;
@@ -99,13 +98,15 @@ public class PlanetGenerator : MonoBehaviour
             celestialBody.rotatingAround = sun;
 
             //set the atmosphere settings
-            AtmosphereData atmosphereData = atmosphereSettings[colorIndex];
+            AtmosphereData atmosphereData = atmosphereSettings[index];
             Atmosphere atmosphere = go.GetComponentInChildren<Atmosphere>();
             atmosphere.gradient = atmosphereData.gradient;
             atmosphere.thickness = atmosphereData.thickness;
             atmosphere.power = atmosphereData.power;
             atmosphere.radius = planet.shapeSettings.radius * planetAtmoshpereRatio;
             atmosphere.sun = sun;
+
+            planet.GeneratePlanet();
 
             //add it to the list of gameobjects
             planets.Add(go);

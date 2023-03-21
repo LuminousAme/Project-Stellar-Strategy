@@ -14,7 +14,7 @@ public class PlanetColorGenerator
     public void UpdateSettings(PlanetColorSettings settings)
     {
         this.settings = settings;
-        mat = new Material(settings.shader);
+        if(mat == null) mat = new Material(settings.shader);
         if (gradientTexture == null) gradientTexture = new Texture2D(textureResolution, textureResolution);
         if (oceanTexture == null) oceanTexture = new Texture2D(textureResolution, 1);
         noiseFilter = PlanetNoiseFilterFactory.CreateNoiseFilter(settings.latitudeNoiseSettings);

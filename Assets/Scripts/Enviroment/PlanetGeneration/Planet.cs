@@ -47,12 +47,9 @@ public class Planet : MonoBehaviour
 
         if (sphereMeshFilter.gameObject.GetComponent<MeshRenderer>() == null)
         {
-            sphereMeshFilter.gameObject.AddComponent<MeshRenderer>().sharedMaterial = colorGenerator.mat;
+            sphereMeshFilter.gameObject.AddComponent<MeshRenderer>();
         }
-        else if (sphereMeshFilter.gameObject.GetComponent<MeshRenderer>().sharedMaterial == null)
-        {
-            sphereMeshFilter.gameObject.GetComponent<MeshRenderer>().sharedMaterial = colorGenerator.mat;
-        }
+        sphereMeshFilter.gameObject.GetComponent<MeshRenderer>().sharedMaterial = colorGenerator.mat;
 
         fullSphere = new PlanetFullSphere(shapeGenerator, colorGenerator, sphereMeshFilter.sharedMesh, resolution);
     }
