@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class UnitSelection : MonoBehaviour
 {
@@ -21,44 +22,45 @@ public class UnitSelection : MonoBehaviour
         selectionBox.SetActive(false);
     }
 
-
     private void Update()
     {
-        // Check for left mouse button down
-        if (Input.GetMouseButtonDown(0))
+        if(selectionBox.activeSelf)
         {
-            startPos = Input.mousePosition;
-            selectionBox.SetActive(true);
-        }
-
-        // Update selection box position and size
-        if (Input.GetMouseButton(0))
-        {
-            currentPos = Input.mousePosition;
+            currentPos = Mouse.current.position.ReadValue();
             Vector2 boxStart = Vector2.Min(startPos, currentPos);
             Vector2 boxEnd = Vector2.Max(startPos, currentPos);
             Vector2 boxSize = boxEnd - boxStart;
             selectionBox.transform.position = boxStart + boxSize / 2;
             selectionBox.GetComponent<RectTransform>().sizeDelta = boxSize;
         }
+    }
 
-        // Check for left mouse button up
-        if (Input.GetMouseButtonUp(0))
+    public void ProcessLeftClick(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            startPos = Mouse.current.position.ReadValue();
+            selectionBox.SetActive(true);
+        }
+
+        if (context.canceled)
         {
             selectionBox.SetActive(false);
             SelectUnits();
         }
+    }
 
-        //right click to move 
-        if (Input.GetMouseButtonDown(1))
+    public void ProcessRightClick(InputAction.CallbackContext context)
+    {
+        if (context.started)
         {
             foreach (GameObject selected in selectedUnits)
             {
                 Unit unit = selected.GetComponent<Unit>();
 
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
                 float dist = 0.0f;
-                
+
                 // If the camera is pointing somewhere on the floor
                 if (plane.Raycast(ray, out dist))
                 {
@@ -78,7 +80,7 @@ public class UnitSelection : MonoBehaviour
 
         // Cast a ray from each corner of the selection box to get all units within the box
         selectedUnits.Clear();
-        for (float x = boxStart.x; x < boxEnd.x; x += Mathf.Clamp(boxEnd.x/2, 5,10))
+        for (float x = boxStart.x; x < boxEnd.x; x += Mathf.Clamp(boxEnd.x / 2, 5, 10))
         {
             for (float y = boxStart.y; y < boxEnd.y; y += Mathf.Clamp(boxEnd.y / 2, 5, 10))
             {
@@ -91,7 +93,7 @@ public class UnitSelection : MonoBehaviour
                 {
                     //look at ray in editor
 
-                    Debug.DrawRay(Camera.main.ScreenPointToRay(screenPos).origin,Camera.main.ScreenPointToRay(screenPos).direction * hit.distance, Color.yellow,
+                    Debug.DrawRay(Camera.main.ScreenPointToRay(screenPos).origin, Camera.main.ScreenPointToRay(screenPos).direction * hit.distance, Color.yellow,
                         10);
 
                     Collider collider = hit.collider;

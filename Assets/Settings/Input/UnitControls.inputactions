@@ -1,0 +1,54 @@
+{
+    "name": "UnitControls",
+    "maps": [
+        {
+            "name": "Unit",
+            "id": "e2ef9c1c-96ee-445b-ab8a-a82cf10029bc",
+            "actions": [
+                {
+                    "name": "Select",
+                    "type": "Button",
+                    "id": "20aa36f2-1875-43db-9506-0618d20cd050",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Travel",
+                    "type": "Button",
+                    "id": "b372c5cf-21fe-41ef-a3ac-6afac21dd247",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "33e54be1-da03-4e1d-a508-c0b74d45ede0",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "794a1932-264d-4601-987a-cbc306036a17",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Travel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
