@@ -60,37 +60,49 @@ public class UnitSelection : MonoBehaviour
     {
         if (context.started)
         {
+            //do some raycasts to determine what, if anything, the selected units should be moving towards
+            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+            float dist = 0.0f;
+            RaycastHit hit;
+            bool planet = false;
+            bool floor = false;
+            CelestialBody targetCB = null;
+            Vector3 position = Vector3.zero;
+
+
+            //check if we hit a planet (other than the sun)
+            if (Physics.Raycast(ray, out hit, float.MaxValue, planetLayer))
+            {
+                Collider col = hit.collider;
+                Transform trans = col.transform;
+                CelestialBody thisCB = trans.GetComponent<CelestialBody>();
+                CelestialBody parentCB = trans.parent.GetComponent<CelestialBody>();
+                if (thisCB != null && thisCB != sun)
+                {
+                    targetCB = thisCB;
+                    planet = true;
+                }
+                else if (parentCB != null && parentCB != sun)
+                {
+                    targetCB = parentCB;
+                    planet = true;
+                }
+            }
+            // If the camera is pointing somewhere on the floor
+            else if (plane.Raycast(ray, out dist))
+            {
+                position = ray.GetPoint(dist);
+                position.y = 0;
+                floor = true;
+            }
+
+            //iterate over the selected units and updated their targets
             foreach (GameObject selected in selectedUnits)
             {
                 ShipUnit unit = selected.GetComponent<ShipUnit>();
 
-                Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-                float dist = 0.0f;
-                RaycastHit hit;
-
-                //check if we hit a planet (other than the sun)
-                if(Physics.Raycast(ray, out hit, float.MaxValue, planetLayer))
-                {
-                    Collider col = hit.collider;
-                    Transform trans = col.transform;
-                    CelestialBody thisCB = trans.GetComponent<CelestialBody>();
-                    CelestialBody parentCB = trans.parent.GetComponent<CelestialBody>();
-                    if (thisCB != sun)
-                    {
-                        unit.SetFollowTarget(thisCB);
-                    }
-                    else if (parentCB != sun)
-                    {
-                        unit.SetFollowTarget(parentCB);
-                    }
-                }
-                // If the camera is pointing somewhere on the floor
-                else if (plane.Raycast(ray, out dist))
-                {
-                    Vector3 position = ray.GetPoint(dist);
-                    position.y = 0;
-                    unit.SetSeekTarget(position);
-                }
+                if(planet) unit.SetFollowTarget(targetCB);
+                else if (floor) unit.SetSeekTarget(position);
             }
         }
     }
