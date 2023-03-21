@@ -16,8 +16,8 @@ MonoBehaviour:
   avoidMask:
     serializedVersion: 2
     m_Bits: 192
-  unitRadius: 12
-  acceptableSeekRadius: 30
+  unitRadius: 40.09
+  acceptableSeekRadius: 20
   aiUpdateDelay: 0.05
   maxSpeed: 20
   fullRotationTime: 2.5

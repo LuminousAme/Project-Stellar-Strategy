@@ -83,7 +83,7 @@ public class Unit : MonoBehaviour
     private void Detect()
     {
         //use the layermask and a sphere cast to determine all of the objects that should currently be avoided
-        Collider[] objectsToAvoid = Physics.OverlapSphere(transform.position, unitData.avoidanceRadius, unitData.avoidMask);
+        objectsToAvoid = Physics.OverlapSphere(transform.position, unitData.avoidanceRadius, unitData.avoidMask);
     }
 
     private void AvoidanceSteering()
@@ -106,7 +106,7 @@ public class Unit : MonoBehaviour
             //calculate the weight based on the distance
             float weight = distance <= unitData.unitRadius ? 1.0f : (unitData.avoidanceRadius - distance) / unitData.avoidanceRadius;
 
-            direction = direction.normalized;
+            direction = -direction.normalized;
 
             for(int j = 0; j < Directions.EigthDirections.Length; j++ )
             {
@@ -155,10 +155,9 @@ public class Unit : MonoBehaviour
 
     private void CombineSteering()
     {
-        //consider adding some condition to handle when the target point is right through an obstacle
         for(int i = 0; i < Directions.EigthDirections.Length; i++)
         {
-            moveValues[i] = Mathf.Clamp01(seekValues[i] - avoidValues[i]);
+            moveValues[i] = Mathf.Clamp01((seekValues[i] + avoidValues[i]));
         }
 
         Vector3 averageDirection = Vector3.zero;

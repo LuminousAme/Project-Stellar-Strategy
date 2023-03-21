@@ -54,7 +54,7 @@ public class Planet : MonoBehaviour
         fullSphere = new PlanetFullSphere(shapeGenerator, colorGenerator, sphereMeshFilter.sharedMesh, resolution);
 
         SphereCollider collider = GetComponent<SphereCollider>();
-        if (collider != null) collider.radius = shapeSettings.radius * 1.2f;
+        if (collider != null) collider.radius = shapeSettings.radius * 2.0f;
     }
 
     public void GeneratePlanet()
