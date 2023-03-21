@@ -16,6 +16,7 @@ public class ShipUnit : Unit
             transform.position = closestPoint.position;
             agent = gameObject.AddComponent<NavMeshAgent>();
             agent.speed = unitData.maxSpeed;
+            agent.radius = unitData.avoidanceRadius;
         }
     }
 
