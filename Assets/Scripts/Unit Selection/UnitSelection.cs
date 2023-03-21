@@ -6,6 +6,8 @@ public class UnitSelection : MonoBehaviour
 {
     public LayerMask unitLayer; // Layer mask for units
     public GameObject selectionBox; // Selection box UI element
+    [SerializeField]
+    private Faction playerFaction; //the player's faction, faction must match this to be a valid selection choice
 
     private Vector2 startPos; // Starting position of selection box
     private Vector2 currentPos; // curretn  position of selection box
@@ -129,19 +131,19 @@ public class UnitSelection : MonoBehaviour
                         10);
 
                     Collider collider = hit.collider;
-                    if (collider != null && collider.CompareTag("Unit"))
+                    Unit unit = collider.gameObject.GetComponent<Unit>();
+                    if (collider != null && collider.CompareTag("Unit") && unit != null && unit.GetFaction().SameFaction(playerFaction))
                     {
                         selectedUnits.Add(collider.gameObject);
-                        SelectUnit(collider.gameObject);
+                        SelectUnit(unit);
                     }
                 }
             }
         }
     }
 
-    private void SelectUnit(GameObject GO)
+    private void SelectUnit(Unit unit)
     {
-        Unit unit = GO.GetComponent<Unit>();
         unit.Select();
     }
 

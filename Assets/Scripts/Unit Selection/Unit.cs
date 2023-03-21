@@ -9,6 +9,11 @@ public class Unit : MonoBehaviour
     [SerializeField] protected Faction faction;
     [SerializeField] private Image cirlce;
 
+    protected virtual void Start()
+    {
+        Deleselect();
+    }
+
     public void Select()
     {
         cirlce.color = faction.selectedColor;
@@ -18,4 +23,6 @@ public class Unit : MonoBehaviour
     {
         cirlce.color = faction.passiveColor;
     }
+
+    public Faction GetFaction() => faction;
 }

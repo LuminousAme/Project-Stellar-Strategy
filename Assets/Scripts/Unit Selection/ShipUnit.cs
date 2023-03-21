@@ -20,6 +20,11 @@ public class ShipUnit : Unit
         }
     }
 
+    protected override void Start()
+    {
+        base.Start();
+    }
+
     private void Update()
     {
         if(followTarget != null)
