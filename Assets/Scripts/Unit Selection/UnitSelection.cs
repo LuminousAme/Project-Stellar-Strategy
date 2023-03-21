@@ -50,34 +50,50 @@ public class UnitSelection : MonoBehaviour
         }
 
 
-    }
-
-    void FixedUpdate()
-    {
         //right click to move 
         if (Input.GetMouseButtonDown(1))
         {
+
+            //foreach (GameObject boid in selectedUnits)
+            //{
+            //    Unit ship = boid.GetComponent<Unit>();
+            //    Rigidbody body = ship.GetComponent<Rigidbody>();
+            //    body.velocity = new Vector3(0,0,0);
+            //}
+
+
             foreach (GameObject boid in selectedUnits)
             {
                 Unit ship = boid.GetComponent<Unit>();
                 Rigidbody body = ship.GetComponent<Rigidbody>();
+                // body.
+                Debug.Log(boid);
+                body.AddForce(ship.Align() * seekingWeight);
 
+                //body.AddForce(ship.Seek(Input.mousePosition) * seekingWeight);
 
-                body.AddForce(ship.Cohere() * seekingWeight);
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
 
-
-                body.AddForce(ship.Seek(Input.mousePosition) * seekingWeight);
-                //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                //RaycastHit hit;
-
-                //// If the camera is pointing somewhere on the floor
-                //if (Physics.Raycast(ray, out hit))
-                //{
-                //    body.AddForce(ship.Seek(hit.point) * seekingWeight);
-                //}
+                // If the camera is pointing somewhere on the floor
+                if (Physics.Raycast(ray, out hit))
+                {
+                    body.AddForce(ship.Seek(hit.point) * seekingWeight);
+                }
             }
 
+
+
         }
+
+
+
+
+    }
+
+    void FixedUpdate()
+    {
+
 
     }
 
