@@ -237,8 +237,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1000
-  m_Range: 10000
+  m_Intensity: 10000
+  m_Range: 100000
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -303,7 +303,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &844055326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,9 +329,13 @@ MonoBehaviour:
   minOrbitTime: 60
   maxOrbitTime: 300
   shapeSettings:
-  - {fileID: 11400000, guid: 8dfb06aa43c0ffb4dacc2d74c59f12a1, type: 2}
+  - {fileID: 11400000, guid: b39c8cfb0395d8547bc2379589b33540, type: 2}
+  - {fileID: 11400000, guid: e3793e6b106a9a7449d58e24b2eb4d09, type: 2}
+  - {fileID: 11400000, guid: 76bb9e7d40e285a43b234e325bc21016, type: 2}
   colorSettings:
-  - {fileID: 11400000, guid: b781fe5523ed5664891ec63e23d54a8e, type: 2}
+  - {fileID: 11400000, guid: 9165099a0768edc41b8e09300bf59733, type: 2}
+  - {fileID: 11400000, guid: 9ace5223eb22870449d9b83168af03c5, type: 2}
+  - {fileID: 11400000, guid: ba3c78ab2a9025244857f080552e88c5, type: 2}
   atmosphereSettings:
   - gradient:
       serializedVersion: 2
@@ -364,6 +368,68 @@ MonoBehaviour:
       m_NumAlphaKeys: 2
     thickness: 0.05
     power: 6
+  - gradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 0.8890566, b: 0.7688679, a: 1}
+      key1: {r: 0.514151, g: 0.90283006, b: 1, a: 1}
+      key2: {r: 0.8254717, g: 0.963, b: 1, a: 0}
+      key3: {r: 0, g: 0.77262485, b: 0.98039216, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 20624
+      ctime2: 65535
+      ctime3: 65535
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 3
+      m_NumAlphaKeys: 2
+    thickness: 0.0287
+    power: 7.3
+  - gradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 0.9811321, g: 0.56898886, b: 0.0046279924, a: 1}
+      key2: {r: 0.85490197, g: 0.46666667, b: 0.76499933, a: 0}
+      key3: {r: 0.7773249, g: 0.40392157, b: 0.8, a: 0}
+      key4: {r: 0.7773249, g: 0.40392157, b: 0.8, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 12336
+      ctime2: 45296
+      ctime3: 65535
+      ctime4: 58211
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 4
+      m_NumAlphaKeys: 2
+    thickness: 0.0175
+    power: 5
 --- !u!4 &844055327
 Transform:
   m_ObjectHideFlags: 0
@@ -395,7 +461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &845808737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -506,14 +572,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.55415374, y: -0, z: -0, w: 0.8324144}
+  m_LocalRotation: {x: 0.4670327, y: -0, z: -0, w: 0.8842401}
   m_LocalPosition: {x: 0, y: 72.01, z: -48.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 67.305, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 55.684, y: 0, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5440,7 +5506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff5780f2edbf62c4da60f670446fd562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seed: 214
+  seed: 338
   nebulaGenerator: {fileID: 1680789637}
   planetGenerator: {fileID: 844055326}
   starGenerator: {fileID: 983011186}

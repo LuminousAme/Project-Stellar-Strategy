@@ -148,10 +148,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoUpdate: 1
   resolution: 64
-  shapeSettings: {fileID: 11400000, guid: 8dfb06aa43c0ffb4dacc2d74c59f12a1, type: 2}
+  shapeSettings: {fileID: 11400000, guid: b387334152ee70c43b22d7521ee090fe, type: 2}
   shapeSettingsFoldout: 1
   colorSettingsFoldout: 1
-  colorSettings: {fileID: 11400000, guid: b781fe5523ed5664891ec63e23d54a8e, type: 2}
+  colorSettings: {fileID: 11400000, guid: 529631aeb92be5b4aa2f57393ef36132, type: 2}
   sphereMeshFilter: {fileID: 1711201007938990571}
 --- !u!1 &1711201009635329051
 GameObject:
