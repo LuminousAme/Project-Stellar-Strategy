@@ -12,9 +12,6 @@ public class UnitSelection : MonoBehaviour
 
     public List<GameObject> selectedUnits = new List<GameObject>(); // List of selected units
 
-    //replace this with a better way of indentifiying selected units soon
-    public Material highlightMaterial; // Material for highlighting selected units
-
     [SerializeField]
     private CelestialBody sun;
 
@@ -114,7 +111,7 @@ public class UnitSelection : MonoBehaviour
         Vector2 boxEnd = Vector2.Max(startPos, currentPos);
 
         // Cast a ray from each corner of the selection box to get all units within the box
-        selectedUnits.Clear();
+        DeselectUnits();
         for (float x = boxStart.x; x < boxEnd.x; x += Mathf.Clamp(boxEnd.x / 2, 5, 10))
         {
             for (float y = boxStart.y; y < boxEnd.y; y += Mathf.Clamp(boxEnd.y / 2, 5, 10))
@@ -135,22 +132,27 @@ public class UnitSelection : MonoBehaviour
                     if (collider != null && collider.CompareTag("Unit"))
                     {
                         selectedUnits.Add(collider.gameObject);
-                        HighlightUnit(collider.gameObject);
+                        SelectUnit(collider.gameObject);
                     }
                 }
             }
         }
     }
 
-    private void HighlightUnit(GameObject unit)
+    private void SelectUnit(GameObject GO)
     {
-        // Add highlight material to unit's renderer
-        Renderer renderer = unit.GetComponent<Renderer>();
-        Material[] materials = renderer.materials;
-        Material[] newMaterials = new Material[materials.Length + 1];
-        materials.CopyTo(newMaterials, 0);
-        newMaterials[materials.Length] = highlightMaterial;
-        renderer.materials = newMaterials;
+        Unit unit = GO.GetComponent<Unit>();
+        unit.Select();
+    }
+
+    private void DeselectUnits()
+    {
+        for(int i = 0; i < selectedUnits.Count; i++)
+        {
+            Unit unit = selectedUnits[i].GetComponent<Unit>();
+            unit.Deleselect();
+        }
+        selectedUnits.Clear();
     }
 
 }
