@@ -8,8 +8,8 @@ public class Unit : MonoBehaviour
     private float cohesionRadius;
     private float alignRadius;
 
-    public float maxSpeed = 10;
-    public float maxForce = 20;
+    public float maxSpeed = 60;
+    public float maxForce = 80;
 
     //public GameObject unitSelect;
     [SerializeField]
@@ -20,8 +20,8 @@ public class Unit : MonoBehaviour
     void Start()
     {
         unitSelector = Object.FindObjectOfType<UnitSelection>();
-       // maxSpeed = 10;
-       // maxForce = 20;
+        maxSpeed = 60;
+        maxForce = 80;
 
 }
 
@@ -40,6 +40,7 @@ public class Unit : MonoBehaviour
 
     }
 
+    //alignment behaviour: https://gamedevelopment.tutsplus.com/tutorials/3-simple-rules-of-flocking-behaviors-alignment-cohesion-and-separation--gamedev-3444
     public Vector3 Align()
     {
         Vector3 totalHeading = Vector3.zero;

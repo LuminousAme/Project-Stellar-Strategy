@@ -54,19 +54,19 @@ public class UnitSelection : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
 
-            //foreach (GameObject boid in selectedUnits)
-            //{
-            //    Unit ship = boid.GetComponent<Unit>();
-            //    Rigidbody body = ship.GetComponent<Rigidbody>();
-            //    body.velocity = new Vector3(0,0,0);
-            //}
+            foreach (GameObject boid in selectedUnits)
+            {
+                Unit ship = boid.GetComponent<Unit>();
+                Rigidbody body = ship.GetComponent<Rigidbody>();
+                body.velocity = Vector3.zero;
+            }
 
 
             foreach (GameObject boid in selectedUnits)
             {
                 Unit ship = boid.GetComponent<Unit>();
                 Rigidbody body = ship.GetComponent<Rigidbody>();
-                // body.
+
                 Debug.Log(boid);
                 body.AddForce(ship.Align() * seekingWeight);
 
