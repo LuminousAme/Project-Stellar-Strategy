@@ -9,11 +9,9 @@ public class UnitSelection : MonoBehaviour
     private Vector2 startPos; // Starting position of selection box
     private Vector2 currentPos; // curretn  position of selection box
 
-    [Tooltip("The factor by which seeking will be scaled. Higher values emphasize this behavior relative to the others.")]
-    [SerializeField] private float seekingWeight = 1.0f;
-
     public List<GameObject> selectedUnits = new List<GameObject>(); // List of selected units
 
+    //replace this with a better way of indentifiying selected units soon
     public Material highlightMaterial; // Material for highlighting selected units
 
     private void Start()
@@ -49,28 +47,12 @@ public class UnitSelection : MonoBehaviour
             SelectUnits();
         }
 
-
         //right click to move 
         if (Input.GetMouseButtonDown(1))
         {
-
-            //foreach (GameObject boid in selectedUnits)
-            //{
-            //    Unit ship = boid.GetComponent<Unit>();
-            //    Rigidbody body = ship.GetComponent<Rigidbody>();
-            //    body.velocity = new Vector3(0,0,0);
-            //}
-
-
-            foreach (GameObject boid in selectedUnits)
+            foreach (GameObject selected in selectedUnits)
             {
-                Unit ship = boid.GetComponent<Unit>();
-                Rigidbody body = ship.GetComponent<Rigidbody>();
-                // body.
-                Debug.Log(boid);
-                body.AddForce(ship.Align() * seekingWeight);
-
-                //body.AddForce(ship.Seek(Input.mousePosition) * seekingWeight);
+                Unit unit = selected.GetComponent<Unit>();
 
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
@@ -78,26 +60,13 @@ public class UnitSelection : MonoBehaviour
                 // If the camera is pointing somewhere on the floor
                 if (Physics.Raycast(ray, out hit))
                 {
-                    body.AddForce(ship.Seek(hit.point) * seekingWeight);
+                    Vector3 position = hit.point;
+                    position.y = 0;
+                    unit.SetSeekTarget(position);
                 }
             }
-
-
-
         }
-
-
-
-
     }
-
-    void FixedUpdate()
-    {
-
-
-    }
-
-
 
     private void SelectUnits()
     {
@@ -128,7 +97,6 @@ public class UnitSelection : MonoBehaviour
                     {
                         selectedUnits.Add(collider.gameObject);
                         HighlightUnit(collider.gameObject);
-                        //Debug.Log("Selected: " + collider.gameObject.name);
                     }
                 }
             }

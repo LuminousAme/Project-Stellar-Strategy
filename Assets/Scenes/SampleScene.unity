@@ -390,7 +390,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   selectionBox: {fileID: 1566966172}
-  seekingWeight: 1
   selectedUnits: []
   highlightMaterial: {fileID: 2100000, guid: f8f4129613f4067449de579155432455, type: 2}
 --- !u!1 &465675627
@@ -504,8 +503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4957709727db9418d1be6d68dd5fb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 10
-  maxForce: 100
+  unitData: {fileID: 11400000, guid: ba8f7116506212f4f8115ddd5aeae99a, type: 2}
   unitSelector: {fileID: 0}
 --- !u!54 &465675633
 Rigidbody:
@@ -534,7 +532,7 @@ GameObject:
   - component: {fileID: 839070486}
   - component: {fileID: 839070488}
   - component: {fileID: 839070487}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sun Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -654,7 +652,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &844055326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -806,13 +804,13 @@ GameObject:
   m_Component:
   - component: {fileID: 845808738}
   - component: {fileID: 845808737}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sun
   m_TagString: Sun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &845808737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -924,7 +922,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.4670327, y: -0, z: -0, w: 0.8842401}
-  m_LocalPosition: {x: 0, y: 72.01, z: -48.77}
+  m_LocalPosition: {x: 0, y: 174, z: -103}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5901,7 +5899,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1137089394}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -100, z: -36.8}
+  m_LocalPosition: {x: 0, y: 4.3, z: -36.8}
   m_LocalScale: {x: 100, y: 1, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5916,7 +5914,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1137089394}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 10, y: 2.220446e-16, z: 10}
@@ -6032,8 +6030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4957709727db9418d1be6d68dd5fb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 10
-  maxForce: 100
+  unitData: {fileID: 11400000, guid: ba8f7116506212f4f8115ddd5aeae99a, type: 2}
   unitSelector: {fileID: 0}
 --- !u!54 &1144766031
 Rigidbody:
@@ -6114,7 +6111,7 @@ GameObject:
   - component: {fileID: 1351641716}
   - component: {fileID: 1351641715}
   - component: {fileID: 1351641714}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SunObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6386,8 +6383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4957709727db9418d1be6d68dd5fb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 10
-  maxForce: 100
+  unitData: {fileID: 11400000, guid: ba8f7116506212f4f8115ddd5aeae99a, type: 2}
   unitSelector: {fileID: 0}
 --- !u!54 &1619009939
 Rigidbody:

@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    [SerializeField] UnitData unitData;
 
-    private float cohesionRadius;
-    private float alignRadius;
+    private Collider[] objectsToAvoid;
+    private float[] avoidValues = new float[8];
 
-    public float maxSpeed = 10;
-    public float maxForce = 20;
+    private Vector3 targetPosition;
+    private float[] seekValues = new float[8];
+
+    private float[] moveValues = new float[8];
+    Vector3 moveDirection = Vector3.zero;
+
+    private float elapsedRotationTime = 0.0f;
 
     //public GameObject unitSelect;
     [SerializeField]
@@ -19,122 +25,187 @@ public class Unit : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        unitSelector = Object.FindObjectOfType<UnitSelection>();
-       // maxSpeed = 10;
-       // maxForce = 20;
+        unitSelector = FindObjectOfType<UnitSelection>();
 
+        //initialize the arrays of seeks and avoidance values
+        for(int i = 0; i < avoidValues.Length; i++)
+        {
+            avoidValues[i] = 0.0f;
+            seekValues[i] = 0.0f;
+            moveValues[i] = 0.0f;
+        }
+
+        targetPosition = transform.position;
+        moveDirection = Vector3.zero;
+
+        InvokeRepeating("Step", 0.0f, unitData.aiUpdateDelay);
 }
 
     private void Awake()
     {
         body = gameObject.GetComponent<Rigidbody>();
-        float radius = transform.localScale.x / 2;
-        alignRadius = radius * radius + 2;
-
     }
 
     // Update is called once per frame
     void Update()
     {
-     
+        //remove any y component influence
+        moveDirection.y = 0.0f;
 
+        //get the t 
+        float t = Mathf.Clamp01(elapsedRotationTime / unitData.fullRotationTime);
+
+        Vector3 position = transform.position;
+        position.y = 0.0f;
+        if(Vector3.Distance(position, targetPosition) > unitData.acceptableSeekRadius)
+        {
+            //get the speed based on that t
+            float speed = MathUtils.LerpClamped(0.0f, unitData.maxSpeed, t);
+            //move based on the speed
+            transform.position = transform.position + (moveDirection * speed * Time.deltaTime);
+        }
+
+        //calculate the angle
+        /*
+        float moveDirectionAngle = Vector3.SignedAngle(Vector3.forward, moveDirection, Vector3.up);
+        float oppositeAngle = moveDirectionAngle + 180.0f;
+
+        //rotate based on that angle
+        Vector3 eulers = transform.rotation.eulerAngles;
+        eulers.y = MathUtils.LerpClamped(oppositeAngle, moveDirectionAngle, t);
+        transform.rotation = Quaternion.Euler(eulers);
+        */
+
+        //update the elapsed time
+        if(elapsedRotationTime < unitData.fullRotationTime) elapsedRotationTime += Time.deltaTime;
     }
 
-    public Vector3 Align()
+    private void Detect()
     {
-        Vector3 totalHeading = Vector3.zero;
-        int numNeighbors = 0;
+        //use the layermask and a sphere cast to determine all of the objects that should currently be avoided
+        Collider[] objectsToAvoid = Physics.OverlapSphere(transform.position, unitData.avoidanceRadius, unitData.avoidMask);
+    }
 
-        // Loop through all boids in the world
-        foreach (GameObject vehicle in unitSelector.selectedUnits)
+    private void AvoidanceSteering()
+    {
+        //reset the values to zero
+        for (int i = 0; i < Directions.EigthDirections.Length; i++)
         {
-            Unit boid = vehicle.GetComponent<Unit>();
+            avoidValues[i] = 0.0f;
+        }
 
-            Vector3 separationVector = transform.position - boid.transform.position;
-            float distance = separationVector.magnitude;
+        if (objectsToAvoid == null) return;
 
-            // If it's a neighbor within our vicinity
-            if (distance > 0 && distance < alignRadius)
+        //iterate over all of the objects the unit is currently avoiding to determine what directions it should be avoiding
+        for (int i = 0; i < objectsToAvoid.Length; i++)
+        {
+            Vector3 direction = objectsToAvoid[i].ClosestPoint(transform.position) - transform.position;
+            direction.y = 0.0f; //ignore the y-axis
+            float distance = direction.magnitude;
+
+            //calculate the weight based on the distance
+            float weight = distance <= unitData.unitRadius ? 1.0f : (unitData.avoidanceRadius - distance) / unitData.avoidanceRadius;
+
+            direction = direction.normalized;
+
+            for(int j = 0; j < Directions.EigthDirections.Length; j++ )
             {
-                numNeighbors++;
-                totalHeading += boid.body.velocity.normalized;
+                float result = Vector2.Dot(direction, Directions.EigthDirections[j]);
+                float val = result * weight;
+
+                if(val > avoidValues[j])
+                {
+                    avoidValues[j] = val;
+                }
             }
         }
-
-        // That is, if this boid actually has neighbors to worry about
-        if (numNeighbors > 0)
-        {
-            // Average direction we need to head in
-            Vector3 averageHeading = (totalHeading / numNeighbors);
-            averageHeading.Normalize();
-
-            // Compute the steering force we need to apply
-            Vector3 alignmentForce = averageHeading * maxSpeed;
-
-            // Cap that steering force
-            if (alignmentForce.magnitude > maxForce)
-            {
-                alignmentForce.Normalize();
-                alignmentForce *= maxForce;
-            }
-
-            //make sure it doenst go up
-            alignmentForce.y = 0;
-
-            return alignmentForce;
-        }
-
-        return Vector3.zero;
     }
 
-    /*
-    public Vector3 Cohere()
+    private void SeekSteering()
     {
-        Vector3 totalPositions = Vector3.zero;
-        int numNeighbors = 0;
-
-        // Loop through all boids in the world
-        foreach (GameObject vehicle in unitSelector.selectedUnits)
+        //reset the values to zero
+        for (int i = 0; i < Directions.EigthDirections.Length; i++)
         {
-            Unit boid = vehicle.GetComponent<Unit>();
+            seekValues[i] = 0.0f;
+        }
 
-            Vector3 separationVector = transform.position - boid.transform.position;
-            float distance = separationVector.magnitude;
+        //remove the affect of the y component
+        Vector3 position = transform.position;
+        position.y = 0.0f;
+        targetPosition.y = 0.0f;
+        if (Vector3.Distance(position, targetPosition) < unitData.acceptableSeekRadius)
+        {
+            return;
+        }
 
-            // If it's a neighbor within our vicinity, add its position to cumulative
-            if (distance > 0 && distance < cohesionRadius)
+        //otherwise try to get the seek values
+        Vector3 directon = (targetPosition - position);
+        directon.y = 0;
+        directon = directon.normalized;
+        for (int i = 0; i < Directions.EigthDirections.Length; i++)
+        {
+            float result = Vector3.Dot(directon, Directions.EigthDirections[i]);
+
+            if(result > seekValues[i])
             {
-                numNeighbors++;
-                totalPositions += boid.body.velocity.normalized;
+                seekValues[i] = result;
             }
         }
-
-        // If there are neighbors
-        if (numNeighbors > 0)
-        {
-            Vector3 averagePosition = (totalPositions / numNeighbors);
-            return Seek(averagePosition);
-        }
-
-        return Vector3.zero;
     }
-    */
 
-    public Vector3 Seek(Vector3 target)
+    private void CombineSteering()
     {
-        // Force to be applied to the boid
-        Vector3 steerForce = ((target - transform.position).normalized * maxSpeed) - body.velocity;
-
-        // Cap the force that can be applied
-        if (steerForce.magnitude > maxForce)
+        //consider adding some condition to handle when the target point is right through an obstacle
+        for(int i = 0; i < Directions.EigthDirections.Length; i++)
         {
-            steerForce = steerForce.normalized * maxForce;
+            moveValues[i] = Mathf.Clamp01(seekValues[i] - avoidValues[i]);
         }
 
-        return steerForce;
+        Vector3 averageDirection = Vector3.zero;
+        for(int i = 0; i < Directions.EigthDirections.Length; i++)
+        {
+            averageDirection += Directions.EigthDirections[i] * moveValues[i];
+        }
+
+        moveDirection = averageDirection.normalized;
     }
 
+    private void Step()
+    {
+        Detect();
+        AvoidanceSteering();
+        SeekSteering();
+        CombineSteering();
 
+        moveDirection.y = 0f;
+        moveDirection = moveDirection.normalized;
 
+        Vector3 forward = transform.forward;
+        forward.y = 0f;
 
+        float dot = Vector3.Dot(moveDirection, forward);
+        float t = MathUtils.ReMap(-1f, 1f, 0f, 1f, dot);
+        elapsedRotationTime = MathUtils.LerpClamped(0.0f, unitData.fullRotationTime, t);
+    }
+
+    public void SetSeekTarget(Vector3 targetPosition)
+    {
+        this.targetPosition = targetPosition;
+        Step();
+    }
+
+    public static class Directions
+    {
+        public static Vector3[] EigthDirections =
+        {
+            (Vector3.forward).normalized,
+            (Vector3.right + Vector3.forward).normalized,
+            (Vector3.right).normalized,
+            (Vector3.right + Vector3.back).normalized,
+            (Vector3.back).normalized,
+            (Vector3.left + Vector3.back).normalized,
+            (Vector3.left).normalized,
+            (Vector3.left + Vector3.forward).normalized
+        };
+    }
 }
