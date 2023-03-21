@@ -15,6 +15,12 @@ public class UnitSelection : MonoBehaviour
     //replace this with a better way of indentifiying selected units soon
     public Material highlightMaterial; // Material for highlighting selected units
 
+    [SerializeField]
+    private CelestialBody sun;
+
+    [SerializeField]
+    private LayerMask planetLayer;
+
     Plane plane = new Plane(Vector3.down, 0f);
 
     private void Start()
@@ -56,13 +62,30 @@ public class UnitSelection : MonoBehaviour
         {
             foreach (GameObject selected in selectedUnits)
             {
-                Unit unit = selected.GetComponent<Unit>();
+                ShipUnit unit = selected.GetComponent<ShipUnit>();
 
                 Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
                 float dist = 0.0f;
+                RaycastHit hit;
 
+                //check if we hit a planet (other than the sun)
+                if(Physics.Raycast(ray, out hit, float.MaxValue, planetLayer))
+                {
+                    Collider col = hit.collider;
+                    Transform trans = col.transform;
+                    CelestialBody thisCB = trans.GetComponent<CelestialBody>();
+                    CelestialBody parentCB = trans.parent.GetComponent<CelestialBody>();
+                    if (thisCB != sun)
+                    {
+                        unit.SetFollowTarget(thisCB);
+                    }
+                    else if (parentCB != sun)
+                    {
+                        unit.SetFollowTarget(parentCB);
+                    }
+                }
                 // If the camera is pointing somewhere on the floor
-                if (plane.Raycast(ray, out dist))
+                else if (plane.Raycast(ray, out dist))
                 {
                     Vector3 position = ray.GetPoint(dist);
                     position.y = 0;
