@@ -1,0 +1,178 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43333f3c363428444a2c9918f870fa44, type: 3}
+  m_Name: EarthLikeColor
+  m_EditorClassIdentifier: 
+  biomes:
+  - gradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    latitude: 1
+    overOcean: 1
+  - gradient:
+      serializedVersion: 2
+      key0: {r: 0, g: 0.36679745, b: 1, a: 1}
+      key1: {r: 0.92156863, g: 0.8980392, b: 0.7058824, a: 1}
+      key2: {r: 0.92221844, g: 0.89758617, b: 0.7075455, a: 1}
+      key3: {r: 0.14442337, g: 0.754717, b: 0, a: 1}
+      key4: {r: 0.4245283, g: 0.16645871, b: 0.106132075, a: 0}
+      key5: {r: 0.16981131, g: 0.041066494, b: 0.010412962, a: 0}
+      key6: {r: 1, g: 1, b: 1, a: 0}
+      key7: {r: 1, g: 1, b: 1, a: 0}
+      ctime0: 0
+      ctime1: 5012
+      ctime2: 9445
+      ctime3: 16577
+      ctime4: 26985
+      ctime5: 37972
+      ctime6: 53777
+      ctime7: 65535
+      atime0: 0
+      atime1: 65535
+      atime2: 65535
+      atime3: 65535
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 8
+      m_NumAlphaKeys: 2
+    latitude: 0.945
+    overOcean: 0
+  - gradient:
+      serializedVersion: 2
+      key0: {r: 0, g: 0.36679745, b: 1, a: 1}
+      key1: {r: 0.92156863, g: 0.8980392, b: 0.7058824, a: 1}
+      key2: {r: 0.92221844, g: 0.89758617, b: 0.7075455, a: 1}
+      key3: {r: 0.14442337, g: 0.754717, b: 0, a: 1}
+      key4: {r: 0.4245283, g: 0.16645871, b: 0.106132075, a: 0}
+      key5: {r: 0.16981131, g: 0.041066494, b: 0.010412962, a: 0}
+      key6: {r: 1, g: 1, b: 1, a: 0}
+      key7: {r: 1, g: 1, b: 1, a: 0}
+      ctime0: 0
+      ctime1: 5012
+      ctime2: 9445
+      ctime3: 16577
+      ctime4: 26985
+      ctime5: 37972
+      ctime6: 53777
+      ctime7: 65535
+      atime0: 0
+      atime1: 65535
+      atime2: 65535
+      atime3: 65535
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 8
+      m_NumAlphaKeys: 2
+    latitude: 0.399
+    overOcean: 0
+  - gradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    latitude: 0.15
+    overOcean: 1
+  oceanGradient:
+    serializedVersion: 2
+    key0: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 1, g: 1, b: 1, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 65535
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  shader: {fileID: -6465566751694194690, guid: 33ca752d4da1c5749910ac3a7ecfdf95, type: 3}
+  latitudeNoiseSettings:
+    filterType: 0
+    strenght: 0.12
+    layers: 3
+    baseRoughness: 1
+    roughness: 3.87
+    persistence: 0.5
+    centre: {x: 0, y: 0, z: 0}
+    minimum: 0

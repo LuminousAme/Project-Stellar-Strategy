@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ad65da87f88054795d34c1e66fc717, type: 3}
   m_Name: TestPlanetShape
   m_EditorClassIdentifier: 
-  radius: 5
+  radius: 4
   noiseLayers:
   - enabled: 1
     useFirstLayerAsMask: 0
     noiseSettings:
       filterType: 0
-      strenght: 0.08
+      strenght: -0.03
       layers: 4
       baseRoughness: 1.2
       roughness: 1.97
@@ -39,11 +39,11 @@ MonoBehaviour:
   - enabled: 1
     useFirstLayerAsMask: 1
     noiseSettings:
-      filterType: 1
+      filterType: 0
       strenght: 1.1
       layers: 4
       baseRoughness: 1.09
       roughness: 2.13
       persistence: 0.5
-      centre: {x: 5.72, y: 0, z: 0}
+      centre: {x: -3.46, y: 2.11, z: 15.31}
       minimum: 0
