@@ -1,103 +1,110 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class UnitSelection : MonoBehaviour
 {
     public LayerMask unitLayer; // Layer mask for units
     public GameObject selectionBox; // Selection box UI element
+    [SerializeField]
+    private Faction playerFaction; //the player's faction, faction must match this to be a valid selection choice
 
     private Vector2 startPos; // Starting position of selection box
     private Vector2 currentPos; // curretn  position of selection box
 
-    [Tooltip("The factor by which seeking will be scaled. Higher values emphasize this behavior relative to the others.")]
-    [SerializeField] private float seekingWeight = 1.0f;
-
     public List<GameObject> selectedUnits = new List<GameObject>(); // List of selected units
 
-    public Material highlightMaterial; // Material for highlighting selected units
+    [SerializeField]
+    private CelestialBody sun;
+
+    [SerializeField]
+    private LayerMask planetLayer;
+
+    Plane plane = new Plane(Vector3.down, 0f);
 
     private void Start()
     {
         selectionBox.SetActive(false);
     }
 
-
     private void Update()
     {
-        // Check for left mouse button down
-        if (Input.GetMouseButtonDown(0))
+        if(selectionBox.activeSelf)
         {
-            startPos = Input.mousePosition;
-            selectionBox.SetActive(true);
-        }
-
-        // Update selection box position and size
-        if (Input.GetMouseButton(0))
-        {
-            currentPos = Input.mousePosition;
+            currentPos = Mouse.current.position.ReadValue();
             Vector2 boxStart = Vector2.Min(startPos, currentPos);
             Vector2 boxEnd = Vector2.Max(startPos, currentPos);
             Vector2 boxSize = boxEnd - boxStart;
             selectionBox.transform.position = boxStart + boxSize / 2;
             selectionBox.GetComponent<RectTransform>().sizeDelta = boxSize;
         }
+    }
 
-        // Check for left mouse button up
-        if (Input.GetMouseButtonUp(0))
+    public void ProcessLeftClick(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            startPos = Mouse.current.position.ReadValue();
+            selectionBox.SetActive(true);
+        }
+
+        if (context.canceled)
         {
             selectionBox.SetActive(false);
             SelectUnits();
         }
+    }
 
-
-        //right click to move 
-        if (Input.GetMouseButtonDown(1))
+    public void ProcessRightClick(InputAction.CallbackContext context)
+    {
+        if (context.started)
         {
+            //do some raycasts to determine what, if anything, the selected units should be moving towards
+            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+            float dist = 0.0f;
+            RaycastHit hit;
+            bool planet = false;
+            bool floor = false;
+            CelestialBody targetCB = null;
+            Vector3 position = Vector3.zero;
 
-            foreach (GameObject boid in selectedUnits)
+
+            //check if we hit a planet (other than the sun)
+            if (Physics.Raycast(ray, out hit, float.MaxValue, planetLayer))
             {
-                Unit ship = boid.GetComponent<Unit>();
-                Rigidbody body = ship.GetComponent<Rigidbody>();
-                body.velocity = Vector3.zero;
-            }
-
-
-            foreach (GameObject boid in selectedUnits)
-            {
-                Unit ship = boid.GetComponent<Unit>();
-                Rigidbody body = ship.GetComponent<Rigidbody>();
-
-                Debug.Log(boid);
-                body.AddForce(ship.Align() * seekingWeight);
-
-                //body.AddForce(ship.Seek(Input.mousePosition) * seekingWeight);
-
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-                // If the camera is pointing somewhere on the floor
-                if (Physics.Raycast(ray, out hit))
+                Collider col = hit.collider;
+                Transform trans = col.transform;
+                CelestialBody thisCB = trans.GetComponent<CelestialBody>();
+                CelestialBody parentCB = trans.parent.GetComponent<CelestialBody>();
+                if (thisCB != null && thisCB != sun)
                 {
-                    body.AddForce(ship.Seek(hit.point) * seekingWeight);
+                    targetCB = thisCB;
+                    planet = true;
+                }
+                else if (parentCB != null && parentCB != sun)
+                {
+                    targetCB = parentCB;
+                    planet = true;
                 }
             }
+            // If the camera is pointing somewhere on the floor
+            else if (plane.Raycast(ray, out dist))
+            {
+                position = ray.GetPoint(dist);
+                position.y = 0;
+                floor = true;
+            }
 
+            //iterate over the selected units and updated their targets
+            foreach (GameObject selected in selectedUnits)
+            {
+                ShipUnit unit = selected.GetComponent<ShipUnit>();
 
-
+                if(planet) unit.SetFollowTarget(targetCB);
+                else if (floor) unit.SetSeekTarget(position);
+            }
         }
-
-
-
-
     }
-
-    void FixedUpdate()
-    {
-
-
-    }
-
-
 
     private void SelectUnits()
     {
@@ -106,8 +113,8 @@ public class UnitSelection : MonoBehaviour
         Vector2 boxEnd = Vector2.Max(startPos, currentPos);
 
         // Cast a ray from each corner of the selection box to get all units within the box
-        selectedUnits.Clear();
-        for (float x = boxStart.x; x < boxEnd.x; x += Mathf.Clamp(boxEnd.x/2, 5,10))
+        DeselectUnits();
+        for (float x = boxStart.x; x < boxEnd.x; x += Mathf.Clamp(boxEnd.x / 2, 5, 10))
         {
             for (float y = boxStart.y; y < boxEnd.y; y += Mathf.Clamp(boxEnd.y / 2, 5, 10))
             {
@@ -120,30 +127,34 @@ public class UnitSelection : MonoBehaviour
                 {
                     //look at ray in editor
 
-                    Debug.DrawRay(Camera.main.ScreenPointToRay(screenPos).origin,Camera.main.ScreenPointToRay(screenPos).direction * hit.distance, Color.yellow,
+                    Debug.DrawRay(Camera.main.ScreenPointToRay(screenPos).origin, Camera.main.ScreenPointToRay(screenPos).direction * hit.distance, Color.yellow,
                         10);
 
                     Collider collider = hit.collider;
-                    if (collider != null && collider.CompareTag("Unit"))
+                    Unit unit = collider.gameObject.GetComponent<Unit>();
+                    if (collider != null && collider.CompareTag("Unit") && unit != null && unit.GetFaction().SameFaction(playerFaction))
                     {
                         selectedUnits.Add(collider.gameObject);
-                        HighlightUnit(collider.gameObject);
-                        //Debug.Log("Selected: " + collider.gameObject.name);
+                        SelectUnit(unit);
                     }
                 }
             }
         }
     }
 
-    private void HighlightUnit(GameObject unit)
+    private void SelectUnit(Unit unit)
     {
-        // Add highlight material to unit's renderer
-        Renderer renderer = unit.GetComponent<Renderer>();
-        Material[] materials = renderer.materials;
-        Material[] newMaterials = new Material[materials.Length + 1];
-        materials.CopyTo(newMaterials, 0);
-        newMaterials[materials.Length] = highlightMaterial;
-        renderer.materials = newMaterials;
+        unit.Select();
+    }
+
+    private void DeselectUnits()
+    {
+        for(int i = 0; i < selectedUnits.Count; i++)
+        {
+            Unit unit = selectedUnits[i].GetComponent<Unit>();
+            unit.Deleselect();
+        }
+        selectedUnits.Clear();
     }
 
 }
