@@ -40,69 +40,74 @@ public class UnitSelection : MonoBehaviour
         }
     }
 
-    public void ProcessLeftClick(InputAction.CallbackContext context)
+    public void SelectUnitAction(InputAction.CallbackContext context)
     {
-        if (context.started)
-        {
+		//to avoid annoying lag
+		if (context.started)
+		{
             startPos = Mouse.current.position.ReadValue();
+		}
+
+        if (context.performed)
+        {
             selectionBox.SetActive(true);
         }
 
-        if (context.canceled)
+		//need to check if the hold went through
+        if (context.canceled && selectionBox.activeInHierarchy)
         {
             selectionBox.SetActive(false);
             SelectUnits();
         }
     }
 
-    public void ProcessRightClick(InputAction.CallbackContext context)
+    public void SelectTarget(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (!context.performed)	return;
+
+        //do some raycasts to determine what, if anything, the selected units should be moving towards
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        float dist = 0.0f;
+        RaycastHit hit;
+        bool planet = false;
+        bool floor = false;
+        CelestialBody targetCB = null;
+        Vector3 position = Vector3.zero;
+
+
+        //check if we hit a planet (other than the sun)
+        if (Physics.Raycast(ray, out hit, float.MaxValue, planetLayer))
         {
-            //do some raycasts to determine what, if anything, the selected units should be moving towards
-            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-            float dist = 0.0f;
-            RaycastHit hit;
-            bool planet = false;
-            bool floor = false;
-            CelestialBody targetCB = null;
-            Vector3 position = Vector3.zero;
-
-
-            //check if we hit a planet (other than the sun)
-            if (Physics.Raycast(ray, out hit, float.MaxValue, planetLayer))
+            Collider col = hit.collider;
+            Transform trans = col.transform;
+            CelestialBody thisCB = trans.GetComponent<CelestialBody>();
+            CelestialBody parentCB = trans.parent?.GetComponent<CelestialBody>();
+            if (thisCB != null && thisCB != sun)
             {
-                Collider col = hit.collider;
-                Transform trans = col.transform;
-                CelestialBody thisCB = trans.GetComponent<CelestialBody>();
-                CelestialBody parentCB = trans.parent.GetComponent<CelestialBody>();
-                if (thisCB != null && thisCB != sun)
-                {
-                    targetCB = thisCB;
-                    planet = true;
-                }
-                else if (parentCB != null && parentCB != sun)
-                {
-                    targetCB = parentCB;
-                    planet = true;
-                }
+                targetCB = thisCB;
+                planet = true;
             }
-            // If the camera is pointing somewhere on the floor
-            else if (plane.Raycast(ray, out dist))
+            else if (parentCB != null && parentCB != sun)
             {
-                position = ray.GetPoint(dist);
-                position.y = 0;
-                floor = true;
+                targetCB = parentCB;
+                planet = true;
             }
+        }
+        // If the camera is pointing somewhere on the floor
+        else if (plane.Raycast(ray, out dist))
+        {
+            position = ray.GetPoint(dist);
+            position.y = 0;
+            floor = true;
+        }
 
-            //iterate over the selected units and updated their targets
-            foreach (GameObject selected in selectedUnits)
-            {
-                ShipUnit unit = selected.GetComponent<ShipUnit>();
+        //iterate over the selected units and updated their targets
+        foreach (GameObject selected in selectedUnits)
+        {
+            ShipUnit unit = selected.GetComponent<ShipUnit>();
 
-                if(planet) unit.SetFollowTarget(targetCB);
-                else if (floor) unit.SetSeekTarget(position);
-            }
+            if(planet) unit.SetFollowTarget(targetCB);
+            else if (floor) unit.SetSeekTarget(position);
         }
     }
 
