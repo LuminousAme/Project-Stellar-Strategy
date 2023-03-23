@@ -24,7 +24,7 @@ public partial class @UnitControls : IInputActionCollection2, IDisposable
     ""name"": ""UnitControls"",
     ""maps"": [
         {
-            ""name"": ""Unit"",
+            ""name"": ""Movement"",
             ""id"": ""e2ef9c1c-96ee-445b-ab8a-a82cf10029bc"",
             ""actions"": [
                 {
@@ -33,8 +33,8 @@ public partial class @UnitControls : IInputActionCollection2, IDisposable
                     ""id"": ""20aa36f2-1875-43db-9506-0618d20cd050"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""interactions"": ""Hold"",
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Travel"",
@@ -42,8 +42,35 @@ public partial class @UnitControls : IInputActionCollection2, IDisposable
                     ""id"": ""b372c5cf-21fe-41ef-a3ac-6afac21dd247"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""LockOn"",
+                    ""type"": ""Button"",
+                    ""id"": ""8b1c5fc2-1a99-469e-9cc6-1272eacc8398"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""MultiTap"",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Button"",
+                    ""id"": ""feabea98-1d1b-48ba-b627-a70a397e1aea"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Movement"",
+                    ""type"": ""Value"",
+                    ""id"": ""8304477d-c4da-4674-beed-e93f971dc01a"",
+                    ""expectedControlType"": ""Vector3"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -61,23 +88,125 @@ public partial class @UnitControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""794a1932-264d-4601-987a-cbc306036a17"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Travel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a841af90-167b-4472-adef-416bdaffc451"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LockOn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""444c6b09-abe7-4ac1-aa1e-1126f8b2f587"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""3D Vector"",
+                    ""id"": ""89a76861-d505-4074-80b8-b355309c6bc0"",
+                    ""path"": ""3DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""24b9479f-68d7-4b53-b8b6-cc50c4e0a172"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""22ccfe79-29cd-4fb3-aff3-ebb65de02eb7"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""73e3bb20-dc71-4e51-8d27-cc6a65d88ca3"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""f801183d-0213-43fa-aa0b-a8e57f916f26"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""forward"",
+                    ""id"": ""ee05040a-d561-4c08-816c-b3b9576acc8e"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""backward"",
+                    ""id"": ""da619ff8-0089-40bc-aa7d-3d32796462ca"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
     ],
     ""controlSchemes"": []
 }");
-        // Unit
-        m_Unit = asset.FindActionMap("Unit", throwIfNotFound: true);
-        m_Unit_Select = m_Unit.FindAction("Select", throwIfNotFound: true);
-        m_Unit_Travel = m_Unit.FindAction("Travel", throwIfNotFound: true);
+        // Movement
+        m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
+        m_Movement_Select = m_Movement.FindAction("Select", throwIfNotFound: true);
+        m_Movement_Travel = m_Movement.FindAction("Travel", throwIfNotFound: true);
+        m_Movement_LockOn = m_Movement.FindAction("LockOn", throwIfNotFound: true);
+        m_Movement_Rotate = m_Movement.FindAction("Rotate", throwIfNotFound: true);
+        m_Movement_Movement = m_Movement.FindAction("Movement", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -134,34 +263,49 @@ public partial class @UnitControls : IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Unit
-    private readonly InputActionMap m_Unit;
-    private IUnitActions m_UnitActionsCallbackInterface;
-    private readonly InputAction m_Unit_Select;
-    private readonly InputAction m_Unit_Travel;
-    public struct UnitActions
+    // Movement
+    private readonly InputActionMap m_Movement;
+    private IMovementActions m_MovementActionsCallbackInterface;
+    private readonly InputAction m_Movement_Select;
+    private readonly InputAction m_Movement_Travel;
+    private readonly InputAction m_Movement_LockOn;
+    private readonly InputAction m_Movement_Rotate;
+    private readonly InputAction m_Movement_Movement;
+    public struct MovementActions
     {
         private @UnitControls m_Wrapper;
-        public UnitActions(@UnitControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Select => m_Wrapper.m_Unit_Select;
-        public InputAction @Travel => m_Wrapper.m_Unit_Travel;
-        public InputActionMap Get() { return m_Wrapper.m_Unit; }
+        public MovementActions(@UnitControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Select => m_Wrapper.m_Movement_Select;
+        public InputAction @Travel => m_Wrapper.m_Movement_Travel;
+        public InputAction @LockOn => m_Wrapper.m_Movement_LockOn;
+        public InputAction @Rotate => m_Wrapper.m_Movement_Rotate;
+        public InputAction @Movement => m_Wrapper.m_Movement_Movement;
+        public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(UnitActions set) { return set.Get(); }
-        public void SetCallbacks(IUnitActions instance)
+        public static implicit operator InputActionMap(MovementActions set) { return set.Get(); }
+        public void SetCallbacks(IMovementActions instance)
         {
-            if (m_Wrapper.m_UnitActionsCallbackInterface != null)
+            if (m_Wrapper.m_MovementActionsCallbackInterface != null)
             {
-                @Select.started -= m_Wrapper.m_UnitActionsCallbackInterface.OnSelect;
-                @Select.performed -= m_Wrapper.m_UnitActionsCallbackInterface.OnSelect;
-                @Select.canceled -= m_Wrapper.m_UnitActionsCallbackInterface.OnSelect;
-                @Travel.started -= m_Wrapper.m_UnitActionsCallbackInterface.OnTravel;
-                @Travel.performed -= m_Wrapper.m_UnitActionsCallbackInterface.OnTravel;
-                @Travel.canceled -= m_Wrapper.m_UnitActionsCallbackInterface.OnTravel;
+                @Select.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnSelect;
+                @Select.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnSelect;
+                @Select.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnSelect;
+                @Travel.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnTravel;
+                @Travel.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnTravel;
+                @Travel.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnTravel;
+                @LockOn.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnLockOn;
+                @LockOn.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnLockOn;
+                @LockOn.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnLockOn;
+                @Rotate.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnRotate;
+                @Rotate.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnRotate;
+                @Rotate.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnRotate;
+                @Movement.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnMovement;
+                @Movement.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnMovement;
+                @Movement.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnMovement;
             }
-            m_Wrapper.m_UnitActionsCallbackInterface = instance;
+            m_Wrapper.m_MovementActionsCallbackInterface = instance;
             if (instance != null)
             {
                 @Select.started += instance.OnSelect;
@@ -170,13 +314,25 @@ public partial class @UnitControls : IInputActionCollection2, IDisposable
                 @Travel.started += instance.OnTravel;
                 @Travel.performed += instance.OnTravel;
                 @Travel.canceled += instance.OnTravel;
+                @LockOn.started += instance.OnLockOn;
+                @LockOn.performed += instance.OnLockOn;
+                @LockOn.canceled += instance.OnLockOn;
+                @Rotate.started += instance.OnRotate;
+                @Rotate.performed += instance.OnRotate;
+                @Rotate.canceled += instance.OnRotate;
+                @Movement.started += instance.OnMovement;
+                @Movement.performed += instance.OnMovement;
+                @Movement.canceled += instance.OnMovement;
             }
         }
     }
-    public UnitActions @Unit => new UnitActions(this);
-    public interface IUnitActions
+    public MovementActions @Movement => new MovementActions(this);
+    public interface IMovementActions
     {
         void OnSelect(InputAction.CallbackContext context);
         void OnTravel(InputAction.CallbackContext context);
+        void OnLockOn(InputAction.CallbackContext context);
+        void OnRotate(InputAction.CallbackContext context);
+        void OnMovement(InputAction.CallbackContext context);
     }
 }

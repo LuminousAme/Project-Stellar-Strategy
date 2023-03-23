@@ -11,6 +11,7 @@ public class CamController : MonoBehaviour
 	public float trackingRangeModifier = 1.5f;
 	public float maxDist = 1000f;
 	public LayerMask mask = 0;
+	public float maxOffsetModifier = 10f;
 
 
 	Transform following = null;
@@ -38,11 +39,16 @@ public class CamController : MonoBehaviour
 		RaycastHit hit;
 		if (Physics.Raycast(dir, out hit, maxDist, mask)) {
 			//check if planet (add conditions later)
-			SphereCollider sphere = hit.transform.GetComponent<SphereCollider>();
-			if (sphere) {
+			if (hit.transform.gameObject.layer == LayerMask.NameToLayer("CelestialBodies")) {
 				//travel to planet
-				minOffset = sphere.radius + 1f;
-				StartCoroutine(LockOn(hit.transform, sphere.radius * trackingRangeModifier));
+				minOffset = hit.transform.GetComponent<SphereCollider>().radius + 1f;
+				StartCoroutine(LockOn(hit.transform, minOffset * trackingRangeModifier));
+				return;
+			}
+			//check if unit
+			if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Units")) {
+				minOffset = hit.transform.GetComponent<BoxCollider>().size.magnitude * 0.5f + 1f;
+				StartCoroutine(LockOn(hit.transform, minOffset * trackingRangeModifier));
 				return;
 			}
 		}
@@ -67,12 +73,26 @@ public class CamController : MonoBehaviour
 	}
 
 	public void MoveCamera(InputAction.CallbackContext context) {
+		//thing is bering weird
+		/*
 		if (context.started) {
 			StartCoroutine(Move(context.action));
 		}
 		if (context.canceled) {
 			isMoving = false;
 		}
+		/*/
+		if (context.performed) {
+			//if reset
+			if (context.ReadValue<Vector3>() == Vector3.zero) {
+				isMoving = false;
+			}
+			//if moving
+			else if (!isMoving) {
+				StartCoroutine(Move(context.action));
+			}
+		}
+		//*/
 	}
 
 	static WaitForEndOfFrame eof = new WaitForEndOfFrame();
@@ -146,6 +166,12 @@ public class CamController : MonoBehaviour
 	IEnumerator Move(InputAction action) {
 		isMoving = true;
 		Vector3 euler = offsetRot.eulerAngles;
+
+		//try locking off if rotating
+		if (isRotating) {
+			following = null;
+		}
+
 		bool lockedOn = following;
 
 		while (isMoving) {
@@ -159,7 +185,7 @@ public class CamController : MonoBehaviour
 
 				euler.x = Mathf.Clamp(euler.x + change.z * 2f, -90f, 90f);
 				euler.y -= change.x * 2f;
-				offset = Mathf.Clamp(offset + change.y * 0.5f, minOffset, minOffset * trackingRangeModifier * 2f);
+				offset = Mathf.Clamp(offset + change.y * 0.5f, minOffset, minOffset * maxOffsetModifier);
 				offsetRot = Quaternion.Euler(euler);
 
 				doRot = true;
