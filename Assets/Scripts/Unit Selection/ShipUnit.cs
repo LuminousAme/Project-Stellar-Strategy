@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class ShipUnit : Unit
 {
     private NavMeshAgent agent;
-    CelestialBody followTarget = null;
+    protected CelestialBody followTarget = null;
 
     private void Awake()
     {
