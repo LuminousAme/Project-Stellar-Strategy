@@ -15,3 +15,5 @@ MonoBehaviour:
   maxSpeed: 10
   followDistance: 1
   avoidanceRadius: 3
+  baseHealth: 100
+  combatRadius: 15
