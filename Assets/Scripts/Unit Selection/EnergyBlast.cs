@@ -43,8 +43,8 @@ public class EnergyBlast : MonoBehaviour
             main.startColor = color;
         }
 
-        Color baseColor = new Color(color.r, color.g, color.b, 1f);
-        Color endColor = new Color(color.r, color.g, color.b, 0f);
+        Color baseColor = new Color(color.r, color.g, color.b, 0f);
+        Color endColor = new Color(color.r, color.g, color.b, 1f);
 
         TrailRenderer trail = GetComponentInChildren<TrailRenderer>();
         trail.startColor = baseColor;
