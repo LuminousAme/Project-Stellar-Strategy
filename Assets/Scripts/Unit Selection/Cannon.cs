@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Cannon : MonoBehaviour
 {
-    [SerializeField] private float rotationSpeed = 5f;
     [SerializeField] private Transform barrel;
     [SerializeField] private GameObject blastPrefab;
     [SerializeField] private float knockBackTime = 0.1f;
     [SerializeField] private float recoveryTime = 2f;
     [SerializeField] private float knockbackDistance = 0.1f;
     [SerializeField] private MultiParticle muzzleFlash;
+    [SerializeField] private Transform reference;
 
     private Unit m_target;
     public Unit target
@@ -30,7 +30,7 @@ public class Cannon : MonoBehaviour
     {
         eplasedSinceLastFired = 0.0f;
         recovering = false;
-        barrelPos = barrel.position;
+        barrelPos = barrel.localPosition;
     }
 
     private void Update()
@@ -48,12 +48,10 @@ public class Cannon : MonoBehaviour
 
         float angle = Vector3.SignedAngle(noYFacing, direction, Vector3.up);
 
-        transform.RotateAround(transform.position, transform.up, Mathf.Min(angle, rotationSpeed) * Time.deltaTime);
+        //transform.Rotate(new Vector3(0.0f, angle, 0.0f), Space.Self);
+        transform.RotateAround(reference.position, reference.up, angle);
 
-        if(angle < 5.0f && !recovering)
-        {
-            Fire();
-        }
+        if(!recovering) Fire();
 
         Recover();
     }
@@ -82,12 +80,12 @@ public class Cannon : MonoBehaviour
         {
             float t = Mathf.Clamp01(eplasedSinceLastFired / knockBackTime);
 
-            barrel.position = Vector3.Lerp(barrelPos, knockedBackPos, t);
+            barrel.localPosition = Vector3.Lerp(barrelPos, knockedBackPos, t);
         }
         else if (eplasedSinceLastFired < recoveryTime)
         {
             float t = Mathf.Clamp01((eplasedSinceLastFired - knockBackTime) / (knockBackTime * 0.5f));
-            barrel.position = Vector3.Lerp(knockedBackPos, barrelPos, t);
+            barrel.localPosition = Vector3.Lerp(knockedBackPos, barrelPos, t);
         }
         else recovering = false;
     }

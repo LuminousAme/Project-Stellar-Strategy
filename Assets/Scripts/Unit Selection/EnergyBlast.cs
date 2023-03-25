@@ -12,13 +12,16 @@ public class EnergyBlast : MonoBehaviour
 
     private void Update()
     {
-        Vector3 velocity = (target.transform.position - transform.position).normalized * speed;
-        transform.position = transform.position + velocity * Time.deltaTime;
-        transform.rotation = Quaternion.FromToRotation(transform.forward, velocity.normalized) * transform.rotation;
-
-        if(Vector3.Distance(target.transform.position, transform.position) < 1f)
+        if(target != null)
         {
-            Contact();
+            Vector3 velocity = (target.transform.position - transform.position).normalized * speed;
+            transform.position = transform.position + velocity * Time.deltaTime;
+            transform.rotation = Quaternion.FromToRotation(transform.forward, velocity.normalized) * transform.rotation;
+
+            if (Vector3.Distance(target.transform.position, transform.position) < 1f)
+            {
+                Contact();
+            }
         }
     }
 
@@ -26,6 +29,7 @@ public class EnergyBlast : MonoBehaviour
     {
         speed = 0f;
         target.TakeDamage(Random.Range(minDamage, maxDamage + 1));
+        target = null;
         impact.Play();
         Destroy(gameObject, 0.2f);
     }
