@@ -9,4 +9,5 @@ public class UnitData : ScriptableObject
     public float followDistance = 10f;
     public float avoidanceRadius = 10f;
     public int baseHealth = 100;
+    public float combatRadius = 20f;
 }

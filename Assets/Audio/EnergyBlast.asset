@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dfc0eff75b379447a5f35733bb2039d, type: 3}
+  m_Name: EnergyBlast
+  m_EditorClassIdentifier: 
+  audioClips:
+  - {fileID: 8300000, guid: 9911d48c5fe4cf24a8396b9f82a1df89, type: 3}
+  - {fileID: 8300000, guid: f4ea5ff9f6ddb8745a539852bbaaaa0f, type: 3}
+  - {fileID: 8300000, guid: cb33a37d3bb765d4a910d8dfe5cceaf2, type: 3}
+  - {fileID: 8300000, guid: 311874882dcc87845817fe72be2853b0, type: 3}
+  - {fileID: 8300000, guid: 89c6874ac0a566c4786fbcc21f226ca6, type: 3}
+  - {fileID: 8300000, guid: 03b111e6acd84ae4a8b8984871457417, type: 3}
+  minVolume: 0.8
+  maxVolume: 0.85
+  minPitch: 0.89090383
+  maxPitch: 1.1224556
+  useSemitones: 1
+  minSemitones: -2
+  maxSemitones: 2
+  targetMixerGroup: {fileID: 0}
+  clipPlayOrder: 0
+  previewer: {fileID: 0}

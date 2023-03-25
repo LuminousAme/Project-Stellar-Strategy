@@ -1288,6 +1288,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 192
+  maxOffsetModifier: 10
 --- !u!1 &983011185
 GameObject:
   m_ObjectHideFlags: 0

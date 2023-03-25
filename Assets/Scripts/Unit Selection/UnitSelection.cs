@@ -150,6 +150,16 @@ public class UnitSelection : MonoBehaviour
     private void SelectUnit(Unit unit)
     {
         unit.Select();
+        unit.OnUnitDestroyed += UnitDestroyed;
+    }
+
+    private void UnitDestroyed(Unit unit)
+    {
+        if(selectedUnits.Contains(unit.gameObject))
+        {
+            unit.OnUnitDestroyed -= UnitDestroyed;
+            selectedUnits.Remove(unit.gameObject);
+        }
     }
 
     private void DeselectUnits()
@@ -157,6 +167,7 @@ public class UnitSelection : MonoBehaviour
         for(int i = 0; i < selectedUnits.Count; i++)
         {
             Unit unit = selectedUnits[i].GetComponent<Unit>();
+            unit.OnUnitDestroyed -= UnitDestroyed;
             unit.Deleselect();
         }
         selectedUnits.Clear();
