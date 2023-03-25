@@ -74,15 +74,15 @@ public class StationSelector : MonoBehaviour
             aiPlanetChosen = true; // set the flag to true to prevent choosing another planet
         }
 
-        //snaps camera to space station
+        //snaps camera to player space station
         if (Input.GetKeyDown(KeyCode.Comma))
         {
             if (playerPlanetChosen)
             {
-                Vector3 newPos = new Vector3(selectedPlanet.transform.position.x + 50f, Camera.main.transform.position.y, selectedPlanet.transform.position.z - 10f);
+                Vector3 newPos = new Vector3(selectedPlanet.transform.position.x , Camera.main.transform.position.y, selectedPlanet.transform.position.z - 10f);
                 Camera.main.transform.position = newPos;
 
-                //                Camera.main.transform.LookAt(selectedPlanet.transform);
+                //Camera.main.transform.LookAt(selectedPlanet.transform);
 
                 //Vector3 lookDirection = selectedPlanet.transform.position - Camera.main.transform.position;
                 //Camera.main.transform.rotation = Quaternion.LookRotation(lookDirection, Vector3.up);
