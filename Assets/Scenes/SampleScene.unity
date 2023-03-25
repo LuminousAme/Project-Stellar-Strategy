@@ -601,6 +601,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   planets: []
   spaceStation: {fileID: 1419164864128026393, guid: 48c15a3102c389a49ba499d356235e22, type: 3}
+  selectedPlanet: {fileID: 0}
+  aiSelectedPlanet: {fileID: 0}
 --- !u!1001 &313246854
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1296,7 +1298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensitivity: {x: 1, y: 0.5}
-  speed: 10
+  speed: 50
   trackingSpeed: 10
   trackingRangeModifier: 2
   maxDist: 1000
