@@ -95,4 +95,13 @@ public class Cannon : MonoBehaviour
         }
         else recovering = false;
     }
+
+    public void SetOffset(int offset)
+    {
+        if(offset > 0)
+        {
+            recovering = true;
+            eplasedSinceLastFired = recoveryTime - (0.2f * offset);
+        }
+    }
 }

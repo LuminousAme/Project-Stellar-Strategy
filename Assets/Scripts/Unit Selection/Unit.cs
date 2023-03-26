@@ -161,7 +161,11 @@ public class Unit : MonoBehaviour
     {
         FindCombatTarget();
 
-        for (int i = 0; i < cannons.Count; i++) cannons[i].target = currentCombatTarget;
+        for (int i = 0; i < cannons.Count; i++)
+        {
+            cannons[i].target = currentCombatTarget;
+            cannons[i].SetOffset(i);
+        }
     }
 
     public Faction GetFaction() => faction;
