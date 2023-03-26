@@ -37,6 +37,12 @@ public class CamController : MonoBehaviour
 		StartCoroutine(LockOn(target.transform, minOffset * trackingRangeModifier, true));
 	}
 
+	public void LockOnUnit(Unit target)
+	{
+		minOffset = target.GetComponent<BoxCollider>().size.magnitude * 0.5f + 1f;
+		StartCoroutine(LockOn(target.transform, minOffset * trackingRangeModifier, true));
+	}
+
 	//multitap interaction
 	public void TryLockOn(InputAction.CallbackContext context) {
 		if (!context.performed)	return;
