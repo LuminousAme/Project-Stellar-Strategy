@@ -146,7 +146,7 @@ public class Unit : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        if(currentHealth <= 0)
+        if(currentHealth <= 0 && !destroyed)
         {
             OnUnitDestroyed?.Invoke(this);
             currentCombatTarget = null;

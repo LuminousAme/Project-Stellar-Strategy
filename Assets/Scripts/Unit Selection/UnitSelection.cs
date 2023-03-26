@@ -166,7 +166,7 @@ public class UnitSelection : MonoBehaviour
 		*/
     }
 
-    private void SelectUnit(Unit unit)
+    public void SelectUnit(Unit unit)
     {
 		selectedUnits.Add(unit.gameObject);
         unit.Select();

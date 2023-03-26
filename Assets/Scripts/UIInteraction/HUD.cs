@@ -10,6 +10,7 @@ public class HUD : MonoBehaviour
     public GameObject unitList, unitButtonPrefab;
     public TMP_Text resourcesText;
     public Button buildDestroyerButton, buildExtractorButton;
+    public UnitSelection unitselector;
     private StationUnit playerStation;
     private Dictionary<Unit, GameObject> unitButtonMap = new Dictionary<Unit, GameObject>();
 
@@ -41,7 +42,7 @@ public class HUD : MonoBehaviour
 
     public void BuildNewExtractor()
     {
-        if (playerStation.TrySpendResources(1000)) Debug.Log("Not implemented");
+        if (playerStation.TrySpendResources(1000)) MatchManager.instance.SpawnNewExtractor(-1);
     }
 
     public void Hide(int index)
@@ -91,7 +92,7 @@ public class HUD : MonoBehaviour
     void SelectAndLockOn(Unit unit)
     {
         Camera.main.GetComponent<CamController>().LockOnUnit(unit);
-        //TODO: select unit
+        unitselector.SelectUnit(unit);
     }
 
 }
@@ -99,7 +100,7 @@ public class HUD : MonoBehaviour
 [System.Serializable]
 public class HUDElement
 {
-    public Transform trans;
+    public RectTransform trans;
     public Vector3 shownPosition;
     public Vector3 hidePosition;
     public bool hidden = false;
@@ -123,7 +124,7 @@ public class HUDElement
         Vector3 position = Vector3.zero;
         if (hidden) position = Vector3.Lerp(shownPosition, hidePosition, t);
         else position = Vector3.Lerp(hidePosition, shownPosition, t);
-        trans.localPosition = position;
+        trans.anchoredPosition = position;
         elapsed += Time.deltaTime;
     }
 }
