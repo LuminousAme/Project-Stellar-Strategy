@@ -5,7 +5,7 @@ using UnityEngine;
 public class AIPlayer : MonoBehaviour
 {
 	protected StationUnit station;
-	protected List<ShipUnit> attackUnits;
+	protected List<ShipUnit> attackUnits = new List<ShipUnit>();
 	public float minDecisionTime = 1f;
 	public float maxDecisionTime = 5f;
 	public int defenseUnits = 2;

@@ -30,7 +30,7 @@ public class StationUnit : Unit
 	public void AddUnit(Unit unit) {
 		managedUnits.Add(unit);
 		unit.OnUnitDestroyed += died => managedUnits.Remove(died);
-		onReceivedUnit.Invoke(unit);
+		onReceivedUnit?.Invoke(unit);
 	}
 
 	public void DepositResources(float amt) {

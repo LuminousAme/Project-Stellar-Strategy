@@ -40,6 +40,8 @@ public class MatchManager : MonoBehaviour
         inCombat = false;
         acutalInCombat = false;
 
+		while (aiPlayers.Count < aiFactions.Count) aiPlayers.Add(Instantiate(AIPrefab));
+
 		StartCoroutine(OrderedFrames());
     }
 
