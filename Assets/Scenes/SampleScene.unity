@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ship (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104350, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -180,11 +184,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
@@ -198,6 +202,10 @@ PrefabInstance:
     - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Name
       value: Test AI Ship (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104347, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: faction
@@ -249,11 +257,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5690093822505316511, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Color.g
@@ -377,6 +385,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test AI Ship (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104347, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: faction
       value: 
@@ -427,11 +439,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5690093822505316511, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Color.g
@@ -453,6 +465,10 @@ PrefabInstance:
     - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Name
       value: Test AI Ship (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104347, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: faction
@@ -504,11 +520,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5690093822505316511, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Color.g
@@ -530,6 +546,10 @@ PrefabInstance:
     - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Name
       value: Test AI Ship (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104347, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: faction
@@ -581,11 +601,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5690093822505316511, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Color.g
@@ -901,6 +921,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ship (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104350, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -947,11 +971,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
@@ -1014,6 +1038,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ship (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104350, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -1060,11 +1088,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
@@ -1078,6 +1106,10 @@ PrefabInstance:
     - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Name
       value: Test AI Ship (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104347, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: faction
@@ -1129,11 +1161,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5690093822505316511, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Color.g
@@ -1155,6 +1187,10 @@ PrefabInstance:
     - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Name
       value: Ship (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104350, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_RootOrder
@@ -1202,11 +1238,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
@@ -1220,6 +1256,10 @@ PrefabInstance:
     - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Name
       value: Ship (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104350, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_RootOrder
@@ -1267,11 +1307,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
@@ -6705,6 +6745,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test AI Ship (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104347, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: faction
       value: 
@@ -6755,11 +6799,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5690093822505316511, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Color.g
@@ -6781,6 +6825,10 @@ PrefabInstance:
     - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Name
       value: Ship (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104350, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_RootOrder
@@ -6828,11 +6876,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
@@ -6898,6 +6946,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ship (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104350, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_RootOrder
       value: 15
@@ -6944,11 +6996,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
@@ -6962,6 +7014,10 @@ PrefabInstance:
     - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Name
       value: Test AI Ship (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104347, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: faction
@@ -7013,11 +7069,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5690093822505316511, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Color.g
@@ -7039,6 +7095,10 @@ PrefabInstance:
     - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Name
       value: Ship (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104350, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_RootOrder
@@ -7086,11 +7146,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
@@ -7104,6 +7164,10 @@ PrefabInstance:
     - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Name
       value: Test AI Ship (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104347, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: faction
@@ -7155,11 +7219,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5690093822505316511, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Color.g
@@ -7181,6 +7245,10 @@ PrefabInstance:
     - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Name
       value: Test AI Ship (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104347, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: faction
@@ -7232,11 +7300,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5690093822505316511, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Color.g
@@ -7258,6 +7326,10 @@ PrefabInstance:
     - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Name
       value: Test AI Ship (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104347, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: faction
@@ -7309,11 +7381,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5690093822505316511, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Color.b
@@ -7441,7 +7513,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56140c1562e03f24c81a515be31684f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sun: {fileID: 845808737}
   playerFaction: {fileID: 11400000, guid: 2c0e5519c8540bb46a03a51d0d4bf3ae, type: 2}
+  aiFactions:
+  - {fileID: 11400000, guid: 0f435a4b5fe07494298ca512496c0488, type: 2}
+  StationPrefab: {fileID: 1419164864128026393, guid: 48c15a3102c389a49ba499d356235e22, type: 3}
   intesnityLevelCutoff: 5
 --- !u!4 &1445132875
 Transform:
@@ -7545,6 +7621,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ship (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104350, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -7591,11 +7671,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
@@ -7702,6 +7782,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test AI Ship (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104347, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: faction
       value: 
@@ -7752,11 +7836,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5690093822505316511, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Color.g
@@ -7778,6 +7862,10 @@ PrefabInstance:
     - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Name
       value: Ship (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104350, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_RootOrder
@@ -7825,11 +7913,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
@@ -7843,6 +7931,10 @@ PrefabInstance:
     - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Name
       value: Test AI Ship (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104347, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: faction
@@ -7894,11 +7986,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5690093822505316511, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Color.g
@@ -7920,6 +8012,10 @@ PrefabInstance:
     - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Name
       value: Ship (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104350, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_RootOrder
@@ -7967,11 +8063,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
@@ -7985,6 +8081,10 @@ PrefabInstance:
     - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_Name
       value: Ship (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2552653394814104350, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_RootOrder
@@ -8032,11 +8132,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165235857962556290, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}

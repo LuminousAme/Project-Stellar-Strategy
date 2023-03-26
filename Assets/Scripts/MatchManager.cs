@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class MatchManager : MonoBehaviour
 {
+    public CelestialBody sun;
     public Faction playerFaction;
+    public List<Faction> aiFactions = new List<Faction>();
+    public GameObject StationPrefab;
     public int intesnityLevelCutoff = 5;
     int numInCombat = 0;
     int desiredIntensity = 0;
@@ -12,6 +15,7 @@ public class MatchManager : MonoBehaviour
     bool inCombat = false;
     bool acutalInCombat = false;
     float timeSinceCombatStatusChanged = 0.0f;
+    bool firstFrame = true;
 
     // Start is called before the first frame update
     void Start()
@@ -19,11 +23,49 @@ public class MatchManager : MonoBehaviour
         MusicManager.instance.FadeTracksIn(1, int.MaxValue, 5f);
         inCombat = false;
         acutalInCombat = false;
+        firstFrame = true;
     }
 
     private void Update()
     {
+        if (firstFrame) FirstFrame();
         UpdateMusic();
+    }
+
+    void FirstFrame()
+    {
+        CelestialBody[] bodies = FindObjectsOfType<CelestialBody>();
+        List<int> bodiesClaimed = new List<int>();
+
+        //claim one for the player
+        int maxIndex = bodies.Length - 1;
+        int randomIndex = Random.Range(0, maxIndex);
+
+        while(bodies[randomIndex] == sun) randomIndex = Random.Range(0, maxIndex);
+
+        bodiesClaimed.Add(randomIndex);
+        PlaceStation(randomIndex, bodies[randomIndex], playerFaction);
+
+        for(int i = 0; i < aiFactions.Count; i++)
+        {
+            do randomIndex = Random.Range(0, maxIndex);
+            while (bodies[randomIndex] == sun || bodiesClaimed.Contains(randomIndex));
+
+            bodiesClaimed.Add(randomIndex);
+            PlaceStation(randomIndex, bodies[randomIndex], aiFactions[i]);
+        }
+
+        Camera.main.GetComponent<CamController>().LockOnCelestialBody(bodies[bodiesClaimed[0]]);
+
+        firstFrame = false;
+    }
+
+    void PlaceStation(int index, CelestialBody planet, Faction faction)
+    {
+        GameObject go = Instantiate(StationPrefab);
+        StationUnit station = go.GetComponent<StationUnit>();
+        station.SetPlanet(planet);
+        station.SetFaction(faction);
     }
 
     void UpdateMusic()

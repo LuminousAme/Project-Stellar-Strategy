@@ -30,6 +30,13 @@ public class CamController : MonoBehaviour
 		cam = GetComponent<Camera>();
 	}
 
+	//automated interaction
+	public void LockOnCelestialBody(CelestialBody target)
+    {
+		minOffset = target.GetComponent<SphereCollider>().radius + 1f;
+		StartCoroutine(LockOn(target.transform, minOffset * trackingRangeModifier, true));
+	}
+
 	//multitap interaction
 	public void TryLockOn(InputAction.CallbackContext context) {
 		if (!context.performed)	return;
