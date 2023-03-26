@@ -13,6 +13,8 @@ public class MatchManager : MonoBehaviour
     public List<AIPlayer> aiPlayers = new List<AIPlayer>();
     public StationUnit StationPrefab;
     public ShipUnit DestroyerPrefab;
+    public ExtractorUnit ExtractorPrefab;
+	public AIPlayer AIPrefab;
     public int destroyersAtSpawn = 2;
     public int maxUnits = 50;
 
@@ -79,7 +81,10 @@ public class MatchManager : MonoBehaviour
 
             bodiesClaimed.Add(randomIndex);
 			stations.Add(aiFactions[i], PlaceStation(randomIndex, bodies[randomIndex], aiFactions[i]));
-            aiPlayers[i]?.SetStation(stations[aiFactions[i]]);
+			if (!aiPlayers[i]) {
+				aiPlayers[i] = Instantiate(AIPrefab);
+			}
+            aiPlayers[i].SetStation(stations[aiFactions[i]]);
         }
 
         Camera.main.GetComponent<CamController>().LockOnCelestialBody(bodies[bodiesClaimed[0]]);

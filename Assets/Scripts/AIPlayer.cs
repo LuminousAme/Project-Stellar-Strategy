@@ -6,8 +6,9 @@ public class AIPlayer : MonoBehaviour
 {
 	protected StationUnit station;
 	protected List<ShipUnit> attackUnits;
-	protected float minDecisionTime = 1f;
-	protected float maxDecisionTime = 5f;
+	public float minDecisionTime = 1f;
+	public float maxDecisionTime = 5f;
+	public int defenseUnits = 2;
 
 	public bool alive = true;
 
@@ -22,6 +23,11 @@ public class AIPlayer : MonoBehaviour
 	//has a deecision timer
 	private void Start() {
 		StartCoroutine(Decision());
+		//defend self
+		/*for (int i = 0; i < Mathf.Min(defenseUnits, attackUnits.Count); ++i) {
+			//send ships to incoming attackers
+			
+		}*/
 	}
 
 	IEnumerator Decision() {
@@ -44,8 +50,8 @@ public class AIPlayer : MonoBehaviour
 
 			if (closest) {
 				//make all attackers target this one
-				foreach (ShipUnit ship in attackUnits) {
-					ship.SetFollowTarget(closest.GetPlanet());
+				for (int i = defenseUnits; i < attackUnits.Count; ++i) {
+					attackUnits[i].SetFollowTarget(closest.GetPlanet());
 				}
 			}
 		}
