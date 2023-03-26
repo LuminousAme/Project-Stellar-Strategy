@@ -254,6 +254,7 @@ MonoBehaviour:
   - {fileID: 8318344230671405090}
   destroyedTime: 2
   offset: {x: 5, y: 5, z: 5}
+  resources: 0
 --- !u!135 &6286959425118345702
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -262,7 +263,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1419164864128026393}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 20

@@ -40,7 +40,7 @@ public class ShipUnit : Unit
 
             Vector3 acutalTargetPosition = targetPosition + inverseDirection;
             acutalTargetPosition.y = transform.position.y;
-            if(agent != null) agent.destination = acutalTargetPosition;
+            if(agent != null && agent.isActiveAndEnabled) agent.destination = acutalTargetPosition;
         }
     }
 

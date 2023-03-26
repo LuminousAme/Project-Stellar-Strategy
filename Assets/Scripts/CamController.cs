@@ -44,7 +44,7 @@ public class CamController : MonoBehaviour
 		//screen position
 		Ray dir = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
 		RaycastHit hit;
-		if (Physics.Raycast(dir, out hit, maxDist, mask)) {
+		if (Physics.Raycast(dir, out hit, maxDist, mask, QueryTriggerInteraction.Ignore)) {
 			//check if planet (add conditions later)
 			if (hit.transform.gameObject.layer == LayerMask.NameToLayer("CelestialBodies")) {
 				//travel to planet
@@ -147,6 +147,10 @@ public class CamController : MonoBehaviour
 		//disable autoRot
 		isRotating = true;
 		doRot = false;
+
+		if (isMoving) {
+			following = null;
+		}
 
 		Vector3 rot = transform.rotation.eulerAngles;
 		if (rot.x > 180f)

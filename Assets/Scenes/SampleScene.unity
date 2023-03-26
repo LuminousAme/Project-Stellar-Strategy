@@ -1873,7 +1873,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.46672204, y: -0, z: -0, w: 0.8844041}
-  m_LocalPosition: {x: 0, y: 75.5, z: -71.4}
+  m_LocalPosition: {x: 0, y: 100, z: -71.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1928,7 +1928,7 @@ MonoBehaviour:
   sensitivity: {x: 1, y: 0.5}
   speed: 20
   trackingSpeed: 100
-  trackingRangeModifier: 2
+  trackingRangeModifier: 4
   maxDist: 1000
   mask:
     serializedVersion: 2
@@ -7025,9 +7025,13 @@ MonoBehaviour:
   playerFaction: {fileID: 11400000, guid: 2c0e5519c8540bb46a03a51d0d4bf3ae, type: 2}
   aiFactions:
   - {fileID: 11400000, guid: 0f435a4b5fe07494298ca512496c0488, type: 2}
-  StationPrefab: {fileID: 1419164864128026393, guid: 48c15a3102c389a49ba499d356235e22, type: 3}
-  DestroyerPrefab: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+  aiPlayers: []
+  StationPrefab: {fileID: 945034296833436700, guid: 48c15a3102c389a49ba499d356235e22, type: 3}
+  DestroyerPrefab: {fileID: 2552653394814104347, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+  ExtractorPrefab: {fileID: 0}
+  AIPrefab: {fileID: -4690222704208627798, guid: 179517cf250e28b40b1b53d88035ea74, type: 3}
   destroyersAtSpawn: 5
+  maxUnits: 50
   intesnityLevelCutoff: 5
 --- !u!4 &1445132875
 Transform:
