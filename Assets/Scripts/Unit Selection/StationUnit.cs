@@ -6,8 +6,9 @@ public class StationUnit : Unit
 {
     [SerializeField] protected Vector3 offset;
     protected CelestialBody attachedPlanet;
-
-
+	[SerializeField] protected int resources;
+	protected List<Unit> managedUnits = new List<Unit>();
+	public System.Action<Unit> onReceivedUnit;
 
     protected override void Update()
     {
@@ -23,4 +24,12 @@ public class StationUnit : Unit
     }
 
     public CelestialBody GetPlanet() => attachedPlanet;
+
+	public int GetUnitCount() => managedUnits.Count;
+
+	public void AddUnit(Unit unit) {
+		managedUnits.Add(unit);
+		unit.OnUnitDestroyed += died => managedUnits.Remove(died);
+		onReceivedUnit.Invoke(unit);
+	}
 }
