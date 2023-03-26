@@ -6,8 +6,9 @@ public class StationUnit : Unit
 {
     [SerializeField] protected Vector3 offset;
     protected CelestialBody attachedPlanet;
-	[SerializeField] protected int resources;
+    [SerializeField] protected float resources;
 	protected List<Unit> managedUnits = new List<Unit>();
+	public List<Unit> factionUnits {get => managedUnits;}
 	public System.Action<Unit> onReceivedUnit;
 
     protected override void Update()
@@ -30,6 +31,22 @@ public class StationUnit : Unit
 	public void AddUnit(Unit unit) {
 		managedUnits.Add(unit);
 		unit.OnUnitDestroyed += died => managedUnits.Remove(died);
-		onReceivedUnit.Invoke(unit);
+		onReceivedUnit?.Invoke(unit);
 	}
+
+	public void DepositResources(float amt) {
+		resources += amt;
+	}
+
+    public float GetResources() => resources;
+
+    public bool TrySpendResources(float value)
+    {
+        if (resources >= value)
+        {
+            resources -= value;
+            return true;
+        }
+        else return false;
+    }
 }

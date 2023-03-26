@@ -87,7 +87,7 @@ public class Unit : MonoBehaviour
         cirlce.color = faction.passiveColor;
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         Transform trans = other.transform;
         Unit unit = trans.GetComponent<Unit>();
@@ -101,7 +101,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         Transform trans = other.transform;
         Unit unit = trans.GetComponent<Unit>();
@@ -146,7 +146,7 @@ public class Unit : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        if(currentHealth <= 0)
+        if(currentHealth <= 0 && !destroyed)
         {
             OnUnitDestroyed?.Invoke(this);
             currentCombatTarget = null;

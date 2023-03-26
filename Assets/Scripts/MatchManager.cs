@@ -13,7 +13,10 @@ public class MatchManager : MonoBehaviour
     public List<AIPlayer> aiPlayers = new List<AIPlayer>();
     public StationUnit StationPrefab;
     public ShipUnit DestroyerPrefab;
+    public ExtractorUnit ExtractorPrefab;
+	public AIPlayer AIPrefab;
     public int destroyersAtSpawn = 2;
+    public int extractorsAtSpawn = 2;
     public int maxUnits = 50;
 
     [Space]
@@ -26,6 +29,10 @@ public class MatchManager : MonoBehaviour
     bool acutalInCombat = false;
     float timeSinceCombatStatusChanged = 0.0f;
 
+
+	Dictionary<Faction, StationUnit> m_stations= new Dictionary<Faction, StationUnit>();
+	public Dictionary<Faction, StationUnit> stations { get => m_stations; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +40,8 @@ public class MatchManager : MonoBehaviour
         MusicManager.instance.FadeTracksIn(1, int.MaxValue, 5f);
         inCombat = false;
         acutalInCombat = false;
+
+		while (aiPlayers.Count < aiFactions.Count) aiPlayers.Add(Instantiate(AIPrefab));
 
 		StartCoroutine(OrderedFrames());
     }
@@ -66,7 +75,7 @@ public class MatchManager : MonoBehaviour
         while(bodies[randomIndex] == sun) randomIndex = Random.Range(0, maxIndex);
 
         bodiesClaimed.Add(randomIndex);
-        PlaceStation(randomIndex, bodies[randomIndex], playerFaction);
+        stations.Add(playerFaction, PlaceStation(randomIndex, bodies[randomIndex], playerFaction));
 
         for(int i = 0; i < aiFactions.Count; i++)
         {
@@ -74,7 +83,11 @@ public class MatchManager : MonoBehaviour
             while (bodies[randomIndex] == sun || bodiesClaimed.Contains(randomIndex));
 
             bodiesClaimed.Add(randomIndex);
-            aiPlayers[i]?.SetStation(PlaceStation(randomIndex, bodies[randomIndex], aiFactions[i]));
+			stations.Add(aiFactions[i], PlaceStation(randomIndex, bodies[randomIndex], aiFactions[i]));
+			if (!aiPlayers[i]) {
+				aiPlayers[i] = Instantiate(AIPrefab);
+			}
+            aiPlayers[i].SetStation(stations[aiFactions[i]]);
         }
 
         Camera.main.GetComponent<CamController>().LockOnCelestialBody(bodies[bodiesClaimed[0]]);
@@ -82,18 +95,18 @@ public class MatchManager : MonoBehaviour
 
     void SecondFrame()
     {
-        for (int i = 0; i< destroyersAtSpawn; i++)
+        for(int j = -1; j < aiFactions.Count; j++)
         {
-            SpawnNewDestroyer(playerFaction);
+        	for (int i = 0; i < destroyersAtSpawn; i++)
+        	{
+	            SpawnNewDestroyer(j);
+    	    }
+        	for (int i = 0; i < extractorsAtSpawn; i++)
+        	{
+	            SpawnNewExtractor(j);
+    	    }
         }
 
-        for(int i = 0; i < aiFactions.Count; i++)
-        {
-            for (int j = 0; j < destroyersAtSpawn; j++)
-            {
-                SpawnNewDestroyer(aiFactions[i]);
-            }
-        }
     }
 
     StationUnit PlaceStation(int index, CelestialBody planet, Faction faction)
@@ -107,30 +120,26 @@ public class MatchManager : MonoBehaviour
 
     public ShipUnit SpawnNewDestroyer(Faction faction)
     {
-        StationUnit[] stations = FindObjectsOfType<StationUnit>();
+		if (!stations.ContainsKey(faction))	return null;
+		
+		StationUnit station = stations[faction];
 
-        for (int i = 0; i < stations.Length; i++)
-        {
-            StationUnit station = stations[i];
-            if (!station.GetFaction().SameFaction(faction) || station.GetUnitCount() >= maxUnits) continue;
+        if (station.GetUnitCount() >= maxUnits) return null;
 
-            Vector3 offset = Random.onUnitSphere;
-            while (offset == Vector3.up || offset == Vector3.down) offset = Random.onUnitSphere;
-            offset.y = 0.0f;
-            offset = offset.normalized;
-            Vector3 newPos = new Vector3(station.transform.position.x + (offset.x * 5.0f), 0.0f, station.transform.position.z + (offset.z * 5.0f));
+        Vector3 offset = Random.onUnitSphere;
+        while (offset == Vector3.up || offset == Vector3.down) offset = Random.onUnitSphere;
+        offset.y = 0.0f;
+        offset = offset.normalized;
+        Vector3 newPos = new Vector3(station.transform.position.x + (offset.x * 5.0f), 0.0f, station.transform.position.z + (offset.z * 5.0f));
 
-            ShipUnit unit = Instantiate(DestroyerPrefab, newPos, Quaternion.identity);
+        ShipUnit unit = Instantiate(DestroyerPrefab, newPos, Quaternion.identity);
 
-			station.AddUnit(unit);
+		station.AddUnit(unit);
 
-            unit.SetFaction(faction);
-            unit.SetFollowTarget(station.GetPlanet());
+        unit.SetFaction(faction);
+        unit.SetFollowTarget(station.GetPlanet());
 
-            return unit;
-        }
-
-        return null;
+        return unit;
     }
 
     public ShipUnit SpawnNewDestroyer(int factionIndex)
@@ -140,6 +149,39 @@ public class MatchManager : MonoBehaviour
         else faction = playerFaction;
 
         return SpawnNewDestroyer(faction);
+    }
+
+    public ExtractorUnit SpawnNewExtractor(Faction faction)
+    {
+		if (!stations.ContainsKey(faction))	return null;
+		
+		StationUnit station = stations[faction];
+
+        if (station.GetUnitCount() >= maxUnits) return null;
+
+        Vector3 offset = Random.onUnitSphere;
+        while (offset == Vector3.up || offset == Vector3.down) offset = Random.onUnitSphere;
+        offset.y = 0.0f;
+        offset = offset.normalized;
+        Vector3 newPos = new Vector3(station.transform.position.x + (offset.x * 5.0f), 0.0f, station.transform.position.z + (offset.z * 5.0f));
+
+        ExtractorUnit unit = Instantiate(ExtractorPrefab, newPos, Quaternion.identity);
+
+		station.AddUnit(unit);
+
+        unit.SetFaction(faction);
+        unit.SetFollowTarget(station.GetPlanet());
+
+        return unit;
+    }
+
+    public ExtractorUnit SpawnNewExtractor(int factionIndex)
+    {
+        Faction faction;
+        if (factionIndex >= 0 && factionIndex < aiFactions.Count) faction = aiFactions[factionIndex];
+        else faction = playerFaction;
+
+        return SpawnNewExtractor(faction);
     }
 
     void UpdateMusic()

@@ -23,13 +23,17 @@ public class PlanetData : MonoBehaviour
 		extractors.Remove(unit);
 	}
 
+	public bool CheckExtractor(ExtractorUnit unit) {
+		return extractors.Contains(unit);
+	}
+
 	private void Update() {
 		resources = Mathf.Min(resources + generationRate * Time.deltaTime, maxResources);
 
 		if (extractors.Count == 0)	return;
 
 		//give resources to all in the list, limited by how many resources there are
-		int rate = (int)Mathf.Min(extractionRate * extractors.Count, resources) / extractors.Count;
+		float rate = Mathf.Min(extractionRate * extractors.Count, resources) / extractors.Count;
 		foreach (ExtractorUnit unit in extractors) {
 			unit.GiveResources(rate);
 			resources -= rate;

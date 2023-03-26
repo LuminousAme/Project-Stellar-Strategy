@@ -6,6 +6,9 @@ public class SolarSystemGenerator : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] int seed = 197;
+    [SerializeField] bool randomizeSeed = false;
+    [SerializeField] int minSeed = 0;
+    [SerializeField] int maxSeed = 25000;
 
     [Space]
     [Header("Generators")]
@@ -15,7 +18,8 @@ public class SolarSystemGenerator : MonoBehaviour
 
     private void Start()
     {
-        Run();    
+        if (randomizeSeed) seed = Random.Range(minSeed, maxSeed);
+        Run();
     }
 
     public void Run()

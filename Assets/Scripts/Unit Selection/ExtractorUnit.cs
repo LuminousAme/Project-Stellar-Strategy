@@ -4,37 +4,72 @@ using UnityEngine;
 
 public class ExtractorUnit : ShipUnit
 {
-	[SerializeField]
-	int resourcesHeld;
-	[SerializeField]
-	int maxResourcesHeld = 10000;
+	[SerializeField]	float resourcesHeld = 0f;
+	[SerializeField]	float maxResourcesHeld = 10000f;
+	[SerializeField]	float depositRate = 1000f;
 
 	PlanetData orbitingPlanet;
+
+	protected override void Start()
+	{
+		base.Start();
+
+		OnUnitDestroyed += unit => {
+			if (orbitingPlanet) {
+				orbitingPlanet.StopGrabResources(this);
+			}
+		};
+	}
+
+	Transform prevFollow;
+
 	protected override void Update()
 	{
 		base.Update();
 
-		//check what's being followed
-		PlanetData data = followTarget?.GetComponent<PlanetData>();
-
-		//if in range, try grabbing resources
-		if (data) {
-			if (orbitingPlanet == null) {
-				orbitingPlanet = data;
-				orbitingPlanet.GrabResources(this);
-			}
-		}
-		else if (orbitingPlanet) {
+		if (orbitingPlanet && followTarget && followTarget.transform != orbitingPlanet.transform) {
 			orbitingPlanet.StopGrabResources(this);
 			orbitingPlanet = null;
 		}
 	}
 
-	public void GiveResources(int amt) {
+	protected void OnTriggerStay(Collider other)
+	{
+		//look for what you're following
+		if (followTarget && other.transform == followTarget.transform) {
+			PlanetData data = followTarget.GetComponent<PlanetData>();
+
+			if (data && !data.CheckExtractor(this)) {
+				orbitingPlanet = data;
+				orbitingPlanet.GrabResources(this);
+			}
+
+			//check if the station is connected
+			StationUnit station = MatchManager.instance.stations[faction];
+			if (followTarget == station.GetPlanet()) {
+				float change = Mathf.Min(depositRate * Time.deltaTime, resourcesHeld);
+				resourcesHeld -= change;
+				station.DepositResources(change);
+			}
+		}
+	}
+
+	protected override void OnTriggerExit(Collider other)
+	{
+		base.OnTriggerExit(other);
+
+		if (orbitingPlanet && other.transform == orbitingPlanet.transform) {
+			orbitingPlanet.StopGrabResources(this);
+			orbitingPlanet = null;
+		}
+	}
+
+	public void GiveResources(float amt) {
 		resourcesHeld = Mathf.Min(resourcesHeld + amt, maxResourcesHeld);
 
 		if (resourcesHeld == maxResourcesHeld) {
 			//do something
+			SetFollowTarget(MatchManager.instance.stations[faction]?.GetPlanet());
 		}
 	}
 }
