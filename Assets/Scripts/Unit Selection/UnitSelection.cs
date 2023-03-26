@@ -119,7 +119,26 @@ public class UnitSelection : MonoBehaviour
 
         // Cast a ray from each corner of the selection box to get all units within the box
         DeselectUnits();
-        for (float x = boxStart.x; x < boxEnd.x; x += Mathf.Clamp(boxEnd.x / 2, 5, 10))
+
+		List<Unit> units = MatchManager.instance.stations[MatchManager.instance.playerFaction].factionUnits;
+
+		//world to screen point
+		Vector3 direction;
+		foreach (Unit unit in units) {
+			direction = unit.transform.position - Camera.main.transform.position;
+
+			if (Vector3.Dot(direction, Camera.main.transform.forward) < 0)	continue;
+
+			if (MathUtils.AABB(boxStart, boxEnd,
+				Camera.main.WorldToScreenPoint(unit.transform.position)
+				))
+			{
+				SelectUnit(unit);
+			}
+		}
+
+        /*
+		for (float x = boxStart.x; x < boxEnd.x; x += Mathf.Clamp(boxEnd.x / 2, 5, 10))
         {
             for (float y = boxStart.y; y < boxEnd.y; y += Mathf.Clamp(boxEnd.y / 2, 5, 10))
             {
@@ -139,16 +158,17 @@ public class UnitSelection : MonoBehaviour
                     Unit unit = collider.gameObject.GetComponent<Unit>();
                     if (collider != null && !collider.isTrigger && collider.CompareTag("Unit") && unit != null && unit.GetFaction().SameFaction(playerFaction))
                     {
-                        selectedUnits.Add(collider.gameObject);
                         SelectUnit(unit);
                     }
                 }
             }
         }
+		*/
     }
 
     private void SelectUnit(Unit unit)
     {
+		selectedUnits.Add(unit.gameObject);
         unit.Select();
         unit.OnUnitDestroyed += UnitDestroyed;
     }

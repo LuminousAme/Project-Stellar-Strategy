@@ -36,4 +36,9 @@ public static class MathUtils
 
         return index;
     }
+
+	public static bool AABB(Vector2 lb, Vector2 ub, Vector2 point) {
+		return (lb.x < point.x) && (ub.x > point.x) &&
+				(lb.y < point.y) && (ub.y > point.y);
+	}
 }

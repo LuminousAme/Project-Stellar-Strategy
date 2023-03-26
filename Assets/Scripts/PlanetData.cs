@@ -23,6 +23,10 @@ public class PlanetData : MonoBehaviour
 		extractors.Remove(unit);
 	}
 
+	public bool CheckExtractor(ExtractorUnit unit) {
+		return extractors.Contains(unit);
+	}
+
 	private void Update() {
 		resources = Mathf.Min(resources + generationRate * Time.deltaTime, maxResources);
 

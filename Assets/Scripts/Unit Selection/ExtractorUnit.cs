@@ -21,32 +21,32 @@ public class ExtractorUnit : ShipUnit
 		};
 	}
 
+	Transform prevFollow;
+
 	protected override void Update()
 	{
 		base.Update();
 
-		if (orbitingPlanet && followTarget != orbitingPlanet.transform) {
+		if (orbitingPlanet && followTarget && followTarget.transform != orbitingPlanet.transform) {
 			orbitingPlanet.StopGrabResources(this);
+			orbitingPlanet = null;
 		}
 	}
 
-	protected override void OnTriggerEnter(Collider other)
+	protected void OnTriggerStay(Collider other)
 	{
-		base.OnTriggerEnter(other);
-
-		//if in range to target
-		if (other.transform == followTarget) {
+		//look for what you're following
+		if (followTarget && other.transform == followTarget.transform) {
 			PlanetData data = followTarget.GetComponent<PlanetData>();
 
-			if (data) {
+			if (data && !data.CheckExtractor(this)) {
 				orbitingPlanet = data;
 				orbitingPlanet.GrabResources(this);
-				return;
 			}
 
-			//if not a planet, check if it's the station
+			//check if the station is connected
 			StationUnit station = MatchManager.instance.stations[faction];
-			if (followTarget == station.transform) {
+			if (followTarget == station.GetPlanet()) {
 				float change = Mathf.Min(depositRate * Time.deltaTime, resourcesHeld);
 				resourcesHeld -= change;
 				station.DepositResources(change);
@@ -58,7 +58,7 @@ public class ExtractorUnit : ShipUnit
 	{
 		base.OnTriggerExit(other);
 
-		if (other.transform == orbitingPlanet.transform) {
+		if (orbitingPlanet && other.transform == orbitingPlanet.transform) {
 			orbitingPlanet.StopGrabResources(this);
 			orbitingPlanet = null;
 		}
