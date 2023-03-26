@@ -10,9 +10,12 @@ public class EnergyBlast : MonoBehaviour
     [SerializeField] private int minDamage = 1;
     [SerializeField] MultiParticle impact;
 
+    bool destroying = false;
+    float destroyTimeElapsed = 0.0f;
+
     private void Update()
     {
-        if(target != null)
+        if (!destroying && target != null)
         {
             Vector3 velocity = (target.transform.position - transform.position).normalized * speed;
             transform.position = transform.position + velocity * Time.deltaTime;
@@ -23,6 +26,15 @@ public class EnergyBlast : MonoBehaviour
                 Contact();
             }
         }
+        if(target == null && !destroying)
+        {
+            Contact();
+        }
+        if(destroying)
+        {
+            destroyTimeElapsed += Time.deltaTime;
+            if (destroyTimeElapsed > 0.3f) Destroy(gameObject);
+        }
     }
 
     void Contact()
@@ -30,8 +42,8 @@ public class EnergyBlast : MonoBehaviour
         speed = 0f;
         target.TakeDamage(Random.Range(minDamage, maxDamage + 1));
         target = null;
-        impact.Play();
-        Destroy(gameObject, 0.2f);
+        if(impact != null) impact.Play();
+        destroying = true;
     }
 
     public void SetColor(Color color)
