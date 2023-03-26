@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class MatchManager : MonoBehaviour
 {
+    [Header("Gameplay")]
     public CelestialBody sun;
     public Faction playerFaction;
     public List<Faction> aiFactions = new List<Faction>();
     public GameObject StationPrefab;
+    public GameObject DestroyerPrefab;
+    public int destroyersAtSpawn = 2;
+
+    [Space]
+    [Header("Music")]
     public int intesnityLevelCutoff = 5;
     int numInCombat = 0;
     int desiredIntensity = 0;
@@ -16,6 +22,7 @@ public class MatchManager : MonoBehaviour
     bool acutalInCombat = false;
     float timeSinceCombatStatusChanged = 0.0f;
     bool firstFrame = true;
+    bool secondFrame = false;
 
     // Start is called before the first frame update
     void Start()
@@ -24,10 +31,12 @@ public class MatchManager : MonoBehaviour
         inCombat = false;
         acutalInCombat = false;
         firstFrame = true;
+        secondFrame = false;
     }
 
     private void Update()
     {
+        if (secondFrame) SecondFrame();
         if (firstFrame) FirstFrame();
         UpdateMusic();
     }
@@ -58,6 +67,25 @@ public class MatchManager : MonoBehaviour
         Camera.main.GetComponent<CamController>().LockOnCelestialBody(bodies[bodiesClaimed[0]]);
 
         firstFrame = false;
+        secondFrame = true;
+    }
+
+    void SecondFrame()
+    {
+        for (int i = 0; i< destroyersAtSpawn; i++)
+        {
+            SpawnNewDestroyer(playerFaction);
+        }
+
+        for(int i = 0; i < aiFactions.Count; i++)
+        {
+            for (int j = 0; j < destroyersAtSpawn; j++)
+            {
+                SpawnNewDestroyer(aiFactions[i]);
+            }
+        }
+
+        secondFrame = false;
     }
 
     void PlaceStation(int index, CelestialBody planet, Faction faction)
@@ -66,6 +94,42 @@ public class MatchManager : MonoBehaviour
         StationUnit station = go.GetComponent<StationUnit>();
         station.SetPlanet(planet);
         station.SetFaction(faction);
+    }
+
+    public ShipUnit SpawnNewDestroyer(Faction faction)
+    {
+        StationUnit[] stations = FindObjectsOfType<StationUnit>();
+
+        for (int i = 0; i < stations.Length; i++)
+        {
+            StationUnit station = stations[i];
+            if (!station.GetFaction().SameFaction(faction)) continue;
+
+            Vector3 offset = Random.onUnitSphere;
+            while (offset == Vector3.up || offset == Vector3.down) offset = Random.onUnitSphere;
+            offset.y = 0.0f;
+            offset = offset.normalized;
+            Vector3 newPos = new Vector3(station.transform.position.x + (offset.x * 5.0f), 0.0f, station.transform.position.z + (offset.z * 5.0f));
+
+            GameObject go = Instantiate(DestroyerPrefab, newPos, Quaternion.identity);
+
+            ShipUnit unit = go.GetComponent<ShipUnit>();
+            unit.SetFaction(faction);
+            unit.SetFollowTarget(station.GetPlanet());
+
+            return unit;
+        }
+
+        return null;
+    }
+
+    public ShipUnit SpawnNewDestroyer(int factionIndex)
+    {
+        Faction faction;
+        if (factionIndex >= 0 && factionIndex < aiFactions.Count) faction = aiFactions[factionIndex];
+        else faction = playerFaction;
+
+        return SpawnNewDestroyer(faction);
     }
 
     void UpdateMusic()

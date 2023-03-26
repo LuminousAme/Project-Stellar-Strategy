@@ -1470,7 +1470,7 @@ MonoBehaviour:
   minRadius: 3
   maxRadius: 8
   minOrbitTime: 60
-  maxOrbitTime: 300
+  maxOrbitTime: 600
   shapeSettings:
   - {fileID: 11400000, guid: b39c8cfb0395d8547bc2379589b33540, type: 2}
   - {fileID: 11400000, guid: e3793e6b106a9a7449d58e24b2eb4d09, type: 2}
@@ -1880,7 +1880,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensitivity: {x: 1, y: 0.5}
-  speed: 10
+  speed: 20
   trackingSpeed: 100
   trackingRangeModifier: 2
   maxDist: 1000
@@ -7518,6 +7518,8 @@ MonoBehaviour:
   aiFactions:
   - {fileID: 11400000, guid: 0f435a4b5fe07494298ca512496c0488, type: 2}
   StationPrefab: {fileID: 1419164864128026393, guid: 48c15a3102c389a49ba499d356235e22, type: 3}
+  DestroyerPrefab: {fileID: 2552653394814104322, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
+  destroyersAtSpawn: 5
   intesnityLevelCutoff: 5
 --- !u!4 &1445132875
 Transform:

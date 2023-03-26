@@ -13,10 +13,14 @@ public class StationUnit : Unit
     {
         base.Update();
         if(attachedPlanet != null) transform.position = attachedPlanet.transform.position + offset;
+        Select();
     }
 
     public void SetPlanet(CelestialBody planet)
     {
         attachedPlanet = planet;
+        if (attachedPlanet != null) transform.position = attachedPlanet.transform.position + offset;
     }
+
+    public CelestialBody GetPlanet() => attachedPlanet;
 }
