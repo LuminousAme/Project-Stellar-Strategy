@@ -10,6 +10,7 @@ public class HUD : MonoBehaviour
     public GameObject unitList, unitButtonPrefab;
     public TMP_Text resourcesText;
     public Button buildDestroyerButton, buildExtractorButton;
+    public UnitSelection unitselector;
     private StationUnit playerStation;
     private Dictionary<Unit, GameObject> unitButtonMap = new Dictionary<Unit, GameObject>();
 
@@ -41,7 +42,7 @@ public class HUD : MonoBehaviour
 
     public void BuildNewExtractor()
     {
-        if (playerStation.TrySpendResources(1000)) Debug.Log("Not implemented");
+        if (playerStation.TrySpendResources(1000)) MatchManager.instance.SpawnNewExtractor(-1);
     }
 
     public void Hide(int index)
@@ -91,7 +92,7 @@ public class HUD : MonoBehaviour
     void SelectAndLockOn(Unit unit)
     {
         Camera.main.GetComponent<CamController>().LockOnUnit(unit);
-        //TODO: select unit
+        unitselector.SelectUnit(unit);
     }
 
 }
