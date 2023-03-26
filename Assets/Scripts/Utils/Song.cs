@@ -20,8 +20,9 @@ public class Track
     public string trackName;
     public AudioClip file;
     public int intensityLevel = 0;
-    public float volume = 0.0f;
-    public float fadeTime = 0.0f;
-    public float fadeElapsed = 0.0f;
-    public AudioSource source;
+    [HideInInspector] public float volume = 0.0f;
+    [HideInInspector] public float cachedVolume = 0.0f;
+    [HideInInspector] public float fadeTime = 0.0f;
+    [HideInInspector] public float fadeElapsed = 0.0f;
+    [HideInInspector] public AudioSource source;
 }

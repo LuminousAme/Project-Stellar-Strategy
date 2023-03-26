@@ -169,4 +169,6 @@ public class Unit : MonoBehaviour
     }
 
     public Faction GetFaction() => faction;
+
+    public bool GetInCombat() => currentCombatTarget != null;
 }

@@ -5,10 +5,11 @@ using UnityEngine;
 public class MusicManager : MonoBehaviour
 {
     public Song[] songs;
+    private List<Song> songInstances = new List<Song>();
     private Song currentSong = null;
     private Song oldSong = null;
 
-    public MusicManager instance = null;
+    static public MusicManager instance = null;
 
     private void Start()
     {
@@ -30,19 +31,26 @@ public class MusicManager : MonoBehaviour
     {
         for (int i = 0; i < songs.Length; i++)
         {
-            for (int j = 0; j < songs[i].tracks.Length; j++)
+            songInstances.Add(ScriptableObject.CreateInstance<Song>());
+            songInstances[i].name = songs[i].name;
+            songInstances[i].tracks = songs[i].tracks;
+            songInstances[i].volume = songs[i].volume;
+            songInstances[i].targetMixerGroup = songs[i].targetMixerGroup;
+            songInstances[i].intesnityLevel = songs[i].intesnityLevel;
+
+            for (int j = 0; j < songInstances[i].tracks.Length; j++)
             {
-                GameObject newObj = new GameObject("Music - Song: " + songs[i].name + " Track: " + songs[i].tracks[j].trackName, typeof(AudioSource));
+                GameObject newObj = new GameObject("Music - Song: " + songInstances[i].name + " Track: " + songInstances[i].tracks[j].trackName, typeof(AudioSource));
                 newObj.transform.SetParent(transform);
                 AudioSource source = newObj.GetComponent<AudioSource>();
                 source.playOnAwake = false;
-                source.clip = songs[i].tracks[j].file;
+                source.clip = songInstances[i].tracks[j].file;
                 source.volume = 0.0f;
-                songs[i].tracks[j].volume = 0.0f;
-                source.outputAudioMixerGroup = songs[i].targetMixerGroup;
+                songInstances[i].tracks[j].volume = 0.0f;
+                source.outputAudioMixerGroup = songInstances[i].targetMixerGroup;
                 source.loop = true;
                 source.Stop();
-                songs[i].tracks[j].source = source;
+                songInstances[i].tracks[j].source = source;
             }
         }
     }
@@ -62,7 +70,7 @@ public class MusicManager : MonoBehaviour
         for (int i = 0; i < currentSong.tracks.Length; i++)
         {
             Track track = currentSong.tracks[i];
-            if (track.intensityLevel >= currentSong.intesnityLevel)
+            if (track.intensityLevel <= currentSong.intesnityLevel)
             {
                 if (track.fadeTime <= 0.0f)
                 {
@@ -71,7 +79,7 @@ public class MusicManager : MonoBehaviour
                 }
 
                 float t = Mathf.Clamp01(track.fadeElapsed / track.fadeTime);
-                track.volume = Mathf.Lerp(0.0f, currentSong.volume, t);
+                track.volume = Mathf.Lerp(track.cachedVolume, currentSong.volume, t);
                 track.fadeElapsed += Time.deltaTime;
             }
             else if (track.volume > 0.0f)
@@ -83,7 +91,7 @@ public class MusicManager : MonoBehaviour
                 }
 
                 float t = Mathf.Clamp01(track.fadeElapsed / track.fadeTime);
-                track.volume = Mathf.Lerp(currentSong.volume, 0.0f, t);
+                track.volume = Mathf.Lerp(track.cachedVolume, 0.0f, t);
                 track.fadeElapsed += Time.deltaTime;
             }
         }
@@ -96,15 +104,23 @@ public class MusicManager : MonoBehaviour
         for (int i = 0; i < oldSong.tracks.Length; i++)
         {
             Track track = oldSong.tracks[i];
-            if (track.fadeTime <= 0.0f)
+            if (track.intensityLevel <= currentSong.intesnityLevel)
+            {
+
+                if (track.fadeTime <= 0.0f)
+                {
+                    track.volume = 0.0f;
+                    continue;
+                }
+
+                float t = Mathf.Clamp01(track.fadeElapsed / track.fadeTime);
+                track.volume = Mathf.Lerp(track.cachedVolume, 0.0f, t);
+                track.fadeElapsed += Time.deltaTime;
+            }
+            else
             {
                 track.volume = 0.0f;
-                continue;
             }
-
-            float t = Mathf.Clamp01(track.fadeElapsed / track.fadeTime);
-            track.volume = Mathf.Lerp(currentSong.volume, 0.0f, t);
-            track.fadeElapsed += Time.deltaTime;
         }
     }
 
@@ -120,10 +136,31 @@ public class MusicManager : MonoBehaviour
         }
     }
 
+    public int CurrentIndex()
+    {
+        if (currentSong == null) return -1;
+
+        return songInstances.IndexOf(currentSong);
+    }
+
+    public int GetCurrentIntensity()
+    {
+        if (currentSong == null) return -1;
+
+        return currentSong.intesnityLevel;
+    }
+
+    public void SetCurrentIntensity(int intensity)
+    {
+        if (currentSong == null) return;
+
+        currentSong.intesnityLevel = intensity;
+    }
+
 
     public void PlayAllTracksImmediate(int index)
     {
-        if (index < 0 || index > songs.Length - 1) return;
+        if (index < 0 || index > songInstances.Count - 1) return;
 
         if (currentSong != null)
         {
@@ -131,13 +168,14 @@ public class MusicManager : MonoBehaviour
             currentSong.intesnityLevel = -1;
         }
 
-        currentSong = songs[index];
+        currentSong = songInstances[index];
         oldSong = null;
 
         for (int i = 0; i < currentSong.tracks.Length; i++)
         {
             Track track = currentSong.tracks[i];
             track.volume = currentSong.volume;
+            track.cachedVolume = track.volume;
             track.fadeTime = 0.0f;
 
             AudioSource source = track.source;
@@ -148,15 +186,19 @@ public class MusicManager : MonoBehaviour
 
     public void FadeTracksIn(int index, int intensityLevel, float fadeInTime)
     {
-        if (index < 0 || index > songs.Length - 1) return;
+        if (index < 0 || index > songInstances.Count - 1) return;
 
         oldSong = currentSong;
-        currentSong = songs[index];
+        currentSong = songInstances[index];
 
         if (oldSong != null)
         {
-            SetFadeTimes(oldSong, 0.0f);
-            oldSong.intesnityLevel = -1;
+            SetFadeTimes(oldSong, fadeInTime);
+            for (int i = 0; i < oldSong.tracks.Length; i++)
+            {
+                Track track = oldSong.tracks[i];
+                track.cachedVolume = track.volume;
+            }
         }
         SetFadeTimes(currentSong, fadeInTime);
         currentSong.intesnityLevel = intensityLevel;
@@ -164,6 +206,7 @@ public class MusicManager : MonoBehaviour
         for (int i = 0; i < currentSong.tracks.Length; i++)
         {
             Track track = currentSong.tracks[i];
+            track.cachedVolume = track.volume;
             track.volume = 0.0f;
 
             AudioSource source = track.source;
