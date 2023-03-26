@@ -9,6 +9,7 @@ public class AIPlayer : MonoBehaviour
 	public float minDecisionTime = 1f;
 	public float maxDecisionTime = 5f;
 	public int defenseUnits = 2;
+	public int minAttackUnits = 7;
 
 	public bool alive = true;
 
@@ -34,24 +35,26 @@ public class AIPlayer : MonoBehaviour
 		while (alive) {
 			yield return new WaitForSeconds(Random.Range(minDecisionTime, maxDecisionTime));
 
-			StationUnit closest = null;
-			float dist = float.PositiveInfinity;
-			//do decision
-			foreach (var pair in MatchManager.instance.stations) {
-				if (pair.Value == station)	continue;
+			if (attackUnits.Count - defenseUnits >= minAttackUnits) {
+				StationUnit closest = null;
+				float dist = float.PositiveInfinity;
+				//do decision
+				foreach (var pair in MatchManager.instance.stations) {
+					if (pair.Value == station)	continue;
 
-				//closest check
-				float newDist = Vector3.Distance(pair.Value.transform.position, transform.position);
-				if (newDist < dist) {
-					dist = newDist;
-					closest = pair.Value;
+					//closest check
+					float newDist = Vector3.Distance(pair.Value.transform.position, transform.position);
+					if (newDist < dist) {
+						dist = newDist;
+						closest = pair.Value;
+					}
 				}
-			}
 
-			if (closest) {
-				//make all attackers target this one
-				for (int i = defenseUnits; i < attackUnits.Count; ++i) {
-					attackUnits[i].SetFollowTarget(closest.GetPlanet());
+				if (closest) {
+					//make all attackers target this one
+					for (int i = defenseUnits; i < attackUnits.Count; ++i) {
+						attackUnits[i].SetFollowTarget(closest.GetPlanet());
+					}
 				}
 			}
 		}
