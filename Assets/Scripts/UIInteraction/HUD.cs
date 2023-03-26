@@ -8,6 +8,8 @@ public class HUD : MonoBehaviour
 {
     public List<HUDElement> elements = new List<HUDElement>();
     public GameObject unitList, unitButtonPrefab;
+    public TMP_Text resourcesText;
+    public Button buildDestroyerButton, buildExtractorButton;
     private StationUnit playerStation;
     private Dictionary<Unit, GameObject> unitButtonMap = new Dictionary<Unit, GameObject>();
 
@@ -20,11 +22,26 @@ public class HUD : MonoBehaviour
     private void Update()
     {
         for (int i = 0; i < elements.Count; i++) elements[i].Update();
+
+        if(playerStation)
+        {
+            if (playerStation.GetResources() >= 1000.0f) buildExtractorButton.enabled = true;
+            else buildExtractorButton.enabled = false;
+            if (playerStation.GetResources() >= 2000.0f) buildDestroyerButton.enabled = true;
+            else buildDestroyerButton.enabled = false;
+
+            resourcesText.text = "Resources: " + Mathf.RoundToInt(playerStation.GetResources()).ToString();
+        }
     }
 
     public void BuildNewDestroyer()
     {
-        MatchManager.instance.SpawnNewDestroyer(-1);
+        if(playerStation.TrySpendResources(2000)) MatchManager.instance.SpawnNewDestroyer(-1);
+    }
+
+    public void BuildNewExtractor()
+    {
+        if (playerStation.TrySpendResources(1000)) Debug.Log("Not implemented");
     }
 
     public void Hide(int index)
@@ -36,7 +53,6 @@ public class HUD : MonoBehaviour
     IEnumerator FirstFrame()
     {
         yield return null;
-        //yield return null;
 
         playerStation = MatchManager.instance.stations[MatchManager.instance.playerFaction];
         AddUnit(playerStation);

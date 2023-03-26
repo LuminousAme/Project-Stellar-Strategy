@@ -6,7 +6,7 @@ public class StationUnit : Unit
 {
     [SerializeField] protected Vector3 offset;
     protected CelestialBody attachedPlanet;
-	[SerializeField] protected float resources;
+    [SerializeField] protected float resources;
 	protected List<Unit> managedUnits = new List<Unit>();
 	public System.Action<Unit> onReceivedUnit;
 
@@ -36,4 +36,16 @@ public class StationUnit : Unit
 	public void DepositResources(float amt) {
 		resources += amt;
 	}
+
+    public float GetResources() => resources;
+
+    public bool TrySpendResources(float value)
+    {
+        if (resources >= value)
+        {
+            resources -= value;
+            return true;
+        }
+        else return false;
+    }
 }

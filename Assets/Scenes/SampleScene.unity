@@ -7883,6 +7883,9 @@ MonoBehaviour:
     time: 0.25
   unitList: {fileID: 578925787}
   unitButtonPrefab: {fileID: 8661842520177723490, guid: 21d44666284a6f84bbe38a9f028482be, type: 3}
+  resourcesText: {fileID: 1618328383}
+  buildDestroyerButton: {fileID: 2033002500}
+  buildExtractorButton: {fileID: 1382324063}
 --- !u!1 &1928166635
 GameObject:
   m_ObjectHideFlags: 0
