@@ -6963,6 +6963,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seed: 338
+  randomizeSeed: 1
+  minSeed: 0
+  maxSeed: 25000
   nebulaGenerator: {fileID: 1680789637}
   planetGenerator: {fileID: 844055326}
   starGenerator: {fileID: 983011186}
