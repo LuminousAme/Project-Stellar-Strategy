@@ -12,8 +12,8 @@ public class MultiParticle : MonoBehaviour
     {
         for (int i = 0; i < particles.Count; i++)
         {
-            particles[i].Play();
-            if(sfx != null) sfx.Play(soundSource);
+            if(particles[i] != null) particles[i].Play();
+            if(sfx != null && soundSource != null) sfx.Play(soundSource);
         }
     }
 

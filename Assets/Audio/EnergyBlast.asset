@@ -19,8 +19,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 311874882dcc87845817fe72be2853b0, type: 3}
   - {fileID: 8300000, guid: 89c6874ac0a566c4786fbcc21f226ca6, type: 3}
   - {fileID: 8300000, guid: 03b111e6acd84ae4a8b8984871457417, type: 3}
-  minVolume: 0.8
-  maxVolume: 0.85
+  minVolume: 0.4
+  maxVolume: 0.45
   minPitch: 0.89090383
   maxPitch: 1.1224556
   useSemitones: 1

@@ -1,0 +1,186 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MatchManager : MonoBehaviour
+{
+	public static MatchManager instance;
+
+    [Header("Gameplay")]
+    public CelestialBody sun;
+    public Faction playerFaction;
+    public List<Faction> aiFactions = new List<Faction>();
+    public List<AIPlayer> aiPlayers = new List<AIPlayer>();
+    public StationUnit StationPrefab;
+    public ShipUnit DestroyerPrefab;
+    public int destroyersAtSpawn = 2;
+    public int maxUnits = 50;
+
+    [Space]
+    [Header("Music")]
+    public int intesnityLevelCutoff = 5;
+    int numInCombat = 0;
+    int desiredIntensity = 0;
+
+    bool inCombat = false;
+    bool acutalInCombat = false;
+    float timeSinceCombatStatusChanged = 0.0f;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+		instance = this;
+        MusicManager.instance.FadeTracksIn(1, int.MaxValue, 5f);
+        inCombat = false;
+        acutalInCombat = false;
+
+		StartCoroutine(OrderedFrames());
+    }
+
+	private void OnDestroy()
+	{
+		instance = null;
+	}
+
+    private void Update()
+    {
+        UpdateMusic();
+    }
+
+	IEnumerator OrderedFrames() {
+		yield return null;
+		FirstFrame();
+		yield return null;
+		SecondFrame();
+	}
+
+    void FirstFrame()
+    {
+        CelestialBody[] bodies = FindObjectsOfType<CelestialBody>();
+        List<int> bodiesClaimed = new List<int>();
+
+        //claim one for the player
+        int maxIndex = bodies.Length - 1;
+        int randomIndex = Random.Range(0, maxIndex);
+
+        while(bodies[randomIndex] == sun) randomIndex = Random.Range(0, maxIndex);
+
+        bodiesClaimed.Add(randomIndex);
+        PlaceStation(randomIndex, bodies[randomIndex], playerFaction);
+
+        for(int i = 0; i < aiFactions.Count; i++)
+        {
+            do randomIndex = Random.Range(0, maxIndex);
+            while (bodies[randomIndex] == sun || bodiesClaimed.Contains(randomIndex));
+
+            bodiesClaimed.Add(randomIndex);
+            aiPlayers[i]?.SetStation(PlaceStation(randomIndex, bodies[randomIndex], aiFactions[i]));
+        }
+
+        Camera.main.GetComponent<CamController>().LockOnCelestialBody(bodies[bodiesClaimed[0]]);
+    }
+
+    void SecondFrame()
+    {
+        for (int i = 0; i< destroyersAtSpawn; i++)
+        {
+            SpawnNewDestroyer(playerFaction);
+        }
+
+        for(int i = 0; i < aiFactions.Count; i++)
+        {
+            for (int j = 0; j < destroyersAtSpawn; j++)
+            {
+                SpawnNewDestroyer(aiFactions[i]);
+            }
+        }
+    }
+
+    StationUnit PlaceStation(int index, CelestialBody planet, Faction faction)
+    {
+        StationUnit station = Instantiate(StationPrefab);
+        station.SetPlanet(planet);
+        station.SetFaction(faction);
+
+		return station;
+    }
+
+    public ShipUnit SpawnNewDestroyer(Faction faction)
+    {
+        StationUnit[] stations = FindObjectsOfType<StationUnit>();
+
+        for (int i = 0; i < stations.Length; i++)
+        {
+            StationUnit station = stations[i];
+            if (!station.GetFaction().SameFaction(faction) || station.GetUnitCount() >= maxUnits) continue;
+
+            Vector3 offset = Random.onUnitSphere;
+            while (offset == Vector3.up || offset == Vector3.down) offset = Random.onUnitSphere;
+            offset.y = 0.0f;
+            offset = offset.normalized;
+            Vector3 newPos = new Vector3(station.transform.position.x + (offset.x * 5.0f), 0.0f, station.transform.position.z + (offset.z * 5.0f));
+
+            ShipUnit unit = Instantiate(DestroyerPrefab, newPos, Quaternion.identity);
+
+			station.AddUnit(unit);
+
+            unit.SetFaction(faction);
+            unit.SetFollowTarget(station.GetPlanet());
+
+            return unit;
+        }
+
+        return null;
+    }
+
+    public ShipUnit SpawnNewDestroyer(int factionIndex)
+    {
+        Faction faction;
+        if (factionIndex >= 0 && factionIndex < aiFactions.Count) faction = aiFactions[factionIndex];
+        else faction = playerFaction;
+
+        return SpawnNewDestroyer(faction);
+    }
+
+    void UpdateMusic()
+    {
+        numInCombat = 0;
+
+        Unit[] units = FindObjectsOfType<Unit>();
+        for (int i = 0; i < units.Length; i++)
+        {
+            Unit unit = units[i];
+            if (!playerFaction.SameFaction(unit.GetFaction())) continue;
+
+            if (unit.GetInCombat()) numInCombat++;
+        }
+
+        desiredIntensity = numInCombat / intesnityLevelCutoff;
+        
+        if(numInCombat > 0 && !inCombat)
+        {
+            inCombat = true;
+            timeSinceCombatStatusChanged = 0.0f;
+        }
+        if(numInCombat > 0 && inCombat && !acutalInCombat && timeSinceCombatStatusChanged > 0.2f)
+        {
+            acutalInCombat = true;
+            if (MusicManager.instance.CurrentIndex() != 2) MusicManager.instance.FadeTracksIn(2, 0, 5f);
+        }
+
+        if(numInCombat == 0 && inCombat)
+        {
+            inCombat = false;
+            timeSinceCombatStatusChanged = 0.0f;
+        }
+        if (numInCombat == 0 && !inCombat && acutalInCombat && timeSinceCombatStatusChanged > 1.0f)
+        {
+            acutalInCombat = false;
+            if (MusicManager.instance.CurrentIndex() == 2) MusicManager.instance.FadeTracksIn(1, 0, 5f);
+        }
+
+        if (MusicManager.instance.CurrentIndex() == 2) MusicManager.instance.SetCurrentIntensity(desiredIntensity);
+
+        timeSinceCombatStatusChanged += Time.deltaTime;
+    }
+}

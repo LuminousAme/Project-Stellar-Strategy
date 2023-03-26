@@ -38,6 +38,7 @@ public class Cannon : MonoBehaviour
         if (m_target == null) return;
         eplasedSinceLastFired += Time.deltaTime;
 
+		/*
         Vector3 direction = (m_target.transform.position - transform.position);
         direction.y = 0f;
         direction = direction.normalized;
@@ -49,7 +50,10 @@ public class Cannon : MonoBehaviour
         float angle = Vector3.SignedAngle(noYFacing, direction, Vector3.up);
 
         //transform.Rotate(new Vector3(0.0f, angle, 0.0f), Space.Self);
-        transform.RotateAround(reference.position, reference.up, angle);
+        transform.RotateAround(reference.forward, reference.up, angle);
+		*/
+
+		transform.LookAt(m_target.transform.position, reference.up);
 
         if(!recovering) Fire();
 
@@ -71,11 +75,13 @@ public class Cannon : MonoBehaviour
         recovering = true;
     }
 
+	static Vector3 cannonBack = new Vector3(0f, -1f, 0.1f);
+
     private void Recover()
     {
         if (!recovering) return;
 
-        Vector3 knockedBackPos = barrelPos + (barrel.forward * knockbackDistance);
+        Vector3 knockedBackPos = barrelPos + (cannonBack * knockbackDistance);
         if (eplasedSinceLastFired <= knockBackTime)
         {
             float t = Mathf.Clamp01(eplasedSinceLastFired / knockBackTime);
@@ -88,5 +94,14 @@ public class Cannon : MonoBehaviour
             barrel.localPosition = Vector3.Lerp(knockedBackPos, barrelPos, t);
         }
         else recovering = false;
+    }
+
+    public void SetOffset(int offset)
+    {
+        if(offset > 0)
+        {
+            recovering = true;
+            eplasedSinceLastFired = recoveryTime - (0.2f * offset);
+        }
     }
 }

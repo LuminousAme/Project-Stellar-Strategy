@@ -137,7 +137,7 @@ public class UnitSelection : MonoBehaviour
 
                     Collider collider = hit.collider;
                     Unit unit = collider.gameObject.GetComponent<Unit>();
-                    if (collider != null && collider.CompareTag("Unit") && unit != null && unit.GetFaction().SameFaction(playerFaction))
+                    if (collider != null && !collider.isTrigger && collider.CompareTag("Unit") && unit != null && unit.GetFaction().SameFaction(playerFaction))
                     {
                         selectedUnits.Add(collider.gameObject);
                         SelectUnit(unit);

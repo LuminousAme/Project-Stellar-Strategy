@@ -30,6 +30,13 @@ public class CamController : MonoBehaviour
 		cam = GetComponent<Camera>();
 	}
 
+	//automated interaction
+	public void LockOnCelestialBody(CelestialBody target)
+    {
+		minOffset = target.GetComponent<SphereCollider>().radius + 1f;
+		StartCoroutine(LockOn(target.transform, minOffset * trackingRangeModifier, true));
+	}
+
 	//multitap interaction
 	public void TryLockOn(InputAction.CallbackContext context) {
 		if (!context.performed)	return;
@@ -37,18 +44,18 @@ public class CamController : MonoBehaviour
 		//screen position
 		Ray dir = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
 		RaycastHit hit;
-		if (Physics.Raycast(dir, out hit, maxDist, mask)) {
+		if (Physics.Raycast(dir, out hit, maxDist, mask, QueryTriggerInteraction.Ignore)) {
 			//check if planet (add conditions later)
 			if (hit.transform.gameObject.layer == LayerMask.NameToLayer("CelestialBodies")) {
 				//travel to planet
 				minOffset = hit.transform.GetComponent<SphereCollider>().radius + 1f;
-				StartCoroutine(LockOn(hit.transform, minOffset * trackingRangeModifier));
+				StartCoroutine(LockOn(hit.transform, minOffset * trackingRangeModifier, true));
 				return;
 			}
 			//check if unit
 			if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Units")) {
 				minOffset = hit.transform.GetComponent<BoxCollider>().size.magnitude * 0.5f + 1f;
-				StartCoroutine(LockOn(hit.transform, minOffset * trackingRangeModifier));
+				StartCoroutine(LockOn(hit.transform, minOffset * trackingRangeModifier, false));
 				return;
 			}
 		}
@@ -97,9 +104,9 @@ public class CamController : MonoBehaviour
 
 	static WaitForEndOfFrame eof = new WaitForEndOfFrame();
 
-	IEnumerator LockOn(Transform target, float newOffset) {
+	IEnumerator LockOn(Transform target, float newOffset, bool lockOnRot) {
 		//check if something has already been locked on, if so, break out, let the other take care of it
-		doRot = true;
+		doRot = lockOnRot;
 		offset = newOffset;
 
 		//calc the new offsetRot
@@ -141,7 +148,19 @@ public class CamController : MonoBehaviour
 		isRotating = true;
 		doRot = false;
 
+		if (isMoving) {
+			following = null;
+		}
+
 		Vector3 rot = transform.rotation.eulerAngles;
+		if (rot.x > 180f)
+        {
+			rot.x -= 360f;
+        }
+		if (rot.x < -180f)
+        {
+			rot.x += 360f;
+        }
 
 		Vector2 pos = cursor.position.ReadValue();
 		Cursor.lockState = CursorLockMode.Locked;
