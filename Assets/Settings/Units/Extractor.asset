@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9675bef90e710c74e90938c3c7cf291e, type: 3}
   m_Name: Extractor
   m_EditorClassIdentifier: 
-  maxSpeed: 10
+  maxSpeed: 15
   followDistance: 2
   avoidanceRadius: 3
   baseHealth: 100
-  combatRadius: 5
+  combatRadius: 10

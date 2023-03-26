@@ -16,6 +16,7 @@ public class MatchManager : MonoBehaviour
     public ExtractorUnit ExtractorPrefab;
 	public AIPlayer AIPrefab;
     public int destroyersAtSpawn = 2;
+    public int extractorsAtSpawn = 2;
     public int maxUnits = 50;
 
     [Space]
@@ -94,18 +95,18 @@ public class MatchManager : MonoBehaviour
 
     void SecondFrame()
     {
-        for (int i = 0; i< destroyersAtSpawn; i++)
+        for(int j = -1; j < aiFactions.Count; j++)
         {
-            SpawnNewDestroyer(playerFaction);
+        	for (int i = 0; i < destroyersAtSpawn; i++)
+        	{
+	            SpawnNewDestroyer(j);
+    	    }
+        	for (int i = 0; i < extractorsAtSpawn; i++)
+        	{
+	            SpawnNewExtractor(j);
+    	    }
         }
 
-        for(int i = 0; i < aiFactions.Count; i++)
-        {
-            for (int j = 0; j < destroyersAtSpawn; j++)
-            {
-                SpawnNewDestroyer(aiFactions[i]);
-            }
-        }
     }
 
     StationUnit PlaceStation(int index, CelestialBody planet, Faction faction)
@@ -148,6 +149,39 @@ public class MatchManager : MonoBehaviour
         else faction = playerFaction;
 
         return SpawnNewDestroyer(faction);
+    }
+
+    public ExtractorUnit SpawnNewExtractor(Faction faction)
+    {
+		if (!stations.ContainsKey(faction))	return null;
+		
+		StationUnit station = stations[faction];
+
+        if (station.GetUnitCount() >= maxUnits) return null;
+
+        Vector3 offset = Random.onUnitSphere;
+        while (offset == Vector3.up || offset == Vector3.down) offset = Random.onUnitSphere;
+        offset.y = 0.0f;
+        offset = offset.normalized;
+        Vector3 newPos = new Vector3(station.transform.position.x + (offset.x * 5.0f), 0.0f, station.transform.position.z + (offset.z * 5.0f));
+
+        ExtractorUnit unit = Instantiate(ExtractorPrefab, newPos, Quaternion.identity);
+
+		station.AddUnit(unit);
+
+        unit.SetFaction(faction);
+        unit.SetFollowTarget(station.GetPlanet());
+
+        return unit;
+    }
+
+    public ExtractorUnit SpawnNewExtractor(int factionIndex)
+    {
+        Faction faction;
+        if (factionIndex >= 0 && factionIndex < aiFactions.Count) faction = aiFactions[factionIndex];
+        else faction = playerFaction;
+
+        return SpawnNewExtractor(faction);
     }
 
     void UpdateMusic()

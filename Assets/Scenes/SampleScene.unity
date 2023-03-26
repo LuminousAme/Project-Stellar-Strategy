@@ -1184,7 +1184,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 641834969}
   m_HandleRect: {fileID: 641834968}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -7028,9 +7028,10 @@ MonoBehaviour:
   aiPlayers: []
   StationPrefab: {fileID: 945034296833436700, guid: 48c15a3102c389a49ba499d356235e22, type: 3}
   DestroyerPrefab: {fileID: 2552653394814104347, guid: 87ee696ec1dc42447b028bde49dd471c, type: 3}
-  ExtractorPrefab: {fileID: 0}
+  ExtractorPrefab: {fileID: 9085027180076224319, guid: bba72efdb8ab3374487d8de86cbcd8db, type: 3}
   AIPrefab: {fileID: -4690222704208627798, guid: 179517cf250e28b40b1b53d88035ea74, type: 3}
   destroyersAtSpawn: 5
+  extractorsAtSpawn: 2
   maxUnits: 50
   intesnityLevelCutoff: 5
 --- !u!4 &1445132875
