@@ -7,6 +7,7 @@ public class HUD : MonoBehaviour
 {
     public MatchManager matchManager;
     public List<HUDElement> elements = new List<HUDElement>();
+    public GameObject unitList, unitButtonPrefab;
 
     private void Start()
     {
