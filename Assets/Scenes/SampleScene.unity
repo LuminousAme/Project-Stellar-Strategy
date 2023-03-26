@@ -1793,7 +1793,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensitivity: {x: 1, y: 0.5}
   speed: 10
-  trackingSpeed: 10
+  trackingSpeed: 100
   trackingRangeModifier: 2
   maxDist: 1000
   mask:
