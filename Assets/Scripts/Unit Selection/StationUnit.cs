@@ -8,6 +8,7 @@ public class StationUnit : Unit
     protected CelestialBody attachedPlanet;
 	[SerializeField] protected float resources;
 	protected List<Unit> managedUnits = new List<Unit>();
+	public List<Unit> factionUnits {get => managedUnits;}
 	public System.Action<Unit> onReceivedUnit;
 
     protected override void Update()
