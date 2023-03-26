@@ -1832,7 +1832,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 152.2, y: 194}
+  m_AnchoredPosition: {x: 165.7, y: 194}
   m_SizeDelta: {x: 30, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &919406237
@@ -7005,7 +7005,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 300.09998, y: 148.79999}
+  m_AnchoredPosition: {x: 300, y: 148.79999}
   m_SizeDelta: {x: 600, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1329638516
@@ -7873,13 +7873,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elements:
   - trans: {fileID: 1329638515}
-    shownPosition: {x: -659.9, y: -391.2, z: 0}
-    hidePosition: {x: -1260, y: -391.2, z: 0}
+    shownPosition: {x: 300, y: 148.8, z: 0}
+    hidePosition: {x: -300, y: 148.8, z: 0}
     hidden: 0
     time: 0.25
   - trans: {fileID: 523450330}
-    shownPosition: {x: -811.5, y: 168, z: 0}
-    hidePosition: {x: -1097.4, y: 168, z: 0}
+    shownPosition: {x: 148.5, y: -372, z: 0}
+    hidePosition: {x: -148.5, y: -372, z: 0}
     hidden: 0
     time: 0.25
   unitList: {fileID: 578925787}

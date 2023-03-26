@@ -100,7 +100,7 @@ public class HUD : MonoBehaviour
 [System.Serializable]
 public class HUDElement
 {
-    public Transform trans;
+    public RectTransform trans;
     public Vector3 shownPosition;
     public Vector3 hidePosition;
     public bool hidden = false;
@@ -124,7 +124,7 @@ public class HUDElement
         Vector3 position = Vector3.zero;
         if (hidden) position = Vector3.Lerp(shownPosition, hidePosition, t);
         else position = Vector3.Lerp(hidePosition, shownPosition, t);
-        trans.localPosition = position;
+        trans.anchoredPosition = position;
         elapsed += Time.deltaTime;
     }
 }
