@@ -47,14 +47,14 @@ public class HUD : MonoBehaviour
             }
 
             resourcesText.text = "Resources: " + Mathf.RoundToInt(playerStation.GetResources()).ToString();
+            // Update the color of the button images based on unit health while station is still alive
+            foreach (KeyValuePair<Unit, GameObject> pair in unitButtonMap)
+            {
+                UpdateUnitButtonHealth(pair.Key);
+            }
         }
 
-        // Update the color of the button images based on unit health
-        foreach (KeyValuePair<Unit, GameObject> pair in unitButtonMap)
-        {
-            UpdateUnitButtonColor(pair.Key);
-        }
-
+      
     }
 
     public void BuildNewDestroyer()
@@ -103,7 +103,6 @@ public class HUD : MonoBehaviour
 
         unitButtonMap.Add(unit, go);
 
-      
     }
 
     void RemoveUnit(Unit unit)
@@ -119,7 +118,7 @@ public class HUD : MonoBehaviour
         unitselector.SelectUnit(unit);
     }
 
-    void UpdateUnitButtonColor(Unit unit)
+    void UpdateUnitButtonHealth(Unit unit)
     {
         GameObject go = unitButtonMap[unit];
         Image image = go.GetComponent<Image>();
