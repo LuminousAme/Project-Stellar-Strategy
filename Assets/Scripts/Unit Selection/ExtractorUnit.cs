@@ -72,4 +72,11 @@ public class ExtractorUnit : ShipUnit
 			SetFollowTarget(MatchManager.instance.stations[faction]?.GetPlanet());
 		}
 	}
+
+	public bool Unloading() {
+		return orbitingPlanet && followTarget == MatchManager.instance.stations[faction].GetPlanet();
+	}
+
+	public float GetResources() => resourcesHeld;
+	public float GetRate() => depositRate;
 }

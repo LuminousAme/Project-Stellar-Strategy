@@ -191,6 +191,14 @@ public class CamController : MonoBehaviour
 	IEnumerator Move(InputAction action) {
 		isMoving = true;
 		Vector3 euler = offsetRot.eulerAngles;
+		if (euler.x > 180f)
+		{
+			euler.x -= 360f;
+		}
+		if (euler.x < -180f)
+		{
+			euler.x += 360f;
+		}
 
 		//try locking off if rotating
 		if (isRotating) {
