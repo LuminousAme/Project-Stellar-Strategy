@@ -26,10 +26,25 @@ public class HUD : MonoBehaviour
 
         if(playerStation)
         {
-            if (playerStation.GetResources() >= 1000.0f) buildExtractorButton.enabled = true;
-            else buildExtractorButton.enabled = false;
-            if (playerStation.GetResources() >= 2000.0f) buildDestroyerButton.enabled = true;
-            else buildDestroyerButton.enabled = false;
+            if (playerStation.GetResources() >= 1000.0f)
+            {
+                buildExtractorButton.enabled = true;
+                buildExtractorButton.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(22, 241, 22, 255);
+            }
+            else
+            {
+                buildExtractorButton.enabled = false; buildExtractorButton.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 41, 22, 255);
+            }
+            if (playerStation.GetResources() >= 2000.0f) {
+                buildDestroyerButton.enabled = true;
+                buildDestroyerButton.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(22, 241, 22, 255);
+
+            }
+            else
+            {
+                buildDestroyerButton.enabled = false;
+                buildDestroyerButton.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 41, 22, 255);
+            }
 
             resourcesText.text = "Resources: " + Mathf.RoundToInt(playerStation.GetResources()).ToString();
         }
