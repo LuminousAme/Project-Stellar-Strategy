@@ -39,4 +39,14 @@ public class PlanetData : MonoBehaviour
 			resources -= rate;
 		}
 	}
+
+	public bool HasStation() {
+		foreach (var station in MatchManager.instance.stations) {
+			if (station.Value.GetPlanet().transform == transform) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 }
