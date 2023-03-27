@@ -48,6 +48,13 @@ public class HUD : MonoBehaviour
 
             resourcesText.text = "Resources: " + Mathf.RoundToInt(playerStation.GetResources()).ToString();
         }
+
+        // Update the color of the button images based on unit health
+        foreach (KeyValuePair<Unit, GameObject> pair in unitButtonMap)
+        {
+            UpdateUnitButtonColor(pair.Key);
+        }
+
     }
 
     public void BuildNewDestroyer()
@@ -95,6 +102,8 @@ public class HUD : MonoBehaviour
         });
 
         unitButtonMap.Add(unit, go);
+
+      
     }
 
     void RemoveUnit(Unit unit)
@@ -109,6 +118,15 @@ public class HUD : MonoBehaviour
         Camera.main.GetComponent<CamController>().LockOnUnit(unit);
         unitselector.SelectUnit(unit);
     }
+
+    void UpdateUnitButtonColor(Unit unit)
+    {
+        GameObject go = unitButtonMap[unit];
+        Image image = go.GetComponent<Image>();
+        float healthRatio = unit.GetHealthRatio();
+        image.color = Color.Lerp(Color.red, Color.green, healthRatio);
+    }
+
 
 }
 
