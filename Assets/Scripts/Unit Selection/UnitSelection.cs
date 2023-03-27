@@ -168,7 +168,8 @@ public class UnitSelection : MonoBehaviour
 
     public void SelectUnit(Unit unit)
     {
-		selectedUnits.Add(unit.gameObject);
+		if (!selectedUnits.Contains(unit.gameObject))
+			selectedUnits.Add(unit.gameObject);
         unit.Select();
         unit.OnUnitDestroyed += UnitDestroyed;
     }
