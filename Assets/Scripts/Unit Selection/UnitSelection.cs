@@ -109,9 +109,12 @@ public class UnitSelection : MonoBehaviour
         //iterate over the selected units and updated their targets
         foreach (GameObject selected in selectedUnits)
         {
-            ShipUnit unit = selected.GetComponent<ShipUnit>();
+            //ShipUnit unit = selected.GetComponent<ShipUnit>();
 
-            if(planet) unit.SetFollowTarget(targetCB);
+            if (!selected.TryGetComponent<ShipUnit>(out ShipUnit unit))
+                continue;
+
+            if (planet) unit.SetFollowTarget(targetCB);
             else if (floor) unit.SetSeekTarget(position);
         }
     }

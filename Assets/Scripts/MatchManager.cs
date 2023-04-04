@@ -89,7 +89,7 @@ public class MatchManager : MonoBehaviour
 			stations.Add(aiFactions[i], PlaceStation(randomIndex, bodies[randomIndex], aiFactions[i]));
 			stations[aiFactions[i]].OnUnitDestroyed += unit => {
 				stations.Remove(aiFactions[i]);
-				if (stations.Count == 1) {
+				if (stations.Count == 1 && stations.ContainsKey(playerFaction)) {
 					playerWon?.Invoke();
 				}
 			};
