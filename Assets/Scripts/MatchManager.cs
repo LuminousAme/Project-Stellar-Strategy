@@ -36,9 +36,8 @@ public class MatchManager : MonoBehaviour
     public float masterVolume; //doesnt actually do anything rn
     public float sfxVolume; //doesnt actually do anything rn
 
-
-    Dictionary<Faction, StationUnit> m_stations= new Dictionary<Faction, StationUnit>();
-	public Dictionary<Faction, StationUnit> stations { get => m_stations; }
+	Dictionary<Faction, StationUnit> m_stations= new Dictionary<Faction, StationUnit>();
+    public Dictionary<Faction, StationUnit> stations { get => m_stations; }
 
     // Start is called before the first frame update
     void Start()

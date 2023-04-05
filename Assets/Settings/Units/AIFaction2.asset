@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7434ec3e4b67c641a0d592102823c03, type: 3}
-  m_Name: AIFaction1
+  m_Name: AIFaction2
   m_EditorClassIdentifier: 
-  m_factionName: faction 1
-  m_selectColor: {r: 0, g: 0.2333653, b: 1, a: 1}
-  m_passiveColor: {r: 0, g: 0.23529412, b: 1, a: 1}
+  m_factionName: faction 2
+  m_selectColor: {r: 0, g: 0.7725491, b: 1, a: 1}
+  m_passiveColor: {r: 0, g: 0.7725491, b: 1, a: 1}
