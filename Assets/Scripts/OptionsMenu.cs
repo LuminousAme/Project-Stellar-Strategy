@@ -63,24 +63,56 @@ public class OptionsMenu : MonoBehaviour
 
         List<string> colorNames = new List<string>(colorDict.Keys); //list of names
 
+        //if color is not in dictionary, then add it with the name default
+        if (!colorDict.ContainsValue(player.passiveColor))
+        {
+            // add player.passiveColor to colorDict with name "Default" and add it to the top of the dictionary
+            colorDict = colorDict.OrderByDescending(x => x.Key == "Player Default").ToDictionary(x => x.Key, x => x.Value);
+            colorDict.Add("Player Default", player.passiveColor);
+            colorNames.Insert(0, "Player Default");
+        }
+
+        //if color is not in dictionary, then add it with the name default
+        if (!colorDict.ContainsValue(ai1.passiveColor))
+        {
+            // add player.passiveColor to colorDict with name "Default" and add it to the top of the dictionary
+            colorDict = colorDict.OrderByDescending(x => x.Key == "AI 1 Default").ToDictionary(x => x.Key, x => x.Value);
+            colorDict.Add("AI 1 Default", ai1.passiveColor);
+            colorNames.Insert(0, "AI 1 Default");
+        }
+
+        //if color is not in dictionary, then add it with the name default
+        if (!colorDict.ContainsValue(ai2.passiveColor))
+        {
+            // add player.passiveColor to colorDict with name "Default" and add it to the top of the dictionary
+            colorDict = colorDict.OrderByDescending(x => x.Key == " AI 2 Default").ToDictionary(x => x.Key, x => x.Value);
+            colorDict.Add("AI 2 Default", ai2.passiveColor);
+            colorNames.Insert(0, "AI 2 Default");
+        }
+
         factionColorDropdown.AddOptions(colorNames);
         ai1factionColorDropdown.AddOptions(colorNames);
         ai2factionColorDropdown.AddOptions(colorNames);
-
+        
         // Check if player's passive color is in the dictionary
         if (colorDict.ContainsValue(player.passiveColor))
         { // Set the dropdown value to the corresponding color name
             factionColorDropdown.value = colorNames.IndexOf(colorDict.FirstOrDefault(x => x.Value == player.passiveColor).Key);
+            playerColorPreview.color = player.passiveColor;
         }
+    
         // Check if ai1's passive color is in the dictionary
         if (colorDict.ContainsValue(ai1.passiveColor))
         { // Set the dropdown value to the corresponding color name
             ai1factionColorDropdown.value = colorNames.IndexOf(colorDict.FirstOrDefault(x => x.Value == ai1.passiveColor).Key);
+            ai1ColorPreview.color = ai1.passiveColor;
         }
         // Check if ai2's passive color is in the dictionary
         if (colorDict.ContainsValue(ai2.passiveColor))
         { // Set the dropdown value to the corresponding color name
             ai2factionColorDropdown.value = colorNames.IndexOf(colorDict.FirstOrDefault(x => x.Value == ai2.passiveColor).Key);
+            ai2ColorPreview.color = ai2.passiveColor;
+
         }
 
 
