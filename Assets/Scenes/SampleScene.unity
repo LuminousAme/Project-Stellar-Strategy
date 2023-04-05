@@ -886,6 +886,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9eef2ead53efe3d4b9fff5107573ddc0, type: 2}
   - {fileID: 11400000, guid: aa43140a20cc66f45a1027d8a7604f5d, type: 2}
   - {fileID: 11400000, guid: 4516bc8bca21300458712a83446a686b, type: 2}
+  musicVolume: 0
 --- !u!4 &375431645
 Transform:
   m_ObjectHideFlags: 0
@@ -1401,7 +1402,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -7670,6 +7671,8 @@ MonoBehaviour:
   extractorsAtSpawn: 2
   maxUnits: 50
   intesnityLevelCutoff: 5
+  masterVolume: 0
+  sfxVolume: 0
 --- !u!4 &1445132875
 Transform:
   m_ObjectHideFlags: 0
@@ -8797,7 +8800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
