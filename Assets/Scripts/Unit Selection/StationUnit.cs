@@ -49,4 +49,18 @@ public class StationUnit : Unit
         }
         else return false;
     }
+
+    public int GetOrbitingUnitCount<T>(CelestialBody followTarget = null, float orbitingRange = 100f) {
+        int unitCount = 0;
+
+        if (followTarget == null)
+            followTarget = attachedPlanet;
+
+        foreach (ShipUnit curUnit in managedUnits) {
+            if (curUnit.GetType() == typeof(T) && curUnit.GetFollowTarget() == followTarget && Vector3.Distance(curUnit.transform.position, followTarget.transform.position) <= orbitingRange) {
+                ++unitCount;
+            }
+        }
+        return unitCount;
+    }
 }

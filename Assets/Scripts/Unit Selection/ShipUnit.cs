@@ -56,5 +56,7 @@ public class ShipUnit : Unit
         this.followTarget = followTarget;
     }
 
-
+    public CelestialBody GetFollowTarget() {
+        return followTarget;
+    }
 }

@@ -11,11 +11,15 @@ public class Faction : ScriptableObject
 
     [SerializeField]
     private Color m_selectColor = Color.green;
-    public Color selectedColor { get { return m_selectColor; } }
+    public Color selectedColor { get { return m_selectColor; }
+        set { m_selectColor = value; }
+    }
 
     [SerializeField]
     private Color m_passiveColor = Color.white;
-    public Color passiveColor { get { return m_passiveColor; } }
+    public Color passiveColor { get { return m_passiveColor; }
+        set { m_passiveColor = value; }
+    }
 
     public bool SameFaction(Faction otherFaction)
     {

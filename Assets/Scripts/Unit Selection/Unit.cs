@@ -181,5 +181,10 @@ public class Unit : MonoBehaviour
     public Faction GetFaction() => faction;
     public void SetFaction(Faction faction) => this.faction = faction;
 
+    public float GetHealthRatio()
+    {
+        return (float)currentHealth / unitData.baseHealth;
+    }
+
     public bool GetInCombat() => currentCombatTarget != null;
 }

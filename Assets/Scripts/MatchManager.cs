@@ -31,6 +31,10 @@ public class MatchManager : MonoBehaviour
     bool acutalInCombat = false;
     float timeSinceCombatStatusChanged = 0.0f;
 
+    [Space]
+    [Header("Menu Stuff")] 
+    public float masterVolume; //doesnt actually do anything rn
+    public float sfxVolume; //doesnt actually do anything rn
 
 	Dictionary<Faction, StationUnit> m_stations= new Dictionary<Faction, StationUnit>();
 	public Dictionary<Faction, StationUnit> stations { get => m_stations; }
@@ -56,6 +60,12 @@ public class MatchManager : MonoBehaviour
     private void Update()
     {
         UpdateMusic();
+		
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("Options");
+
+        }
     }
 
 	IEnumerator OrderedFrames() {

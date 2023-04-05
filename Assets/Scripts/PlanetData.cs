@@ -27,13 +27,13 @@ public class PlanetData : MonoBehaviour
 		return extractors.Contains(unit);
 	}
 
-	private void Update() {
-		resources = Mathf.Min(resources + generationRate * Time.deltaTime, maxResources);
+	private void FixedUpdate() {
+		resources = Mathf.Min(resources + generationRate * Time.fixedDeltaTime, maxResources);
 
 		if (extractors.Count == 0)	return;
 
 		//give resources to all in the list, limited by how many resources there are
-		float rate = Mathf.Min(extractionRate * extractors.Count, resources) / extractors.Count;
+		float rate = Mathf.Min(extractors.Count * extractionRate * Time.fixedDeltaTime, resources) / extractors.Count;
 		foreach (ExtractorUnit unit in extractors) {
 			unit.GiveResources(rate);
 			resources -= rate;
@@ -49,4 +49,8 @@ public class PlanetData : MonoBehaviour
 
 		return false;
 	}
+
+	public float GetResources() {
+		return resources;
+    }
 }
