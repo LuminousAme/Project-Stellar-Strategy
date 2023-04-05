@@ -11,9 +11,12 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] PlayerInput playerInput;
     [SerializeField] SceneTransition transition;
     [SerializeField] CamController camController;
+    [SerializeField] LeanTweenHelper tween;
     bool inputActive = true;
     bool inputwasActive = true;
     float timeScale = 0.0f;
+    bool loadingOptions = false;
+    float elapsed = 0.0f;
 
     private void Start()
     {
@@ -23,6 +26,8 @@ public class PauseMenu : MonoBehaviour
         inputActive = true;
         inputwasActive = true;
         playerInput.actions.FindActionMap("Movement").Enable();
+        loadingOptions = false;
+        elapsed = 0.0f;
     }
 
     public void TooglePaused()
@@ -44,10 +49,24 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
+        if(loadingOptions)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            if(elapsed > 1.5f)
+            {
+                SceneManager.LoadSceneAsync("Options", LoadSceneMode.Additive);
+                loadingOptions = false;
+            }
+        }
+
         if(inputActive != inputwasActive)
         {
             inputwasActive = inputActive;
-            if(inputActive) playerInput.actions.FindActionMap("Movement").Enable();
+            if (inputActive)
+            {
+                tween.BeginTween(0);
+                playerInput.actions.FindActionMap("Movement").Enable();
+            }
             else playerInput.actions.FindActionMap("Movement").Disable();
         }
 
@@ -64,7 +83,9 @@ public class PauseMenu : MonoBehaviour
 
     public void OpenOptions()
     {
-        SceneManager.LoadSceneAsync("Options", LoadSceneMode.Additive);
+        tween.BeginTween(2);
+        loadingOptions = true;
+        elapsed = 0.0f;
     }
     
     public void ReturnToMenu()

@@ -80,7 +80,7 @@ public class MusicManager : MonoBehaviour
 
                 float t = Mathf.Clamp01(track.fadeElapsed / track.fadeTime);
                 track.volume = Mathf.Lerp(track.cachedVolume, currentSong.volume, t);
-                track.fadeElapsed += Time.deltaTime;
+                track.fadeElapsed += Time.unscaledDeltaTime;
             }
             else if (track.volume > 0.0f)
             {
@@ -92,7 +92,7 @@ public class MusicManager : MonoBehaviour
 
                 float t = Mathf.Clamp01(track.fadeElapsed / track.fadeTime);
                 track.volume = Mathf.Lerp(track.cachedVolume, 0.0f, t);
-                track.fadeElapsed += Time.deltaTime;
+                track.fadeElapsed += Time.unscaledDeltaTime;
             }
         }
     }
@@ -115,7 +115,7 @@ public class MusicManager : MonoBehaviour
 
                 float t = Mathf.Clamp01(track.fadeElapsed / track.fadeTime);
                 track.volume = Mathf.Lerp(track.cachedVolume, 0.0f, t);
-                track.fadeElapsed += Time.deltaTime;
+                track.fadeElapsed += Time.unscaledDeltaTime;
             }
             else
             {

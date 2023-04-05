@@ -129,7 +129,7 @@ public class HUD : MonoBehaviour
         GameObject go = unitButtonMap[unit];
         Image image = go.GetComponent<Image>();
 		if (isUnit && unit.isSelected) {
-			image.color = new Color(0.5f, 0.5f, 0f);
+			image.color = new Color(1.0f, 0.5f, 0.05f);
 		}
 		else {
         	float healthRatio = unit.GetHealthRatio();

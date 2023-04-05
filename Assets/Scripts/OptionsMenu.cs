@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -26,6 +27,7 @@ public class OptionsMenu : MonoBehaviour
     public Image ai2ColorPreview;
 
     [SerializeField] private SceneTransition transition;
+    [SerializeField] LeanTweenHelper tween;
 
     [Space]
     [Header("Audio")]
@@ -33,20 +35,19 @@ public class OptionsMenu : MonoBehaviour
 
     [SerializeField] private Slider masterVol, musicVol, sfxVol;
 
+    bool unloading = false;
+    float elapsed = 0.0f;
+
     // Start is called before the first frame update
     private void Start()
     {
+        unloading = false;
+        elapsed = 0.0f;
+
         if (GameSettings.instance.LastScene != "MainMenu")
         {
-            transition.gameObject.SetActive(false);
             cam.gameObject.SetActive(false);
             EventSystem.SetActive(false);
-            Image image = transition.GetImage();
-            Color fadecol = image.color;
-            fadecol.a = 0.0f;
-            image.color = fadecol;
-            image.raycastTarget = false;
-            image.maskable = false;
 
             Color col = background.color;
             col.a = 1.0f;
@@ -180,6 +181,19 @@ public class OptionsMenu : MonoBehaviour
         sfxVol.value = GameSettings.instance.SFXVolume;
     }
 
+    private void Update()
+    {
+        if(unloading)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            if(elapsed > 1.5f)
+            {
+                SceneManager.UnloadSceneAsync("Options");
+                unloading = false;
+            }
+        }
+    }
+
     // Callback for audio settings selection
     public void SetMasterVolume(float value)
     {
@@ -257,6 +271,9 @@ public class OptionsMenu : MonoBehaviour
             transition.beginTransition("MainMenu");
 
         else
-            SceneManager.UnloadSceneAsync("Options");
+        {
+            tween.BeginTween(2);
+            unloading = true;
+        }
     }
 }
