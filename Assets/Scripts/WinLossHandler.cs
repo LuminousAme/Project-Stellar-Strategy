@@ -19,6 +19,7 @@ public class WinLossHandler : MonoBehaviour
     }
 
 	private void OnDestroy() {
+		Time.timeScale = 0;
 		if (gameObject.activeInHierarchy || MatchManager.instance == null)	return;
 
 		MatchManager.instance.playerWon -= Win;
@@ -33,7 +34,7 @@ public class WinLossHandler : MonoBehaviour
 		HUD.SetActive(false);
 		gameObject.SetActive(true);
 
-		StartCoroutine(SlowTime(1f));
+		StartCoroutine(SlowTime(10f));
 	}
 
 	IEnumerator SlowTime(float duration) {
@@ -41,7 +42,7 @@ public class WinLossHandler : MonoBehaviour
 		while (counter > 0) {
 			Time.timeScale = counter / duration;
 
-			counter += Time.unscaledDeltaTime;
+			counter -= Time.unscaledDeltaTime;
 			yield return null;
 		}
 		Time.timeScale = 0f;
