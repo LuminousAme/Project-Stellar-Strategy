@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MatchManager : MonoBehaviour
 {
@@ -39,15 +40,18 @@ public class MatchManager : MonoBehaviour
 	Dictionary<Faction, StationUnit> m_stations= new Dictionary<Faction, StationUnit>();
 	public Dictionary<Faction, StationUnit> stations { get => m_stations; }
 
+	private void Awake() {
+		instance = this;
+	}
+
     // Start is called before the first frame update
     void Start()
     {
-		instance = this;
         MusicManager.instance.FadeTracksIn(1, int.MaxValue, 5f);
         inCombat = false;
         acutalInCombat = false;
 
-		while (aiPlayers.Count < aiFactions.Count) aiPlayers.Add(Instantiate(AIPrefab));
+		while (aiPlayers.Count < aiFactions.Count) aiPlayers.Add(null);
 
 		StartCoroutine(OrderedFrames());
     }

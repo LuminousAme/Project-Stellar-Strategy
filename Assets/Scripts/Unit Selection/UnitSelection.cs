@@ -50,7 +50,8 @@ public class UnitSelection : MonoBehaviour
 			startPos = Vector2.left;
 		}
 		//then get rid of it
-		DeselectUnits();
+		if (gameObject.scene.isLoaded)
+			DeselectUnits();
 	}
 
     public void SelectUnitAction(InputAction.CallbackContext context)

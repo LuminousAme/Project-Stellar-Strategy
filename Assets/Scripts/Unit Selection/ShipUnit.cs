@@ -44,14 +44,14 @@ public class ShipUnit : Unit
         }
     }
 
-    public void SetSeekTarget(Vector3 targetPosition)
+    public virtual void SetSeekTarget(Vector3 targetPosition)
     {
         followTarget = null;
         targetPosition.y = transform.position.y;
         if (agent != null) agent.destination = targetPosition;
     }
 
-    public void SetFollowTarget(CelestialBody followTarget)
+    public virtual void SetFollowTarget(CelestialBody followTarget)
     {
         this.followTarget = followTarget;
     }
