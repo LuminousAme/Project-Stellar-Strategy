@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,13 +8,20 @@ using UnityEngine.UI;
 //https://www.red-gate.com/simple-talk/development/dotnet-development/how-to-create-a-settings-menu-in-unity/
 public class OptionsMenu : MonoBehaviour
 {
-    [SerializeField] private TMP_Dropdown factionColorDropdown, ai1factionColorDropdown, ai2factionColorDropdown;
     [SerializeField] private TMP_Dropdown resolutionDropdown;
     [SerializeField] private TMP_Dropdown qualityDropdown;
     private Resolution[] resolutions;
 
- 
-    // Dictionary of color names and RGB values
+    [Space]
+    [Header("Faction Colors")]
+    [SerializeField] private TMP_Dropdown factionColorDropdown;
+    [SerializeField] private TMP_Dropdown ai1factionColorDropdown;
+    [SerializeField] private TMP_Dropdown ai2factionColorDropdown;
+    public Image playerColorPreview;
+    public Image ai1ColorPreview;
+    public Image ai2ColorPreview;
+
+    // Dictionary of color names and their RGB values
     private Dictionary<string, Color> colorDict = new Dictionary<string, Color>
     {
         {"Red", Color.red},
@@ -26,6 +32,15 @@ public class OptionsMenu : MonoBehaviour
         {"White", Color.white},
         {"Black", Color.black},
         {"Grey", Color.gray},
+        {"Light Pastel Green", new  Color(0.698039216f, 0.984313725f, 0.647058824f)},
+        {"Green Teal", new Color(0.0470588235f, 0.709803922f, 0.466666667f)},
+        {"Strong Pink", new Color(1f, 0.0274509804f, 0.537254902f)},
+        {"Bland", new Color(0.68627451f, 0.658823529f, 0.545098039f)},
+        {"Deep Aqua", new Color(0.031372549f, 0.470588235f, 0.498039216f)},
+        {"Lavender Pink", new Color(0.866666667f, 0.521568627f, 0.843137255f)},
+        {"Light Moss Green", new Color(0.650980392f, 0.784313725f, 0.458823529f)},
+        {"Light Seafoam Green", new Color(0.654901961f, 1f, 0.709803922f)},
+        {"Olive Yellow", new Color(0.760784314f, 0.717647059f, 0.0352941176f)}
     };
 
     [SerializeField] private Faction player, ai1, ai2;
@@ -43,7 +58,7 @@ public class OptionsMenu : MonoBehaviour
         ai1factionColorDropdown.ClearOptions();
         ai2factionColorDropdown.ClearOptions();
 
-        List<string> colorNames = new List<string>(colorDict.Keys);
+        List<string> colorNames = new List<string>(colorDict.Keys); //list of names
 
         factionColorDropdown.AddOptions(colorNames);
         ai1factionColorDropdown.AddOptions(colorNames);
@@ -81,8 +96,6 @@ public class OptionsMenu : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        // Update UI elements based on current settings (e.g., load saved settings)
-        masterVol.onValueChanged.AddListener(SetMasterVolume);
     }
 
     // Callback for audio settings selection
@@ -99,22 +112,25 @@ public class OptionsMenu : MonoBehaviour
         Color selectedColor = colorDict[factionColorDropdown.options[index].text];
         // MatchManager.instance.playerFaction.passiveColor = selectedColor;
         player.passiveColor = selectedColor;
+        playerColorPreview.color = selectedColor;
     }
 
     public void OnColorSelectedAI1(int index)
     {
         // Get selected color value from dictionary and set it on the Faction
         Color selectedColor = colorDict[ai1factionColorDropdown.options[index].text];
-        // MatchManager.instance.playerFaction.passiveColor = selectedColor;
+        //  MatchManager.instance.aiFactions[0].passiveColor = selectedColor;
         ai1.passiveColor = selectedColor;
+        ai1ColorPreview.color = selectedColor;
     }
 
     public void OnColorSelectedAI2(int index)
     {
         // Get selected color value from dictionary and set it on the Faction
         Color selectedColor = colorDict[ai2factionColorDropdown.options[index].text];
-        // MatchManager.instance.playerFaction.passiveColor = selectedColor;
+        // MatchManager.instance.aiFactions[0].passiveColor = selectedColor;
         ai2.passiveColor = selectedColor;
+        ai2ColorPreview.color = selectedColor;
     }
 
     public void SetFullscreen(bool isFullscreen)
