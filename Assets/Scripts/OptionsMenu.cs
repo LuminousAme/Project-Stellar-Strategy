@@ -24,30 +24,6 @@ public class OptionsMenu : MonoBehaviour
 
     SceneTransition transition;
 
-    // Dictionary of color names and their RGB values
-    private Dictionary<string, Color> colorDict = new Dictionary<string, Color>
-    {
-        {"Red", Color.red},
-        {"Blue", Color.blue},
-        {"Yellow", Color.yellow},
-        {"Cyan", Color.cyan},
-        {"Magenta", Color.magenta},
-        {"White", Color.white},
-        {"Black", Color.black},
-        {"Grey", Color.gray},
-        {"Light Pastel Green", new  Color(0.698039216f, 0.984313725f, 0.647058824f)},
-        {"Green Teal", new Color(0.0470588235f, 0.709803922f, 0.466666667f)},
-        {"Strong Pink", new Color(1f, 0.0274509804f, 0.537254902f)},
-        {"Bland", new Color(0.68627451f, 0.658823529f, 0.545098039f)},
-        {"Deep Aqua", new Color(0.031372549f, 0.470588235f, 0.498039216f)},
-        {"Lavender Pink", new Color(0.866666667f, 0.521568627f, 0.843137255f)},
-        {"Light Moss Green", new Color(0.650980392f, 0.784313725f, 0.458823529f)},
-        {"Light Seafoam Green", new Color(0.654901961f, 1f, 0.709803922f)},
-        {"Olive Yellow", new Color(0.760784314f, 0.717647059f, 0.0352941176f)}
-    };
-
-    [SerializeField] private Faction player, ai1, ai2;
-
     [Space]
     [Header("Audio")]
     public AudioMixer audioMixer;
@@ -61,58 +37,80 @@ public class OptionsMenu : MonoBehaviour
         ai1factionColorDropdown.ClearOptions();
         ai2factionColorDropdown.ClearOptions();
 
-        List<string> colorNames = new List<string>(colorDict.Keys); //list of names
+        List<string> colorNames = new List<string>(GameSettings.instance.colorDict.Keys); //list of names
 
+        //get the color from the settings
+        if(GameSettings.instance.colorDict.ContainsKey(GameSettings.instance.playerfactionColor))
+        {
+            GameSettings.instance.player.selectedColor = GameSettings.instance.colorDict[GameSettings.instance.playerfactionColor];
+        }
         //if color is not in dictionary, then add it with the name default
-        if (!colorDict.ContainsValue(player.passiveColor))
+        else if (!GameSettings.instance.colorDict.ContainsValue(GameSettings.instance.player.selectedColor))
         {
             // add player.passiveColor to colorDict with name "Default" and add it to the top of the dictionary
-            colorDict = colorDict.OrderByDescending(x => x.Key == "Player Default").ToDictionary(x => x.Key, x => x.Value);
-            colorDict.Add("Player Default", player.passiveColor);
+            GameSettings.instance.colorDict = GameSettings.instance.colorDict.OrderByDescending(x => x.Key == "Player Default").ToDictionary(x => x.Key, x => x.Value);
+            GameSettings.instance.colorDict.Add("Player Default", GameSettings.instance.player.selectedColor);
             colorNames.Insert(0, "Player Default");
+            GameSettings.instance.playerfactionColor = "Player Default";
         }
 
-        //if color is not in dictionary, then add it with the name default
-        if (!colorDict.ContainsValue(ai1.passiveColor))
+        //get the color from the settings
+        if (GameSettings.instance.colorDict.ContainsKey(GameSettings.instance.ai1factionColor))
         {
-            // add player.passiveColor to colorDict with name "Default" and add it to the top of the dictionary
-            colorDict = colorDict.OrderByDescending(x => x.Key == "AI 1 Default").ToDictionary(x => x.Key, x => x.Value);
-            colorDict.Add("AI 1 Default", ai1.passiveColor);
+            GameSettings.instance.ai1.passiveColor = GameSettings.instance.colorDict[GameSettings.instance.ai1factionColor];
+            GameSettings.instance.ai1.selectedColor = GameSettings.instance.colorDict[GameSettings.instance.ai1factionColor];
+        }
+        //if color is not in dictionary, then add it with the name default
+        else if (!GameSettings.instance.colorDict.ContainsValue(GameSettings.instance.ai1.passiveColor))
+        {
+            // add player.selectedColor to colorDict with name "Default" and add it to the top of the dictionary
+            GameSettings.instance.colorDict = GameSettings.instance.colorDict.OrderByDescending(x => x.Key == "AI 1 Default").ToDictionary(x => x.Key, x => x.Value);
+            GameSettings.instance.colorDict.Add("AI 1 Default", GameSettings.instance.ai1.passiveColor);
             colorNames.Insert(0, "AI 1 Default");
+            GameSettings.instance.ai1factionColor = "AI 1 Default";
         }
 
-        //if color is not in dictionary, then add it with the name default
-        if (!colorDict.ContainsValue(ai2.passiveColor))
+
+        //get the color from the settings
+        if (GameSettings.instance.colorDict.ContainsKey(GameSettings.instance.ai2factionColor))
         {
-            // add player.passiveColor to colorDict with name "Default" and add it to the top of the dictionary
-            colorDict = colorDict.OrderByDescending(x => x.Key == " AI 2 Default").ToDictionary(x => x.Key, x => x.Value);
-            colorDict.Add("AI 2 Default", ai2.passiveColor);
-            colorNames.Insert(0, "AI 2 Default");
+            GameSettings.instance.ai2.passiveColor = GameSettings.instance.colorDict[GameSettings.instance.ai2factionColor];
+            GameSettings.instance.ai2.selectedColor = GameSettings.instance.colorDict[GameSettings.instance.ai2factionColor];
         }
+        //if color is not in dictionary, then add it with the name default
+        else if (!GameSettings.instance.colorDict.ContainsValue(GameSettings.instance.ai2.passiveColor))
+        {
+            // add player.selectedColor to colorDict with name "Default" and add it to the top of the dictionary
+            GameSettings.instance.colorDict = GameSettings.instance.colorDict.OrderByDescending(x => x.Key == " AI 2 Default").ToDictionary(x => x.Key, x => x.Value);
+            GameSettings.instance.colorDict.Add("AI 2 Default", GameSettings.instance.ai2.passiveColor);
+            colorNames.Insert(0, "AI 2 Default");
+            GameSettings.instance.ai2factionColor = "AI 2 Default";
+        }
+
+
 
         factionColorDropdown.AddOptions(colorNames);
         ai1factionColorDropdown.AddOptions(colorNames);
         ai2factionColorDropdown.AddOptions(colorNames);
         
         // Check if player's passive color is in the dictionary
-        if (colorDict.ContainsValue(player.passiveColor))
+        if (GameSettings.instance.colorDict.ContainsValue(GameSettings.instance.player.selectedColor))
         { // Set the dropdown value to the corresponding color name
-            factionColorDropdown.value = colorNames.IndexOf(colorDict.FirstOrDefault(x => x.Value == player.passiveColor).Key);
-            playerColorPreview.color = player.passiveColor;
+            factionColorDropdown.value = colorNames.IndexOf(GameSettings.instance.colorDict.FirstOrDefault(x => x.Value == GameSettings.instance.player.selectedColor).Key);
+            playerColorPreview.color = GameSettings.instance.player.selectedColor;
         }
     
         // Check if ai1's passive color is in the dictionary
-        if (colorDict.ContainsValue(ai1.passiveColor))
+        if (GameSettings.instance.colorDict.ContainsValue(GameSettings.instance.ai1.passiveColor))
         { // Set the dropdown value to the corresponding color name
-            ai1factionColorDropdown.value = colorNames.IndexOf(colorDict.FirstOrDefault(x => x.Value == ai1.passiveColor).Key);
-            ai1ColorPreview.color = ai1.passiveColor;
+            ai1factionColorDropdown.value = colorNames.IndexOf(GameSettings.instance.colorDict.FirstOrDefault(x => x.Value == GameSettings.instance.ai1.passiveColor).Key);
+            ai1ColorPreview.color = GameSettings.instance.ai1.passiveColor;
         }
         // Check if ai2's passive color is in the dictionary
-        if (colorDict.ContainsValue(ai2.passiveColor))
+        if (GameSettings.instance.colorDict.ContainsValue(GameSettings.instance.ai2.passiveColor))
         { // Set the dropdown value to the corresponding color name
-            ai2factionColorDropdown.value = colorNames.IndexOf(colorDict.FirstOrDefault(x => x.Value == ai2.passiveColor).Key);
-            ai2ColorPreview.color = ai2.passiveColor;
-
+            ai2factionColorDropdown.value = colorNames.IndexOf(GameSettings.instance.colorDict.FirstOrDefault(x => x.Value == GameSettings.instance.ai2.passiveColor).Key);
+            ai2ColorPreview.color = GameSettings.instance.ai2.passiveColor;
         }
 
 
@@ -136,83 +134,101 @@ public class OptionsMenu : MonoBehaviour
         }
 
         resolutionDropdown.AddOptions(options);
+        resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
 
+        qualityDropdown.ClearOptions();
+        List<string> qualityOptions = new List<string>();
+        int currentQualityIndex = QualitySettings.GetQualityLevel();
+        for(int i = 0; i < QualitySettings.names.Length; i++)
+        {
+            qualityOptions.Add(QualitySettings.names[i]);
+        }
+        qualityDropdown.AddOptions(qualityOptions);
+        qualityDropdown.value = currentQualityIndex;
         qualityDropdown.RefreshShownValue();
 
         // audio
-        masterVol.value = MatchManager.instance.masterVolume;
-        musicVol.value = MusicManager.instance.musicVolume;
-        sfxVol.value = MatchManager.instance.sfxVolume;
+        masterVol.value = GameSettings.instance.masterVolume;
+        musicVol.value = GameSettings.instance.musicVolume;
+        sfxVol.value = GameSettings.instance.SFXVolume;
 
         transition = GetComponent<SceneTransition>();
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-    }
-
     // Callback for audio settings selection
-    private void SetMasterVolume(float value)
+    public void SetMasterVolume(float value)
     {
         audioMixer.SetFloat("MasterVolume", value);
-        // Get the selected audio volume level
-        MatchManager.instance.masterVolume = value;
+        GameSettings.instance.masterVolume = value;
+    }
+
+    public void SetMusicVolume(float value)
+    {
+        audioMixer.SetFloat("MusicVolume", value);
+        GameSettings.instance.musicVolume = value;
+    }
+
+    public void SetSFXVolume(float value)
+    {
+        audioMixer.SetFloat("SFXVolume", value);
+        GameSettings.instance.SFXVolume = value;
     }
 
     public void OnColorSelected(int index)
     {
         // Get selected color value from dictionary and set it on the Faction
-        Color selectedColor = colorDict[factionColorDropdown.options[index].text];
+        Color selectedColor = GameSettings.instance.colorDict[factionColorDropdown.options[index].text];
         // MatchManager.instance.playerFaction.passiveColor = selectedColor;
-        player.passiveColor = selectedColor;
+        GameSettings.instance.player.selectedColor = selectedColor;
         playerColorPreview.color = selectedColor;
+        GameSettings.instance.playerfactionColor = factionColorDropdown.options[index].text;
     }
 
     public void OnColorSelectedAI1(int index)
     {
         // Get selected color value from dictionary and set it on the Faction
-        Color selectedColor = colorDict[ai1factionColorDropdown.options[index].text];
+        Color selectedColor = GameSettings.instance.colorDict[ai1factionColorDropdown.options[index].text];
         //  MatchManager.instance.aiFactions[0].passiveColor = selectedColor;
-        ai1.passiveColor = selectedColor;
+        GameSettings.instance.ai1.passiveColor = selectedColor;
+        GameSettings.instance.ai1.selectedColor = selectedColor;
         ai1ColorPreview.color = selectedColor;
+        GameSettings.instance.ai1factionColor = ai1factionColorDropdown.options[index].text;
     }
 
     public void OnColorSelectedAI2(int index)
     {
         // Get selected color value from dictionary and set it on the Faction
-        Color selectedColor = colorDict[ai2factionColorDropdown.options[index].text];
+        Color selectedColor = GameSettings.instance.colorDict[ai2factionColorDropdown.options[index].text];
         // MatchManager.instance.aiFactions[0].passiveColor = selectedColor;
-        ai2.passiveColor = selectedColor;
+        GameSettings.instance.ai2.passiveColor = selectedColor;
+        GameSettings.instance.ai2.selectedColor = selectedColor;
         ai2ColorPreview.color = selectedColor;
+        GameSettings.instance.ai2factionColor = ai2factionColorDropdown.options[index].text;
     }
 
-    public void SetFullscreen(bool isFullscreen)
+    public void SetFullscreen()
     {
-        Screen.fullScreen = isFullscreen;
+        bool fullscreen = !GameSettings.instance.fullscreen;
+        Screen.fullScreen = fullscreen;
+        GameSettings.instance.fullscreen = fullscreen;
     }
 
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        GameSettings.instance.resolutionIndex = resolutionIndex;
     }
 
     public void SetQuality(int qIndex)
     {
         QualitySettings.SetQualityLevel(qIndex);
+        GameSettings.instance.graphicsQuality = qIndex;
     }
 
-    public void SetTextureQuality(int textureIndex)
-    {
-        QualitySettings.masterTextureLimit = textureIndex;
-        qualityDropdown.value = 6;
-    }
-
-    //go to game rn just for dev purposes
     public void Back()
     {
-        transition.beginTransition("SampleScene");
+        transition.beginTransition(GameSettings.instance.LastScene);
     }
 }

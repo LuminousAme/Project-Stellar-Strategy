@@ -9,8 +9,6 @@ public class MusicManager : MonoBehaviour
     private Song currentSong = null;
     private Song oldSong = null;
 
-    public float musicVolume; //doesnt actually do anything rn
-
     static public MusicManager instance = null;
 
     private void Start()

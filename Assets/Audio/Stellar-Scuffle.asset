@@ -18,6 +18,7 @@ MonoBehaviour:
     file: {fileID: 8300000, guid: 2fe799d5832eae345ab1d72b83e86a11, type: 3}
     intensityLevel: 0
     volume: 0
+    cachedVolume: 0
     fadeTime: 0
     fadeElapsed: 0
     source: {fileID: 0}
@@ -25,6 +26,7 @@ MonoBehaviour:
     file: {fileID: 8300000, guid: 7b2ef84d24183e845a702e347b07f45e, type: 3}
     intensityLevel: 0
     volume: 0
+    cachedVolume: 0
     fadeTime: 0
     fadeElapsed: 0
     source: {fileID: 0}
@@ -32,6 +34,7 @@ MonoBehaviour:
     file: {fileID: 8300000, guid: 21c9863eef9b02c4da53616ea12661df, type: 3}
     intensityLevel: 0
     volume: 0
+    cachedVolume: 0
     fadeTime: 0
     fadeElapsed: 0
     source: {fileID: 0}
@@ -39,6 +42,7 @@ MonoBehaviour:
     file: {fileID: 8300000, guid: 454ca3c34fb633b49a6b5e645624e18d, type: 3}
     intensityLevel: 0
     volume: 0
+    cachedVolume: 0
     fadeTime: 0
     fadeElapsed: 0
     source: {fileID: 0}
@@ -46,6 +50,7 @@ MonoBehaviour:
     file: {fileID: 8300000, guid: 55c3b8938f221704bbf0efe87425a710, type: 3}
     intensityLevel: 0
     volume: 0
+    cachedVolume: 0
     fadeTime: 0
     fadeElapsed: 0
     source: {fileID: 0}
@@ -53,6 +58,7 @@ MonoBehaviour:
     file: {fileID: 8300000, guid: 1c1fe9facf9ea9b4884daf21e6848d35, type: 3}
     intensityLevel: 1
     volume: 0
+    cachedVolume: 0
     fadeTime: 0
     fadeElapsed: 0
     source: {fileID: 0}
@@ -60,9 +66,10 @@ MonoBehaviour:
     file: {fileID: 8300000, guid: 6f9221baf3319d14290139f0e494a39b, type: 3}
     intensityLevel: 2
     volume: 0
+    cachedVolume: 0
     fadeTime: 0
     fadeElapsed: 0
     source: {fileID: 0}
   volume: 1
-  targetMixerGroup: {fileID: 0}
+  targetMixerGroup: {fileID: -4739365466128842902, guid: a2f3b33c2af16214fbf20c92f4717561, type: 2}
   intesnityLevel: 2147483647

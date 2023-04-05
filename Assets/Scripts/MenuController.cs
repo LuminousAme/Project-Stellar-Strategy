@@ -9,6 +9,8 @@ public class MenuController : MonoBehaviour
 
     private void Start()
     {
+        GameSettings.instance.LastScene = "MainMenu";
+
         if (MusicManager.instance.CurrentIndex() != 0)
             MusicManager.instance.FadeTracksIn(0, int.MaxValue, 5f);
 
