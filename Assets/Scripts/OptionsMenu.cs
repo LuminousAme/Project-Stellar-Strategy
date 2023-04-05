@@ -22,6 +22,8 @@ public class OptionsMenu : MonoBehaviour
     public Image ai1ColorPreview;
     public Image ai2ColorPreview;
 
+    SceneTransition transition;
+
     // Dictionary of color names and their RGB values
     private Dictionary<string, Color> colorDict = new Dictionary<string, Color>
     {
@@ -110,6 +112,8 @@ public class OptionsMenu : MonoBehaviour
         masterVol.value = MatchManager.instance.masterVolume;
         musicVol.value = MusicManager.instance.musicVolume;
         sfxVol.value = MatchManager.instance.sfxVolume;
+
+        transition = GetComponent<SceneTransition>();
     }
 
     // Update is called once per frame
@@ -177,6 +181,6 @@ public class OptionsMenu : MonoBehaviour
     //go to game rn just for dev purposes
     public void Back()
     {
-        SceneManager.LoadScene("SampleScene");
+        transition.beginTransition("SampleScene");
     }
 }
