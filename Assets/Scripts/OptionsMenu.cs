@@ -5,11 +5,12 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using TMPro;
 
-
+//https://www.red-gate.com/simple-talk/development/dotnet-development/how-to-create-a-settings-menu-in-unity/ 
 public class OptionsMenu : MonoBehaviour
 {
     [SerializeField] private TMP_Dropdown factionColorDropdown;
     [SerializeField] private TMP_Dropdown resolutionDropdown;
+    [SerializeField] private TMP_Dropdown qualityDropdown;
     Resolution[] resolutions;
 
 
@@ -39,10 +40,12 @@ public class OptionsMenu : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.RefreshShownValue();
 
+        qualityDropdown.RefreshShownValue();
+
         // audio
-        // masterVol.value = MatchManager.instance.masterVolume;
-        // musicVol.value = MusicManager.instance.musicVolume;
-        // sfxVol.value = MatchManager.instance.sfxVolume;
+         masterVol.value = MatchManager.instance.masterVolume;
+        musicVol.value = MusicManager.instance.musicVolume;
+         sfxVol.value = MatchManager.instance.sfxVolume;
     }
 
     // Update is called once per frame
@@ -70,6 +73,17 @@ public class OptionsMenu : MonoBehaviour
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width,
             resolution.height, Screen.fullScreen);
+    }
+
+    public void SetQuality(int qIndex)
+    {
+        QualitySettings.SetQualityLevel(qIndex);
+    }
+
+    public void SetTextureQuality(int textureIndex)
+    {
+        QualitySettings.masterTextureLimit = textureIndex;
+        qualityDropdown.value = 6;
     }
 
 }
