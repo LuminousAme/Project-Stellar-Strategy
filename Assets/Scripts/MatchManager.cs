@@ -44,7 +44,7 @@ public class MatchManager : MonoBehaviour
     {
 		instance = this;
         GameSettings.instance.LastScene = "SampleScene";
-        MusicManager.instance.FadeTracksIn(1, int.MaxValue, 5f);
+        if(MusicManager.instance.CurrentIndex() != 1) MusicManager.instance.FadeTracksIn(1, int.MaxValue, 5f);
         inCombat = false;
         acutalInCombat = false;
 
