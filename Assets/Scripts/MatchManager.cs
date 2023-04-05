@@ -31,8 +31,13 @@ public class MatchManager : MonoBehaviour
     bool acutalInCombat = false;
     float timeSinceCombatStatusChanged = 0.0f;
 
+    [Space]
+    [Header("Menu Stuff")] 
+    public float masterVolume; //doesnt actually do anything rn
+    public float sfxVolume; //doesnt actually do anything rn
 
-	Dictionary<Faction, StationUnit> m_stations= new Dictionary<Faction, StationUnit>();
+
+    Dictionary<Faction, StationUnit> m_stations= new Dictionary<Faction, StationUnit>();
 	public Dictionary<Faction, StationUnit> stations { get => m_stations; }
 
     // Start is called before the first frame update
