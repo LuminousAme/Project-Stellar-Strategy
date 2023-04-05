@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: AIFaction1
   m_EditorClassIdentifier: 
   m_factionName: faction 1
-  m_selectColor: {r: 0, g: 0.2333653, b: 1, a: 1}
-  m_passiveColor: {r: 0, g: 0.23529413, b: 1, a: 1}
+  m_selectColor: {r: 0, g: 0.060156107, b: 1, a: 1}
+  m_passiveColor: {r: 0, g: 0.058823533, b: 1, a: 1}

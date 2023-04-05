@@ -26,6 +26,6 @@ MonoBehaviour:
   useSemitones: 1
   minSemitones: -2
   maxSemitones: 2
-  targetMixerGroup: {fileID: 0}
+  targetMixerGroup: {fileID: -6030633051337213269, guid: a2f3b33c2af16214fbf20c92f4717561, type: 2}
   clipPlayOrder: 0
   previewer: {fileID: 0}

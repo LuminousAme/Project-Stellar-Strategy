@@ -27,6 +27,7 @@ public class Unit : MonoBehaviour
     float timeElapsedSinceDestroyed = 0.0f;
     [SerializeField] protected float destroyedTime = 2f;
     int expolsionIndex = 1;
+    bool selected = false;
 
     protected virtual void Start()
     {
@@ -43,10 +44,19 @@ public class Unit : MonoBehaviour
             main.startColor = faction.selectedColor;
         }
         for (int i = 0; i < cannons.Count; i++) cannons[i].SetColor(faction.selectedColor);
+        selected = false;
     }
 
     protected virtual void Update()
     {
+        if((selected && cirlce.color != faction.selectedColor)
+            || !selected && cirlce.color != faction.passiveColor)
+        {
+            if (selected) cirlce.color = faction.selectedColor;
+            if (!selected) cirlce.color = faction.passiveColor;
+            for (int i = 0; i < cannons.Count; i++) cannons[i].SetColor(faction.selectedColor);
+        }
+
         float t = Mathf.Clamp01((float)currentHealth / (float)maxHealth);
         healthSlider.value = t;
 
@@ -83,11 +93,13 @@ public class Unit : MonoBehaviour
     public void Select()
     {
         cirlce.color = faction.selectedColor;
+        selected = true;
     }
 
     public void Deleselect()
     {
         cirlce.color = faction.passiveColor;
+        selected = false;
     }
 
     protected virtual void OnTriggerEnter(Collider other)

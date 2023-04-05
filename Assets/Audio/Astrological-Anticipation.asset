@@ -17,10 +17,11 @@ MonoBehaviour:
   - trackName: Astrological-Anticipation
     file: {fileID: 8300000, guid: f72a3b1f390e06141b471c88b30924c5, type: 3}
     intensityLevel: 0
-    volume: 0
-    fadeTime: 0
-    fadeElapsed: 0
+    volume: 1
+    cachedVolume: 0
+    fadeTime: 5
+    fadeElapsed: 26.034662
     source: {fileID: 0}
   volume: 1
-  targetMixerGroup: {fileID: 0}
+  targetMixerGroup: {fileID: -4739365466128842902, guid: a2f3b33c2af16214fbf20c92f4717561, type: 2}
   intesnityLevel: 2147483647

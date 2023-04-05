@@ -5,29 +5,40 @@ using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
-    [SerializeField]
+    SceneTransition transition;
 
+    private void Start()
+    {
+        GameSettings.instance.LastScene = "MainMenu";
 
+        if (MusicManager.instance.CurrentIndex() != 0)
+            MusicManager.instance.FadeTracksIn(0, int.MaxValue, 5f);
+
+        transition = GetComponent<SceneTransition>();
+    }
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("SampleScene");
+        transition.beginTransition("SampleScene");
     }
 
     public void OpenSettings()
     {
-        SceneManager.LoadScene("Options");
-
+        transition.beginTransition("Options");
     }
 
     public void OpenCredits()
     {
-        SceneManager.LoadScene("Credits");
-
+        transition.beginTransition("Credits");
     }
 
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void OpenMainMenu()
+    {
+        transition.beginTransition("MainMenu");
     }
 }
