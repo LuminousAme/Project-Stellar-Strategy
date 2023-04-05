@@ -52,6 +52,11 @@ public class Unit : MonoBehaviour
 
         if(destroyed)
         {
+            if (timeElapsedSinceDestroyed >= destroyedTime) {
+				Destroy(gameObject);
+				return;
+			}
+
             t = Mathf.Clamp01(timeElapsedSinceDestroyed / destroyedTime);
             float scale = Mathf.Lerp(1.0f, 0.0f, t);
             cirlce.transform.localScale = new Vector3(scale, scale, scale);
@@ -59,8 +64,6 @@ public class Unit : MonoBehaviour
             Image hp2 = healthSlider.transform.GetChild(1).GetComponent<Image>();
             hp1.color = new Color(hp1.color.r, hp1.color.g, hp1.color.b, scale);
             hp2.color = new Color(hp2.color.r, hp2.color.g, hp2.color.b, scale);
-
-            if (timeElapsedSinceDestroyed >= destroyedTime) Destroy(gameObject);
 
             float explodeTime = (0.6f * destroyedTime) / (float)Expolsions.Count;
             if (timeElapsedSinceDestroyed >= explodeTime * expolsionIndex && expolsionIndex < Expolsions.Count)
@@ -156,6 +159,13 @@ public class Unit : MonoBehaviour
             destroyed = true;
         }
     }
+
+	//make sure we invoke this function
+	private void OnDestroy() {
+		if (!destroyed && gameObject.scene.isLoaded) {
+            OnUnitDestroyed?.Invoke(this);
+		}
+	}
 
     protected virtual void CombatUpdate()
     {

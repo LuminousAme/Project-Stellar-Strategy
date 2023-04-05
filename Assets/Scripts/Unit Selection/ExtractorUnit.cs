@@ -44,12 +44,14 @@ public class ExtractorUnit : ShipUnit
 				orbitingPlanet.GrabResources(this);
 			}
 
-			//check if the station is connected
-			StationUnit station = MatchManager.instance.stations[faction];
-			if (followTarget == station.GetPlanet()) {
-				float change = Mathf.Min(depositRate * Time.deltaTime, resourcesHeld);
-				resourcesHeld -= change;
-				station.DepositResources(change);
+			//check if the station is connected/exists
+			StationUnit station;
+			if (MatchManager.instance.stations.TryGetValue(faction, out station)) {
+				if (followTarget == station.GetPlanet()) {
+					float change = Mathf.Min(depositRate * Time.deltaTime, resourcesHeld);
+					resourcesHeld -= change;
+					station.DepositResources(change);
+				}
 			}
 		}
 	}
@@ -69,7 +71,7 @@ public class ExtractorUnit : ShipUnit
 
 		if (resourcesHeld == maxResourcesHeld) {
 			//do something
-			SetFollowTarget(MatchManager.instance.stations[faction]?.GetPlanet());
+			SetFollowTarget(MatchManager.instance.stations.GetValueOrDefault(faction, null)?.GetPlanet());
 		}
 	}
 

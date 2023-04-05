@@ -88,14 +88,15 @@ public class MatchManager : MonoBehaviour
             bodiesClaimed.Add(randomIndex);
 			stations.Add(aiFactions[i], PlaceStation(randomIndex, bodies[randomIndex], aiFactions[i]));
 			stations[aiFactions[i]].OnUnitDestroyed += unit => {
-				stations.Remove(aiFactions[i]);
+				stations.Remove(unit.GetFaction());
 				if (stations.Count == 1) {
 					playerWon?.Invoke();
 				}
 			};
 
+			//makes em self destroying
 			if (!aiPlayers[i]) {
-				aiPlayers[i] = Instantiate(AIPrefab);
+				aiPlayers[i] = Instantiate(AIPrefab, stations[aiFactions[i]].transform);
 			}
             aiPlayers[i].SetStation(stations[aiFactions[i]]);
         }

@@ -41,8 +41,22 @@ public class UnitSelection : MonoBehaviour
         }
     }
 
+	private void OnDisable() {
+		//finish selection
+		if (selectionBox.activeInHierarchy)
+		{
+			selectionBox.SetActive(false);
+			//SelectUnits();
+			startPos = Vector2.left;
+		}
+		//then get rid of it
+		DeselectUnits();
+	}
+
     public void SelectUnitAction(InputAction.CallbackContext context)
     {
+		if (!enabled)	return;
+
 		//to avoid annoying lag
 		if (context.started && !EventSystem.current.IsPointerOverGameObject())
 		{
@@ -68,7 +82,7 @@ public class UnitSelection : MonoBehaviour
 
     public void SelectTarget(InputAction.CallbackContext context)
     {
-        if (!context.performed || EventSystem.current.IsPointerOverGameObject())	return;
+        if (!enabled || !context.performed || EventSystem.current.IsPointerOverGameObject())	return;
 
         //do some raycasts to determine what, if anything, the selected units should be moving towards
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -188,8 +202,10 @@ public class UnitSelection : MonoBehaviour
         }
     }
 
-    private void DeselectUnits()
+    public void DeselectUnits()
     {
+		if (selectedUnits.Count <= 0)	return;
+		
         for(int i = 0; i < selectedUnits.Count; i++)
         {
             Unit unit = selectedUnits[i].GetComponent<Unit>();
@@ -198,5 +214,4 @@ public class UnitSelection : MonoBehaviour
         }
         selectedUnits.Clear();
     }
-
 }

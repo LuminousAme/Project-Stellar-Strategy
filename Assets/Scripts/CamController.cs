@@ -131,7 +131,7 @@ public class CamController : MonoBehaviour
 		while (following) {
 			//do rotation only while doRot is true and not masnually rotating (which also resets doRot)
 			if (doRot && !isRotating) {
-				transform.rotation = Quaternion.RotateTowards(transform.rotation, offsetRot, 360f * Time.deltaTime);
+				transform.rotation = Quaternion.RotateTowards(transform.rotation, offsetRot, 360f * Time.unscaledDeltaTime);
 				if (transform.rotation == offsetRot) {
 					doRot = false;
 				}
@@ -143,7 +143,7 @@ public class CamController : MonoBehaviour
 				transform.position = Vector3.Lerp(transform.position, targetPos, 0.01f);
 			}
 			else {
-				transform.position = Vector3.MoveTowards(transform.position, targetPos, trackingSpeed * Time.deltaTime);
+				transform.position = Vector3.MoveTowards(transform.position, targetPos, trackingSpeed * Time.unscaledDeltaTime);
 			}
 
 			yield return eof;
@@ -209,7 +209,7 @@ public class CamController : MonoBehaviour
 		bool lockedOn = following;
 
 		while (isMoving) {
-			Vector3 change = action.ReadValue<Vector3>() * speed * Time.deltaTime;
+			Vector3 change = action.ReadValue<Vector3>() * speed * Time.unscaledDeltaTime;
 			//is locked on
 			if (following) {
 				if (!lockedOn) {
