@@ -13,12 +13,21 @@ public class HUD : MonoBehaviour
     public UnitSelection unitselector;
     private StationUnit playerStation;
     private Dictionary<Unit, GameObject> unitButtonMap = new Dictionary<Unit, GameObject>();
+	[SerializeField]	UnityEngine.InputSystem.InputAction selectLockOn;
 
     private void Start()
     {
         for (int i = 0; i < elements.Count; i++) elements[i].Start();
         StartCoroutine(FirstFrame());
     }
+
+	private void OnEnable() {
+		selectLockOn.Enable();
+	}
+
+	private void OnDisable() {
+		selectLockOn.Disable();
+	}
 
     private void Update()
     {
@@ -33,7 +42,8 @@ public class HUD : MonoBehaviour
             }
             else
             {
-                buildExtractorButton.enabled = false; buildExtractorButton.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 41, 22, 255);
+                buildExtractorButton.enabled = false;
+				buildExtractorButton.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 41, 22, 255);
             }
             if (playerStation.GetResources() >= 2000.0f) {
                 buildDestroyerButton.enabled = true;
@@ -50,7 +60,7 @@ public class HUD : MonoBehaviour
             // Update the color of the button images based on unit health while station is still alive
             foreach (KeyValuePair<Unit, GameObject> pair in unitButtonMap)
             {
-                UpdateUnitButtonHealth(pair.Key);
+                UpdateUnitButtonHealth(pair.Key, playerStation != pair.Key);
             }
         }
 
@@ -97,8 +107,10 @@ public class HUD : MonoBehaviour
         Button button = go.GetComponent<Button>();
 
         button.onClick.AddListener(() =>
-        {
-            SelectAndLockOn(unit);
+		{	
+			unitselector.ToggleSelect(unit);
+			if (selectLockOn.IsPressed())
+				Camera.main.GetComponent<CamController>().LockOnUnit(unit);
         });
 
         unitButtonMap.Add(unit, go);
@@ -112,18 +124,17 @@ public class HUD : MonoBehaviour
         Destroy(go);
     }
 
-    void SelectAndLockOn(Unit unit)
-    {
-        Camera.main.GetComponent<CamController>().LockOnUnit(unit);
-        unitselector.SelectUnit(unit);
-    }
-
-    void UpdateUnitButtonHealth(Unit unit)
+    void UpdateUnitButtonHealth(Unit unit, bool isUnit)
     {
         GameObject go = unitButtonMap[unit];
         Image image = go.GetComponent<Image>();
-        float healthRatio = unit.GetHealthRatio();
-        image.color = Color.Lerp(Color.red, Color.green, healthRatio);
+		if (isUnit && unit.isSelected) {
+			image.color = new Color(0.5f, 0.5f, 0f);
+		}
+		else {
+        	float healthRatio = unit.GetHealthRatio();
+        	image.color = Color.Lerp(Color.red, Color.blue, healthRatio);
+		}
     }
 
 
