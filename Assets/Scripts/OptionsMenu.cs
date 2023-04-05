@@ -1,51 +1,40 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using TMPro;
+using UnityEngine.UI;
 
-//https://www.red-gate.com/simple-talk/development/dotnet-development/how-to-create-a-settings-menu-in-unity/ 
+//https://www.red-gate.com/simple-talk/development/dotnet-development/how-to-create-a-settings-menu-in-unity/
 public class OptionsMenu : MonoBehaviour
 {
     [SerializeField] private TMP_Dropdown factionColorDropdown, ai1factionColorDropdown, ai2factionColorDropdown;
     [SerializeField] private TMP_Dropdown resolutionDropdown;
     [SerializeField] private TMP_Dropdown qualityDropdown;
-    Resolution[] resolutions;
-    
+    private Resolution[] resolutions;
+
+ 
     // Dictionary of color names and RGB values
-   private Dictionary<string, Color> colorDict = new Dictionary<string, Color>
+    private Dictionary<string, Color> colorDict = new Dictionary<string, Color>
     {
         {"Red", Color.red},
-        {"Green", Color.green},
         {"Blue", Color.blue},
         {"Yellow", Color.yellow},
         {"Cyan", Color.cyan},
         {"Magenta", Color.magenta},
         {"White", Color.white},
         {"Black", Color.black},
+        {"Grey", Color.gray},
     };
-
-    [Serializable]
-    public struct ColorStuff
-    {
-        public string name;
-        [ColorUsageAttribute(true, true, 0f, 8f, 0.125f, 3f)]
-        public Color colour;
-    }
-
-    public ColorStuff[] colors;
-
 
     [SerializeField] private Faction player, ai1, ai2;
 
     [Space]
     [Header("Audio")]
+    public AudioMixer audioMixer;
 
-    public AudioMixer audioMixer; 
     [SerializeField] private Slider masterVol, musicVol, sfxVol;
-
 
     // Start is called before the first frame update
     private void Start()
@@ -55,7 +44,7 @@ public class OptionsMenu : MonoBehaviour
         ai2factionColorDropdown.ClearOptions();
 
         List<string> colorNames = new List<string>(colorDict.Keys);
-       
+
         factionColorDropdown.AddOptions(colorNames);
         ai1factionColorDropdown.AddOptions(colorNames);
         ai2factionColorDropdown.AddOptions(colorNames);
@@ -77,17 +66,16 @@ public class OptionsMenu : MonoBehaviour
                 && resolutions[i].height == Screen.currentResolution.height)
                 currentResolutionIndex = i;
         }
-        
+
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.RefreshShownValue();
 
         qualityDropdown.RefreshShownValue();
 
         // audio
-         masterVol.value = MatchManager.instance.masterVolume;
+        masterVol.value = MatchManager.instance.masterVolume;
         musicVol.value = MusicManager.instance.musicVolume;
-         sfxVol.value = MatchManager.instance.sfxVolume;
-
+        sfxVol.value = MatchManager.instance.sfxVolume;
     }
 
     // Update is called once per frame
@@ -104,15 +92,14 @@ public class OptionsMenu : MonoBehaviour
         // Get the selected audio volume level
         MatchManager.instance.masterVolume = value;
     }
-    
+
     public void OnColorSelected(int index)
     {
         // Get selected color value from dictionary and set it on the Faction
         Color selectedColor = colorDict[factionColorDropdown.options[index].text];
-       // MatchManager.instance.playerFaction.passiveColor = selectedColor;
-       player.passiveColor = selectedColor;
+        // MatchManager.instance.playerFaction.passiveColor = selectedColor;
+        player.passiveColor = selectedColor;
     }
-
 
     public void OnColorSelectedAI1(int index)
     {
@@ -156,7 +143,5 @@ public class OptionsMenu : MonoBehaviour
     public void Back()
     {
         SceneManager.LoadScene("SampleScene");
-
     }
-
 }

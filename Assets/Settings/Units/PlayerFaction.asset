@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: PlayerFaction
   m_EditorClassIdentifier: 
   m_factionName: Player
+  m_selectColor: {r: 0, g: 1, b: 0, a: 1}
+  m_passiveColor: {r: 0, g: 1, b: 0, a: 1}
