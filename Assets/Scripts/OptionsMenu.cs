@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -63,6 +64,24 @@ public class OptionsMenu : MonoBehaviour
         factionColorDropdown.AddOptions(colorNames);
         ai1factionColorDropdown.AddOptions(colorNames);
         ai2factionColorDropdown.AddOptions(colorNames);
+
+        // Check if player's passive color is in the dictionary
+        if (colorDict.ContainsValue(player.passiveColor))
+        { // Set the dropdown value to the corresponding color name
+            factionColorDropdown.value = colorNames.IndexOf(colorDict.FirstOrDefault(x => x.Value == player.passiveColor).Key);
+        }
+        // Check if ai1's passive color is in the dictionary
+        if (colorDict.ContainsValue(ai1.passiveColor))
+        { // Set the dropdown value to the corresponding color name
+            ai1factionColorDropdown.value = colorNames.IndexOf(colorDict.FirstOrDefault(x => x.Value == ai1.passiveColor).Key);
+        }
+        // Check if ai2's passive color is in the dictionary
+        if (colorDict.ContainsValue(ai2.passiveColor))
+        { // Set the dropdown value to the corresponding color name
+            ai2factionColorDropdown.value = colorNames.IndexOf(colorDict.FirstOrDefault(x => x.Value == ai2.passiveColor).Key);
+        }
+
+
         factionColorDropdown.RefreshShownValue();
         ai1factionColorDropdown.RefreshShownValue();
         ai2factionColorDropdown.RefreshShownValue();
