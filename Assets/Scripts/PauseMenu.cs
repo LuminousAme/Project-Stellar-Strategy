@@ -69,7 +69,6 @@ public class PauseMenu : MonoBehaviour
     
     public void ReturnToMenu()
     {
-        Time.timeScale = timeScale;
         transition.beginTransition("MainMenu");
     }
 

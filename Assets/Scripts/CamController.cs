@@ -89,20 +89,20 @@ public class CamController : MonoBehaviour
 	public void MoveCamera(InputAction.CallbackContext context) {
 		//thing is bering weird
 		/*
-		if (context.started && !EventSystem.current.IsPointerOverGameObject()) {
+		if (enabled && context.started && !EventSystem.current.IsPointerOverGameObject()) {
 			StartCoroutine(Move(context.action));
 		}
 		if (context.canceled) {
 			isMoving = false;
 		}
 		/*/
-		if (enabled && context.performed) {
+		if (context.performed) {
 			//if reset
 			if (context.ReadValue<Vector3>() == Vector3.zero) {
 				isMoving = false;
 			}
 			//if moving
-			else if (!isMoving) {
+			else if (enabled && !isMoving) {
 				StartCoroutine(Move(context.action));
 			}
 		}

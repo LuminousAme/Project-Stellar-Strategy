@@ -19,7 +19,7 @@ public class WinLossHandler : MonoBehaviour
     }
 
 	private void OnDestroy() {
-		Time.timeScale = 0;
+		Time.timeScale = 1;
 		if (gameObject.activeInHierarchy || MatchManager.instance == null)	return;
 
 		MatchManager.instance.playerWon -= Win;

@@ -173,6 +173,10 @@ public class LeanTweenHelper : MonoBehaviour
                 }
             }
 
+			if (tween != null) {
+				tween.setIgnoreTimeScale(true);
+			}
+
             //when the tween finishes it will fire off the event with a rerefence to this helper and the index of the tween
             tween.setOnComplete(delegate ()
             {

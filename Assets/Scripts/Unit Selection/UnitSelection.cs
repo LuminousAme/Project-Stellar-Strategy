@@ -189,13 +189,32 @@ public class UnitSelection : MonoBehaviour
 		*/
     }
 
+	public void ToggleSelect(Unit unit)
+	{
+		if (selectedUnits.Contains(unit.gameObject)) {
+			DeselectUnit(unit);
+		}
+		else {
+			SelectUnit(unit);
+		}
+	}
+
     public void SelectUnit(Unit unit)
     {
-		if (!selectedUnits.Contains(unit.gameObject))
+		if (!selectedUnits.Contains(unit.gameObject)) {
 			selectedUnits.Add(unit.gameObject);
-        unit.Select();
-        unit.OnUnitDestroyed += UnitDestroyed;
+        	unit.Select();
+        	unit.OnUnitDestroyed += UnitDestroyed;
+		}
     }
+
+	public void DeselectUnit(Unit unit)
+	{
+		if (selectedUnits.Remove(unit.gameObject)) {
+			unit.Deleselect();
+			unit.OnUnitDestroyed -= UnitDestroyed;
+		}
+	}
 
     private void UnitDestroyed(Unit unit)
     {
@@ -213,8 +232,9 @@ public class UnitSelection : MonoBehaviour
         for(int i = 0; i < selectedUnits.Count; i++)
         {
             Unit unit = selectedUnits[i].GetComponent<Unit>();
-            unit.OnUnitDestroyed -= UnitDestroyed;
-            unit.Deleselect();
+
+			unit.OnUnitDestroyed -= UnitDestroyed;
+			unit.Deleselect();
         }
         selectedUnits.Clear();
     }

@@ -17,7 +17,7 @@ public class Unit : MonoBehaviour
     [SerializeField] protected List<MultiParticle> Expolsions;
 
     protected int maxHealth;
-    protected int currentHealth;
+    [SerializeField] protected int currentHealth;
     protected List<Unit> enemyUnitsInCombatRange = new List<Unit>();
     protected Unit currentCombatTarget;
 
@@ -28,6 +28,7 @@ public class Unit : MonoBehaviour
     [SerializeField] protected float destroyedTime = 2f;
     int expolsionIndex = 1;
     bool selected = false;
+	public bool isSelected => selected;
 
     protected virtual void Start()
     {
