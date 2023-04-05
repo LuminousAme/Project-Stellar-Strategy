@@ -46,7 +46,7 @@ public class CamController : MonoBehaviour
 
 	//multitap interaction
 	public void TryLockOn(InputAction.CallbackContext context) {
-		if (!context.performed || EventSystem.current.IsPointerOverGameObject())	return;
+		if (!enabled || !context.performed || EventSystem.current.IsPointerOverGameObject())	return;
 
 		//screen position
 		Ray dir = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -72,13 +72,13 @@ public class CamController : MonoBehaviour
 	}
 
 	public void StopTracking(InputAction.CallbackContext context) {
-		if (!context.started)	return;
+		if (!enabled || !context.started)	return;
 
 		following = null;
 	}
 
 	public void RotateCamera(InputAction.CallbackContext context) {
-		if (context.performed && !EventSystem.current.IsPointerOverGameObject()) {
+		if (enabled && context.performed && !EventSystem.current.IsPointerOverGameObject()) {
 			StartCoroutine(Rotate(Mouse.current));
 		}
 		if (context.canceled) {
@@ -96,7 +96,7 @@ public class CamController : MonoBehaviour
 			isMoving = false;
 		}
 		/*/
-		if (context.performed) {
+		if (enabled && context.performed) {
 			//if reset
 			if (context.ReadValue<Vector3>() == Vector3.zero) {
 				isMoving = false;
