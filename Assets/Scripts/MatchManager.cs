@@ -61,12 +61,6 @@ public class MatchManager : MonoBehaviour
     private void Update()
     {
         UpdateMusic();
-		
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneManager.LoadScene("Options");
-
-        }
     }
 
 	IEnumerator OrderedFrames() {

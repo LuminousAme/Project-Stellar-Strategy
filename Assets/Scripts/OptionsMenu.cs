@@ -9,6 +9,9 @@ using UnityEngine.UI;
 //https://www.red-gate.com/simple-talk/development/dotnet-development/how-to-create-a-settings-menu-in-unity/
 public class OptionsMenu : MonoBehaviour
 {
+    [SerializeField] private Camera cam;
+    [SerializeField] private GameObject EventSystem;
+    [SerializeField] private Image background;
     [SerializeField] private TMP_Dropdown resolutionDropdown;
     [SerializeField] private TMP_Dropdown qualityDropdown;
     private Resolution[] resolutions;
@@ -22,7 +25,7 @@ public class OptionsMenu : MonoBehaviour
     public Image ai1ColorPreview;
     public Image ai2ColorPreview;
 
-    SceneTransition transition;
+    [SerializeField] private SceneTransition transition;
 
     [Space]
     [Header("Audio")]
@@ -33,6 +36,29 @@ public class OptionsMenu : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        if (GameSettings.instance.LastScene != "MainMenu")
+        {
+            transition.gameObject.SetActive(false);
+            cam.gameObject.SetActive(false);
+            EventSystem.SetActive(false);
+            Image image = transition.GetImage();
+            Color fadecol = image.color;
+            fadecol.a = 0.0f;
+            image.color = fadecol;
+            image.raycastTarget = false;
+            image.maskable = false;
+
+            Color col = background.color;
+            col.a = 1.0f;
+            background.color = col;
+        }
+        else
+        {
+            Color col = background.color;
+            col.a = 0.0f;
+            background.color = col;
+        }
+
         factionColorDropdown.ClearOptions();
         ai1factionColorDropdown.ClearOptions();
         ai2factionColorDropdown.ClearOptions();
@@ -152,8 +178,6 @@ public class OptionsMenu : MonoBehaviour
         masterVol.value = GameSettings.instance.masterVolume;
         musicVol.value = GameSettings.instance.musicVolume;
         sfxVol.value = GameSettings.instance.SFXVolume;
-
-        transition = GetComponent<SceneTransition>();
     }
 
     // Callback for audio settings selection
@@ -229,6 +253,10 @@ public class OptionsMenu : MonoBehaviour
 
     public void Back()
     {
-        transition.beginTransition(GameSettings.instance.LastScene);
+        if (GameSettings.instance.LastScene == "MainMenu")
+            transition.beginTransition("MainMenu");
+
+        else
+            SceneManager.UnloadSceneAsync("Options");
     }
 }

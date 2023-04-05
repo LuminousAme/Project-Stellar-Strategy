@@ -7,6 +7,7 @@ public class SceneTransition : MonoBehaviour
 {
     [SerializeField] LeanTweenHelper transitionTween;
     UnityEngine.UI.Image transitionImage;
+    public UnityEngine.UI.Image GetImage() => transitionImage;
     string sceneToLoad = "";
 
     private void OnEnable()
