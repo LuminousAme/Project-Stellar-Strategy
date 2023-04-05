@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class UnitSelection : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class UnitSelection : MonoBehaviour
     [SerializeField]
     private Faction playerFaction; //the player's faction, faction must match this to be a valid selection choice
 
-    private Vector2 startPos; // Starting position of selection box
+    private Vector2 startPos = Vector2.left; // Starting position of selection box
     private Vector2 currentPos; // curretn  position of selection box
 
     public List<GameObject> selectedUnits = new List<GameObject>(); // List of selected units
@@ -43,27 +44,31 @@ public class UnitSelection : MonoBehaviour
     public void SelectUnitAction(InputAction.CallbackContext context)
     {
 		//to avoid annoying lag
-		if (context.started)
+		if (context.started && !EventSystem.current.IsPointerOverGameObject())
 		{
             startPos = Mouse.current.position.ReadValue();
 		}
 
-        if (context.performed)
+        if (context.performed && startPos.x >= 0 && !EventSystem.current.IsPointerOverGameObject())
         {
             selectionBox.SetActive(true);
         }
 
 		//need to check if the hold went through
-        if (context.canceled && selectionBox.activeInHierarchy)
+        if (context.canceled)
         {
-            selectionBox.SetActive(false);
-            SelectUnits();
+			if (selectionBox.activeInHierarchy)
+			{
+            	selectionBox.SetActive(false);
+            	SelectUnits();
+			}
+			startPos = Vector2.left;
         }
     }
 
     public void SelectTarget(InputAction.CallbackContext context)
     {
-        if (!context.performed)	return;
+        if (!context.performed || EventSystem.current.IsPointerOverGameObject())	return;
 
         //do some raycasts to determine what, if anything, the selected units should be moving towards
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -104,9 +109,12 @@ public class UnitSelection : MonoBehaviour
         //iterate over the selected units and updated their targets
         foreach (GameObject selected in selectedUnits)
         {
-            ShipUnit unit = selected.GetComponent<ShipUnit>();
+            //ShipUnit unit = selected.GetComponent<ShipUnit>();
 
-            if(planet) unit.SetFollowTarget(targetCB);
+            if (!selected.TryGetComponent<ShipUnit>(out ShipUnit unit))
+                continue;
+
+            if (planet) unit.SetFollowTarget(targetCB);
             else if (floor) unit.SetSeekTarget(position);
         }
     }
@@ -168,7 +176,8 @@ public class UnitSelection : MonoBehaviour
 
     public void SelectUnit(Unit unit)
     {
-		selectedUnits.Add(unit.gameObject);
+		if (!selectedUnits.Contains(unit.gameObject))
+			selectedUnits.Add(unit.gameObject);
         unit.Select();
         unit.OnUnitDestroyed += UnitDestroyed;
     }

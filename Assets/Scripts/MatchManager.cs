@@ -18,6 +18,8 @@ public class MatchManager : MonoBehaviour
     public int destroyersAtSpawn = 2;
     public int extractorsAtSpawn = 2;
     public int maxUnits = 50;
+	public event System.Action playerLost;
+	public event System.Action playerWon;
 
     [Space]
     [Header("Music")]
@@ -76,6 +78,7 @@ public class MatchManager : MonoBehaviour
 
         bodiesClaimed.Add(randomIndex);
         stations.Add(playerFaction, PlaceStation(randomIndex, bodies[randomIndex], playerFaction));
+		stations[playerFaction].OnUnitDestroyed += ctx => playerLost?.Invoke();
 
         for(int i = 0; i < aiFactions.Count; i++)
         {
@@ -84,6 +87,13 @@ public class MatchManager : MonoBehaviour
 
             bodiesClaimed.Add(randomIndex);
 			stations.Add(aiFactions[i], PlaceStation(randomIndex, bodies[randomIndex], aiFactions[i]));
+			stations[aiFactions[i]].OnUnitDestroyed += unit => {
+				stations.Remove(aiFactions[i]);
+				if (stations.Count == 1 && stations.ContainsKey(playerFaction)) {
+					playerWon?.Invoke();
+				}
+			};
+
 			if (!aiPlayers[i]) {
 				aiPlayers[i] = Instantiate(AIPrefab);
 			}

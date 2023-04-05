@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class AIPlayer : MonoBehaviour
 {
-	protected StationUnit station;
-	protected List<ShipUnit> attackUnits = new List<ShipUnit>();
+	public bool alive = true;
+	public float alignment = 0f;
 	public float minDecisionTime = 1f;
 	public float maxDecisionTime = 5f;
+	public AnimationCurve decisionDifficultyCurve;
+	public int maxLocalGatherUnits = 2;
 	public int defenseUnits = 2;
 	public int minAttackUnits = 7;
 
+	protected StationUnit station;
+	protected List<ShipUnit> attackUnits = new List<ShipUnit>();
 	protected List<ExtractorUnit> extractorUnits = new List<ExtractorUnit>();
-	public int gatherUnits = 2;
 
-	public bool alive = true;
+	private float aliveTime = 0f;
+	private float startTime = 0f;
 
 	enum Want {
 		WAIT,
@@ -35,6 +39,8 @@ public class AIPlayer : MonoBehaviour
 	//has a deecision timer
 	private void Start() {
 		StartCoroutine(Decision());
+		startTime = Time.time;
+		//Debug.Log(Time.timeSinceLevelLoad);
 		//defend self
 		/*for (int i = 0; i < Mathf.Min(defenseUnits, attackUnits.Count); ++i) {
 			//send ships to incoming attackers
@@ -44,7 +50,8 @@ public class AIPlayer : MonoBehaviour
 
 	IEnumerator Decision() {
 		while (alive) {
-			yield return new WaitForSeconds(Random.Range(minDecisionTime, maxDecisionTime));
+			aliveTime = Time.time - startTime;
+			yield return new WaitForSeconds(Random.Range(minDecisionTime / decisionDifficultyCurve.Evaluate(aliveTime), maxDecisionTime / decisionDifficultyCurve.Evaluate(aliveTime)));
 
 			SpendResources();
 
@@ -53,8 +60,8 @@ public class AIPlayer : MonoBehaviour
 			}
 
 			//spread gatherers
-			if (extractorUnits.Count > gatherUnits) {
-				for (int i = gatherUnits; i < extractorUnits.Count; ++i) {
+			if (extractorUnits.Count > maxLocalGatherUnits) {
+				for (int i = maxLocalGatherUnits; i < extractorUnits.Count; ++i) {
 					if (extractorUnits[i].GetResources() < extractorUnits[i].GetRate() && extractorUnits[i].Unloading()) {
 						SendGatherer(extractorUnits[i]);
 					}
@@ -64,6 +71,8 @@ public class AIPlayer : MonoBehaviour
 	}
 
 	void SpendResources() {
+		//Higher the alignement, more chance for wanting extractor
+
 		switch (currentWant) {
 			default:
 				currentWant = (Want)Random.Range(0, 3);

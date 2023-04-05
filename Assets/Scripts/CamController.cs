@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class CamController : MonoBehaviour
 {
@@ -45,7 +46,7 @@ public class CamController : MonoBehaviour
 
 	//multitap interaction
 	public void TryLockOn(InputAction.CallbackContext context) {
-		if (!context.performed)	return;
+		if (!context.performed || EventSystem.current.IsPointerOverGameObject())	return;
 
 		//screen position
 		Ray dir = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -77,7 +78,7 @@ public class CamController : MonoBehaviour
 	}
 
 	public void RotateCamera(InputAction.CallbackContext context) {
-		if (context.performed) {
+		if (context.performed && !EventSystem.current.IsPointerOverGameObject()) {
 			StartCoroutine(Rotate(Mouse.current));
 		}
 		if (context.canceled) {
@@ -88,7 +89,7 @@ public class CamController : MonoBehaviour
 	public void MoveCamera(InputAction.CallbackContext context) {
 		//thing is bering weird
 		/*
-		if (context.started) {
+		if (context.started && !EventSystem.current.IsPointerOverGameObject()) {
 			StartCoroutine(Move(context.action));
 		}
 		if (context.canceled) {

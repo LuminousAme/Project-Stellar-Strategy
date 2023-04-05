@@ -335,7 +335,7 @@ MonoBehaviour:
   - {fileID: 461990205115389747}
   destroyedTime: 2
   resourcesHeld: 0
-  maxResourcesHeld: 10000
+  maxResourcesHeld: 3000
   depositRate: 1000
 --- !u!54 &7079608163100964467
 Rigidbody:
