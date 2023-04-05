@@ -33,8 +33,11 @@ public class MatchManager : MonoBehaviour
     float timeSinceCombatStatusChanged = 0.0f;
 
 	Dictionary<Faction, StationUnit> m_stations= new Dictionary<Faction, StationUnit>();
+	public Dictionary<Faction, StationUnit> stations { get => m_stations; }
 
-    public Dictionary<Faction, StationUnit> stations { get => m_stations; }
+	private void Awake() {
+		instance = this;
+	}
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +48,7 @@ public class MatchManager : MonoBehaviour
         inCombat = false;
         acutalInCombat = false;
 
-		while (aiPlayers.Count < aiFactions.Count) aiPlayers.Add(Instantiate(AIPrefab));
+		while (aiPlayers.Count < aiFactions.Count) aiPlayers.Add(null);
 
 		StartCoroutine(OrderedFrames());
     }
@@ -58,7 +61,7 @@ public class MatchManager : MonoBehaviour
     private void Update()
     {
         UpdateMusic();
-
+		
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene("Options");
@@ -96,14 +99,15 @@ public class MatchManager : MonoBehaviour
             bodiesClaimed.Add(randomIndex);
 			stations.Add(aiFactions[i], PlaceStation(randomIndex, bodies[randomIndex], aiFactions[i]));
 			stations[aiFactions[i]].OnUnitDestroyed += unit => {
-				stations.Remove(aiFactions[i]);
-				if (stations.Count == 1 && stations.ContainsKey(playerFaction)) {
+				stations.Remove(unit.GetFaction());
+				if (stations.Count == 1) {
 					playerWon?.Invoke();
 				}
 			};
 
+			//makes em self destroying
 			if (!aiPlayers[i]) {
-				aiPlayers[i] = Instantiate(AIPrefab);
+				aiPlayers[i] = Instantiate(AIPrefab, stations[aiFactions[i]].transform);
 			}
             aiPlayers[i].SetStation(stations[aiFactions[i]]);
         }

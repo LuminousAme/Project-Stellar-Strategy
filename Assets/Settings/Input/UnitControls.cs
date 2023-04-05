@@ -71,6 +71,15 @@ public partial class @UnitControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Deselect"",
+                    ""type"": ""Button"",
+                    ""id"": ""debcac04-6fbe-4f35-9239-2c0c67b546a9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -194,6 +203,17 @@ public partial class @UnitControls : IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f691ca22-bac6-42a7-bd28-e284063b3404"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Deselect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -207,6 +227,7 @@ public partial class @UnitControls : IInputActionCollection2, IDisposable
         m_Movement_LockOn = m_Movement.FindAction("LockOn", throwIfNotFound: true);
         m_Movement_Rotate = m_Movement.FindAction("Rotate", throwIfNotFound: true);
         m_Movement_Movement = m_Movement.FindAction("Movement", throwIfNotFound: true);
+        m_Movement_Deselect = m_Movement.FindAction("Deselect", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -271,6 +292,7 @@ public partial class @UnitControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_LockOn;
     private readonly InputAction m_Movement_Rotate;
     private readonly InputAction m_Movement_Movement;
+    private readonly InputAction m_Movement_Deselect;
     public struct MovementActions
     {
         private @UnitControls m_Wrapper;
@@ -280,6 +302,7 @@ public partial class @UnitControls : IInputActionCollection2, IDisposable
         public InputAction @LockOn => m_Wrapper.m_Movement_LockOn;
         public InputAction @Rotate => m_Wrapper.m_Movement_Rotate;
         public InputAction @Movement => m_Wrapper.m_Movement_Movement;
+        public InputAction @Deselect => m_Wrapper.m_Movement_Deselect;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -304,6 +327,9 @@ public partial class @UnitControls : IInputActionCollection2, IDisposable
                 @Movement.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnMovement;
+                @Deselect.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnDeselect;
+                @Deselect.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnDeselect;
+                @Deselect.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnDeselect;
             }
             m_Wrapper.m_MovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -323,6 +349,9 @@ public partial class @UnitControls : IInputActionCollection2, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
+                @Deselect.started += instance.OnDeselect;
+                @Deselect.performed += instance.OnDeselect;
+                @Deselect.canceled += instance.OnDeselect;
             }
         }
     }
@@ -334,5 +363,6 @@ public partial class @UnitControls : IInputActionCollection2, IDisposable
         void OnLockOn(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
+        void OnDeselect(InputAction.CallbackContext context);
     }
 }
