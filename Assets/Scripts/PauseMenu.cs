@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject pauseMenuObject;
     [SerializeField] PlayerInput playerInput;
     [SerializeField] SceneTransition transition;
+    [SerializeField] CamController camController;
     bool inputActive = true;
     bool inputwasActive = true;
     float timeScale = 0.0f;
@@ -29,8 +30,16 @@ public class PauseMenu : MonoBehaviour
         paused = !paused;
         pauseMenuObject.SetActive(!pauseMenuObject.activeSelf);
 
-        if (paused) Time.timeScale = 0.0f;
-        else Time.timeScale = timeScale;
+        if (paused)
+        {
+            Time.timeScale = 0.0f;
+            camController.enabled = false;
+        }
+        else
+        {
+            Time.timeScale = timeScale;
+            camController.enabled = true;
+        }
     }
 
     private void Update()
