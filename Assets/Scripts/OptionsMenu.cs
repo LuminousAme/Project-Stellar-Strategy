@@ -17,10 +17,29 @@ public class OptionsMenu : MonoBehaviour
     public AudioMixer audioMixer;
 
     [SerializeField] private Slider masterVol, musicVol, sfxVol;
+    
+    // Dictionary of color names and RGB values
+    private Dictionary<string, Color> colorDict = new Dictionary<string, Color>
+    {
+        {"Red", Color.red},
+        {"Green", Color.green},
+        {"Blue", Color.blue},
+        {"Yellow", Color.yellow},
+        {"Cyan", Color.cyan},
+        {"Magenta", Color.magenta},
+        {"White", Color.white},
+        {"Black", Color.black},
+    };
 
     // Start is called before the first frame update
     private void Start()
     {
+        factionColorDropdown.ClearOptions();
+
+        List<string> colorNames = new List<string>(colorDict.Keys);
+       
+        factionColorDropdown.AddOptions(colorNames);
+        factionColorDropdown.RefreshShownValue();
 
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
@@ -36,7 +55,7 @@ public class OptionsMenu : MonoBehaviour
                 && resolutions[i].height == Screen.currentResolution.height)
                 currentResolutionIndex = i;
         }
-
+        
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.RefreshShownValue();
 
@@ -62,6 +81,16 @@ public class OptionsMenu : MonoBehaviour
         // Get the selected audio volume level
         MatchManager.instance.masterVolume = value;
     }
+
+
+
+    public void OnColorSelected(int index)
+    {
+        // Get selected color value from dictionary and set it on the Faction
+        Color selectedColor = colorDict[factionColorDropdown.options[index].text];
+        MatchManager.instance.playerFaction.passiveColor = selectedColor;
+    }
+
 
     public void SetFullscreen(bool isFullscreen)
     {
