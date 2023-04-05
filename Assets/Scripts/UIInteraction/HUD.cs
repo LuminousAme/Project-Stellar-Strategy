@@ -26,13 +26,35 @@ public class HUD : MonoBehaviour
 
         if(playerStation)
         {
-            if (playerStation.GetResources() >= 1000.0f) buildExtractorButton.enabled = true;
-            else buildExtractorButton.enabled = false;
-            if (playerStation.GetResources() >= 2000.0f) buildDestroyerButton.enabled = true;
-            else buildDestroyerButton.enabled = false;
+            if (playerStation.GetResources() >= 1000.0f)
+            {
+                buildExtractorButton.enabled = true;
+                buildExtractorButton.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(22, 241, 22, 255);
+            }
+            else
+            {
+                buildExtractorButton.enabled = false; buildExtractorButton.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 41, 22, 255);
+            }
+            if (playerStation.GetResources() >= 2000.0f) {
+                buildDestroyerButton.enabled = true;
+                buildDestroyerButton.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(22, 241, 22, 255);
+
+            }
+            else
+            {
+                buildDestroyerButton.enabled = false;
+                buildDestroyerButton.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 41, 22, 255);
+            }
 
             resourcesText.text = "Resources: " + Mathf.RoundToInt(playerStation.GetResources()).ToString();
+            // Update the color of the button images based on unit health while station is still alive
+            foreach (KeyValuePair<Unit, GameObject> pair in unitButtonMap)
+            {
+                UpdateUnitButtonHealth(pair.Key);
+            }
         }
+
+      
     }
 
     public void BuildNewDestroyer()
@@ -80,6 +102,7 @@ public class HUD : MonoBehaviour
         });
 
         unitButtonMap.Add(unit, go);
+
     }
 
     void RemoveUnit(Unit unit)
@@ -94,6 +117,15 @@ public class HUD : MonoBehaviour
         Camera.main.GetComponent<CamController>().LockOnUnit(unit);
         unitselector.SelectUnit(unit);
     }
+
+    void UpdateUnitButtonHealth(Unit unit)
+    {
+        GameObject go = unitButtonMap[unit];
+        Image image = go.GetComponent<Image>();
+        float healthRatio = unit.GetHealthRatio();
+        image.color = Color.Lerp(Color.red, Color.green, healthRatio);
+    }
+
 
 }
 

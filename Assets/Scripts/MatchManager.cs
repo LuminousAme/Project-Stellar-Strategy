@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MatchManager : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class MatchManager : MonoBehaviour
     public int destroyersAtSpawn = 2;
     public int extractorsAtSpawn = 2;
     public int maxUnits = 50;
+	public event System.Action playerLost;
+	public event System.Action playerWon;
 
     [Space]
     [Header("Music")]
@@ -29,9 +32,14 @@ public class MatchManager : MonoBehaviour
     bool acutalInCombat = false;
     float timeSinceCombatStatusChanged = 0.0f;
 
+    [Space]
+    [Header("Menu Stuff")] 
+    public float masterVolume; //doesnt actually do anything rn
+    public float sfxVolume; //doesnt actually do anything rn
 
 	Dictionary<Faction, StationUnit> m_stations= new Dictionary<Faction, StationUnit>();
-	public Dictionary<Faction, StationUnit> stations { get => m_stations; }
+
+    public Dictionary<Faction, StationUnit> stations { get => m_stations; }
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +62,12 @@ public class MatchManager : MonoBehaviour
     private void Update()
     {
         UpdateMusic();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("Options");
+
+        }
     }
 
 	IEnumerator OrderedFrames() {
@@ -76,6 +90,7 @@ public class MatchManager : MonoBehaviour
 
         bodiesClaimed.Add(randomIndex);
         stations.Add(playerFaction, PlaceStation(randomIndex, bodies[randomIndex], playerFaction));
+		stations[playerFaction].OnUnitDestroyed += ctx => playerLost?.Invoke();
 
         for(int i = 0; i < aiFactions.Count; i++)
         {
@@ -84,6 +99,13 @@ public class MatchManager : MonoBehaviour
 
             bodiesClaimed.Add(randomIndex);
 			stations.Add(aiFactions[i], PlaceStation(randomIndex, bodies[randomIndex], aiFactions[i]));
+			stations[aiFactions[i]].OnUnitDestroyed += unit => {
+				stations.Remove(aiFactions[i]);
+				if (stations.Count == 1 && stations.ContainsKey(playerFaction)) {
+					playerWon?.Invoke();
+				}
+			};
+
 			if (!aiPlayers[i]) {
 				aiPlayers[i] = Instantiate(AIPrefab);
 			}
