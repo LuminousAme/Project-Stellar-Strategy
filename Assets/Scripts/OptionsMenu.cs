@@ -13,9 +13,9 @@ public class OptionsMenu : MonoBehaviour
     [SerializeField] private Camera cam;
     [SerializeField] private GameObject EventSystem;
     [SerializeField] private Image background;
-    [SerializeField] private TMP_Dropdown resolutionDropdown;
+    //[SerializeField] private TMP_Dropdown resolutionDropdown;
     [SerializeField] private TMP_Dropdown qualityDropdown;
-    private Resolution[] resolutions;
+    //private Resolution[] resolutions;
 
     [Space]
     [Header("Faction Colors")]
@@ -145,25 +145,23 @@ public class OptionsMenu : MonoBehaviour
         ai1factionColorDropdown.RefreshShownValue();
         ai2factionColorDropdown.RefreshShownValue();
 
+		/*
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
         resolutions = Screen.resolutions;
-        int currentResolutionIndex = 0;
 
         for (int i = 0; i < resolutions.Length; i++)
         {
             string option = resolutions[i].width + " x " +
                             resolutions[i].height;
+							
             options.Add(option);
-            if (resolutions[i].width == Screen.currentResolution.width
-                && resolutions[i].height == Screen.currentResolution.height)
-                currentResolutionIndex = i;
         }
 
         resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentResolutionIndex;
+        resolutionDropdown.value = GameSettings.instance.resolutionIndex;
         resolutionDropdown.RefreshShownValue();
-
+*/
         qualityDropdown.ClearOptions();
         List<string> qualityOptions = new List<string>();
         int currentQualityIndex = QualitySettings.GetQualityLevel();
@@ -247,17 +245,20 @@ public class OptionsMenu : MonoBehaviour
 
     public void SetFullscreen()
     {
-        bool fullscreen = !GameSettings.instance.fullscreen;
-        Screen.fullScreen = fullscreen;
-        GameSettings.instance.fullscreen = fullscreen;
+        //bool fullscreen = !GameSettings.instance.fullscreen;
+        //GameSettings.instance.fullscreen = fullscreen;
+		//Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+        Screen.fullScreen = !Screen.fullScreen;
     }
 
+	/*
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         GameSettings.instance.resolutionIndex = resolutionIndex;
     }
+	*/
 
     public void SetQuality(int qIndex)
     {

@@ -8,12 +8,12 @@ public class GameSettings : MonoBehaviour
     public static GameSettings instance;
 
     public float masterVolume, musicVolume, SFXVolume;
-    public bool fullscreen;
-    public int graphicsQuality, resolutionIndex;
+    //public bool fullscreen;
+    public int graphicsQuality;//, resolutionIndex;
     public string playerfactionColor, ai1factionColor, ai2factionColor;
 
     [SerializeField] AudioMixer mixer;
-    Resolution[] resolutions;
+    //Resolution[] resolutions;
 
     public string LastScene = "";
 
@@ -42,20 +42,22 @@ public class GameSettings : MonoBehaviour
 
     public Faction player, ai1, ai2;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    private void Awake() {
         if (instance != null)
         {
             Destroy(this.gameObject);
         }
-        else
-        {
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-            LastScene = "MainMenu";
-            ReadValuesFromFile();
-        }
+		else {
+			instance = this;
+	        DontDestroyOnLoad(this.gameObject);
+        	ReadValuesFromFile();
+		}
+		
+	}
+
+	private void Start()
+    {
+        LastScene = "MainMenu";
     }
 
     void ReadValuesFromFile()
@@ -67,13 +69,14 @@ public class GameSettings : MonoBehaviour
         SFXVolume = PlayerPrefs.GetFloat("SFXVolume", 0);
         mixer.SetFloat("SFXVolume", SFXVolume);
 
-        int fullscreenint = PlayerPrefs.GetInt("Fullscreen", 0);
-        fullscreen = fullscreenint == 1;
-        Screen.fullScreen = fullscreen;
+        //int fullscreenint = PlayerPrefs.GetInt("Fullscreen", 0);
+        //fullscreen = fullscreenint == 1;
+        //Screen.fullScreen = fullscreen;
 
         graphicsQuality = PlayerPrefs.GetInt("GraphicsQuality", QualitySettings.GetQualityLevel());
         QualitySettings.SetQualityLevel(graphicsQuality);
 
+		/*
         resolutions = Screen.resolutions;
         resolutionIndex = PlayerPrefs.GetInt("ResolutionIndex", resolutions.Length - 1);
         if (resolutionIndex >= resolutions.Length)
@@ -82,7 +85,8 @@ public class GameSettings : MonoBehaviour
             SaveValuesToFile();
         }
         Resolution newResolution = resolutions[resolutionIndex];
-        Screen.SetResolution(newResolution.width, newResolution.height, Screen.fullScreen);
+        Screen.SetResolution(newResolution.width, newResolution.height, fullscreen);
+		*/
 
         playerfactionColor = PlayerPrefs.GetString("PlayerFactionColor", "Green");
         if(colorDict.ContainsKey(playerfactionColor))
@@ -109,11 +113,11 @@ public class GameSettings : MonoBehaviour
         PlayerPrefs.SetFloat("MusicVolume", musicVolume);
         PlayerPrefs.GetFloat("SFXVolume", SFXVolume);
 
-        int fullscreenInt = (fullscreen) ? 1 : 0;
-        PlayerPrefs.SetInt("Fullscreen", fullscreenInt);
+        //int fullscreenInt = (fullscreen) ? 1 : 0;
+        //PlayerPrefs.SetInt("Fullscreen", fullscreenInt);
 
         PlayerPrefs.SetInt("GraphicsQuality", graphicsQuality);
-        PlayerPrefs.SetInt("ResolutionIndex", resolutionIndex);
+        //PlayerPrefs.SetInt("ResolutionIndex", resolutionIndex);
 
         PlayerPrefs.SetString("PlayerFactionColor", playerfactionColor);
         PlayerPrefs.SetString("AI1FactionColor", ai1factionColor);
