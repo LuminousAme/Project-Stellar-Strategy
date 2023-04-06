@@ -9,6 +9,7 @@ public class HUD : MonoBehaviour
     public List<HUDElement> elements = new List<HUDElement>();
     public GameObject unitList, unitButtonPrefab;
     public TMP_Text resourcesText;
+    public TMP_Text unitCountText;
     public Button buildDestroyerButton, buildExtractorButton;
     public UnitSelection unitselector;
     private StationUnit playerStation;
@@ -69,12 +70,23 @@ public class HUD : MonoBehaviour
 
     public void BuildNewDestroyer()
     {
-        if(playerStation.TrySpendResources(2000)) MatchManager.instance.SpawnNewDestroyer(-1);
+        if (playerStation.TrySpendResources(2000, typeof(ShipUnit))) {
+			if (MatchManager.instance.maxUnits > playerStation.GetUnitCount())
+				unitCountText.text = playerStation.GetUnitCount() + " Units";
+			else
+				unitCountText.text = "Max Units";
+		}
+
     }
 
     public void BuildNewExtractor()
     {
-        if (playerStation.TrySpendResources(1000)) MatchManager.instance.SpawnNewExtractor(-1);
+        if (playerStation.TrySpendResources(1000, typeof(ExtractorUnit))) {
+			if (MatchManager.instance.maxUnits > playerStation.GetUnitCount())
+				unitCountText.text = playerStation.GetUnitCount() + " Units";
+			else
+				unitCountText.text = "Max Units";
+		}
     }
 
     public void Hide(int index)
@@ -90,6 +102,9 @@ public class HUD : MonoBehaviour
         playerStation = MatchManager.instance.stations[MatchManager.instance.playerFaction];
         AddUnit(playerStation);
         playerStation.onReceivedUnit += AddUnit;
+		
+		yield return null;
+		unitCountText.text = playerStation.GetUnitCount() + " Units";
     }
 
     Dictionary<System.Type, string> typeDictionary = new Dictionary<System.Type, string>() {
@@ -108,9 +123,10 @@ public class HUD : MonoBehaviour
 
         button.onClick.AddListener(() =>
 		{	
-			unitselector.ToggleSelect(unit);
-			if (selectLockOn.IsPressed())
+			if (selectLockOn.IsPressed() || playerStation == unit)
 				Camera.main.GetComponent<CamController>().LockOnUnit(unit);
+			else
+				unitselector.ToggleSelect(unit);
         });
 
         unitButtonMap.Add(unit, go);
@@ -122,6 +138,9 @@ public class HUD : MonoBehaviour
         GameObject go = unitButtonMap[unit];
         unitButtonMap.Remove(unit);
         Destroy(go);
+
+		//update ship count
+		unitCountText.text = playerStation.GetUnitCount() + " Units";
     }
 
     void UpdateUnitButtonHealth(Unit unit, bool isUnit)

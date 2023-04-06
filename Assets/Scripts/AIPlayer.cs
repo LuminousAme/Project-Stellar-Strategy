@@ -108,15 +108,13 @@ public class AIPlayer : MonoBehaviour {
 				ChangePurchaseCurrentWant();
 				return;
 			case PurchaseWant.DESTROYER:
-				if (station.TrySpendResources(2000f)) {
-					MatchManager.instance.SpawnNewDestroyer(station.GetFaction());
+				if (station.TrySpendResources(2000f, typeof(ShipUnit))) {
 					ChangePurchaseCurrentWant();
 					return;
 				}
 				break;
 			case PurchaseWant.EXTRACTOR:
-				if (station.TrySpendResources(1000f)) {
-					MatchManager.instance.SpawnNewExtractor(station.GetFaction());
+				if (station.TrySpendResources(1000f, typeof(ExtractorUnit))) {
 					ChangePurchaseCurrentWant();
 					return;
 				}

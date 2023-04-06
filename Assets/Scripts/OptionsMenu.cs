@@ -12,9 +12,9 @@ public class OptionsMenu : MonoBehaviour
     [SerializeField] private Camera cam;
     [SerializeField] private GameObject EventSystem;
     [SerializeField] private Image background;
-    [SerializeField] private TMP_Dropdown resolutionDropdown;
+    //[SerializeField] private TMP_Dropdown resolutionDropdown;
     [SerializeField] private TMP_Dropdown qualityDropdown;
-    private Resolution[] resolutions;
+    //private Resolution[] resolutions;
 
     [Space]
     [Header("Faction Colors")]
@@ -144,25 +144,23 @@ public class OptionsMenu : MonoBehaviour
         ai1factionColorDropdown.RefreshShownValue();
         ai2factionColorDropdown.RefreshShownValue();
 
+		/*
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
         resolutions = Screen.resolutions;
-        int currentResolutionIndex = 0;
 
         for (int i = 0; i < resolutions.Length; i++)
         {
             string option = resolutions[i].width + " x " +
                             resolutions[i].height;
+							
             options.Add(option);
-            if (resolutions[i].width == Screen.currentResolution.width
-                && resolutions[i].height == Screen.currentResolution.height)
-                currentResolutionIndex = i;
         }
 
         resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentResolutionIndex;
+        resolutionDropdown.value = GameSettings.instance.resolutionIndex;
         resolutionDropdown.RefreshShownValue();
-
+*/
         qualityDropdown.ClearOptions();
         List<string> qualityOptions = new List<string>();
         int currentQualityIndex = QualitySettings.GetQualityLevel();
@@ -238,12 +236,14 @@ public class OptionsMenu : MonoBehaviour
         GameSettings.instance.fullscreen = fullscreen;
     }
 
+	/*
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         GameSettings.instance.resolutionIndex = resolutionIndex;
     }
+	*/
 
     public void SetQuality(int qIndex)
     {

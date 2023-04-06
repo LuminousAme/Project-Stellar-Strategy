@@ -40,14 +40,23 @@ public class StationUnit : Unit
 
     public float GetResources() => resources;
 
-    public bool TrySpendResources(float value)
+    public bool TrySpendResources(float value, System.Type type)
     {
         if (resources >= value)
         {
-            resources -= value;
-            return true;
+			bool works = false;
+			if (typeof(ShipUnit) == type) {
+				works = MatchManager.instance.SpawnNewDestroyer(faction);
+			}
+			if (typeof(ExtractorUnit) == type) {
+				works = MatchManager.instance.SpawnNewExtractor(faction);
+			}
+			if (works) {
+            	resources -= value;
+            	return true;
+			}
         }
-        else return false;
+        return false;
     }
 
     public int GetOrbitingUnitCount<T>(CelestialBody followTarget = null, float orbitingRange = 100f) {
