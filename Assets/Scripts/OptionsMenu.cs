@@ -231,9 +231,10 @@ public class OptionsMenu : MonoBehaviour
 
     public void SetFullscreen()
     {
-        bool fullscreen = !GameSettings.instance.fullscreen;
-        Screen.fullScreen = fullscreen;
-        GameSettings.instance.fullscreen = fullscreen;
+        //bool fullscreen = !GameSettings.instance.fullscreen;
+        //GameSettings.instance.fullscreen = fullscreen;
+		//Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+        Screen.fullScreen = !Screen.fullScreen;
     }
 
 	/*

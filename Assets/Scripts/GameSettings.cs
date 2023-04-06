@@ -8,7 +8,7 @@ public class GameSettings : MonoBehaviour
     public static GameSettings instance;
 
     public float masterVolume, musicVolume, SFXVolume;
-    public bool fullscreen;
+    //public bool fullscreen;
     public int graphicsQuality;//, resolutionIndex;
     public string playerfactionColor, ai1factionColor, ai2factionColor;
 
@@ -69,8 +69,8 @@ public class GameSettings : MonoBehaviour
         SFXVolume = PlayerPrefs.GetFloat("SFXVolume", 0);
         mixer.SetFloat("SFXVolume", SFXVolume);
 
-        int fullscreenint = PlayerPrefs.GetInt("Fullscreen", 0);
-        fullscreen = fullscreenint == 1;
+        //int fullscreenint = PlayerPrefs.GetInt("Fullscreen", 0);
+        //fullscreen = fullscreenint == 1;
         //Screen.fullScreen = fullscreen;
 
         graphicsQuality = PlayerPrefs.GetInt("GraphicsQuality", QualitySettings.GetQualityLevel());
@@ -113,8 +113,8 @@ public class GameSettings : MonoBehaviour
         PlayerPrefs.SetFloat("MusicVolume", musicVolume);
         PlayerPrefs.GetFloat("SFXVolume", SFXVolume);
 
-        int fullscreenInt = (fullscreen) ? 1 : 0;
-        PlayerPrefs.SetInt("Fullscreen", fullscreenInt);
+        //int fullscreenInt = (fullscreen) ? 1 : 0;
+        //PlayerPrefs.SetInt("Fullscreen", fullscreenInt);
 
         PlayerPrefs.SetInt("GraphicsQuality", graphicsQuality);
         //PlayerPrefs.SetInt("ResolutionIndex", resolutionIndex);
